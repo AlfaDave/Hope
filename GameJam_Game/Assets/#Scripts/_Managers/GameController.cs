@@ -29,7 +29,7 @@ public class GameController : MonoBehaviour
     }
     private void Start()
     {
-
+        Application.targetFrameRate = 60;
     }
     private void Update()// does an update every frame your computers max cpu process speed can cope with very unreliable for physics.
     {
