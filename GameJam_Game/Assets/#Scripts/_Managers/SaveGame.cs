@@ -147,6 +147,7 @@ public class SaveGame : MonoBehaviour
         //data. Saved data Variable = Variable instance location to copy from;
         data.example = exampleVariable;
         // ADD NEW VARIABLES UNDER HERE IN THE STYLE ON THE LINE ABOVE
+        data.player_Sound = gCont.Player_Sound;
         data.player_Score = gCont.Player_Score;
 
         #endregion
@@ -175,6 +176,7 @@ public class SaveGame : MonoBehaviour
             exampleVariable = data.example;
             // ADD NEW VARIABLES UNDER HERE IN THE STYLE ON THE LINE ABOVE
             gCont.Player_Score = data.player_Score;
+            gCont.Player_Sound = data.player_Sound;
 
             #endregion
         }
@@ -232,5 +234,6 @@ public class GameData
     public int example;
     
     public int player_Score;
+    public bool player_Sound;
     #endregion
 }

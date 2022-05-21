@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
+    public bool Player_Sound { get; set; }
     public int Player_Score { get; set; }
     [SerializeField] internal GameObject example;
     private int setToZero = 0;
@@ -38,7 +39,6 @@ public class GameController : MonoBehaviour
     {
         
     }
-
     private void PlayGame()
     {
 
