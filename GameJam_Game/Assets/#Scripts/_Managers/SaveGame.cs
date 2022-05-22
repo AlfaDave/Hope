@@ -95,7 +95,7 @@ public class SaveGame : MonoBehaviour
     }
     #endregion
     #endregion
-    #region load and save tasks
+    #region load and save tasks ADD VARIABLES TO SAVE AND LOAD IN HERE!!!! IN the load and save player data
     private void DeleteSave()
     {
         /*File.Delete(Application.persistentDataPath + "/" + SaveFolder + "/" + Username + "/" + UsernameForSave + "/" + CurrentSaveLocation);// edit each version update
@@ -143,7 +143,7 @@ public class SaveGame : MonoBehaviour
         FileStream file_Career = File.OpenWrite(Application.persistentDataPath + "/" + saveFolder + "/" + username + "/" + tempPath);
         GameData data = new GameData();
         // data here
-        #region player data
+        #region Save player data
         //data. Saved data Variable = Variable instance location to copy from;
         data.example = exampleVariable;
         // ADD NEW VARIABLES UNDER HERE IN THE STYLE ON THE LINE ABOVE
@@ -171,7 +171,7 @@ public class SaveGame : MonoBehaviour
             FileStream file_Career = File.OpenRead(Application.persistentDataPath + "/" + saveFolder + "/" + username + "/" + tempPath);// edit each version update
             GameData data = (GameData)bf.Deserialize(file_Career);
             file_Career.Close();
-            #region player
+            #region Load player data
             //Saved Data to load = data.Variable in this file to load the date too;
             exampleVariable = data.example;
             // ADD NEW VARIABLES UNDER HERE IN THE STYLE ON THE LINE ABOVE
