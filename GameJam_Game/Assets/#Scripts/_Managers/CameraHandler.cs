@@ -9,6 +9,8 @@ public class CameraHandler : MonoBehaviour
     public Transform point1, point2, point3, point4;
     private float zoom = 396f;
     private bool centered = true;
+    private float moveAmount = 600f;
+
     private void Start()
     {
         camFollow.Setup(() => point1.transform.position, () => zoom);
@@ -21,7 +23,7 @@ public class CameraHandler : MonoBehaviour
     private void Update()
     {
         UserInput();
-        Debug.Log(zoom);
+        //Debug.Log(zoom);
     }
     private void UserInput()
     {
@@ -30,15 +32,15 @@ public class CameraHandler : MonoBehaviour
         if (Input.GetKey(KeyCode.Minus)) { ZoomOut(); }
         if (Input.GetKey(KeyCode.Underscore)) { ZoomOut(); }
 
-        if (Input.GetKey(KeyCode.W)) { centered = false; }
-        if (Input.GetKey(KeyCode.S)) { centered = false; }
-        if (Input.GetKey(KeyCode.A)) { centered = false; }
-        if (Input.GetKey(KeyCode.D)) { centered = false; }
+        if (Input.GetKey(KeyCode.W)) { centered = false; SetCameraPosition(2, true, moveAmount); }
+        if (Input.GetKey(KeyCode.S)) { centered = false; SetCameraPosition(2, false, moveAmount); }
+        if (Input.GetKey(KeyCode.A)) { centered = false; SetCameraPosition(1, false, moveAmount); }
+        if (Input.GetKey(KeyCode.D)) { centered = false; SetCameraPosition(1, true, moveAmount); }
 
-        if (Input.GetKey(KeyCode.UpArrow)) { centered = false; }
-        if (Input.GetKey(KeyCode.DownArrow)) { centered = false; }
-        if (Input.GetKey(KeyCode.LeftArrow)) { centered = false; }
-        if (Input.GetKey(KeyCode.RightArrow)) { centered = false; }
+        if (Input.GetKey(KeyCode.UpArrow)) { centered = false; SetCameraPosition(2, true, moveAmount); }
+        if (Input.GetKey(KeyCode.DownArrow)) { centered = false; SetCameraPosition(2, false, moveAmount); }
+        if (Input.GetKey(KeyCode.LeftArrow)) { centered = false; SetCameraPosition(1, false, moveAmount); }
+        if (Input.GetKey(KeyCode.RightArrow)) { centered = false; SetCameraPosition(1, true, moveAmount); }
         if (Input.GetKey(KeyCode.Home)) { Center(); }
 
     }
@@ -53,16 +55,50 @@ public class CameraHandler : MonoBehaviour
     }
     private void ZoomIn()
     {
-        Debug.Log("calling zoom in");
+        //Debug.Log("calling zoom in");
         zoom -= 1;
         if (zoom <= 250) zoom = 250;
         camFollow.SetCamZoom(zoom);
     }
     private void ZoomOut()
     {
-        Debug.Log("calling zoom out");
+        //Debug.Log("calling zoom out");
         zoom += 1;
         if (zoom >= 730) zoom = 730;
         camFollow.SetCamZoom(zoom);
+    }
+    private void SetCameraPosition(int axis, bool polarity, float moveAmount)
+    {
+        if (axis == 1) {// x axis
+            if (polarity)// positive
+            {
+                camFollowPosition.x += moveAmount * Time.deltaTime;
+            }
+            else
+            {
+                camFollowPosition.x -= moveAmount * Time.deltaTime;
+            }
+        }
+        else if (axis == 2){ // y axis
+            if (polarity)// negative
+            {
+                camFollowPosition.y += moveAmount * Time.deltaTime;
+            }
+            else
+            {
+                camFollowPosition.y -= moveAmount * Time.deltaTime;
+            }
+        }
+        else if (axis == 3) { // z axis
+            if (polarity)// negative
+            {
+                camFollowPosition.z += moveAmount * Time.deltaTime;
+            }
+            else
+            {
+                camFollowPosition.z -= moveAmount * Time.deltaTime;
+            }
+        }
+        camFollow.SetCamFollowPos(camFollowPosition);
     }
 }
