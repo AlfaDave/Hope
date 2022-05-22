@@ -480,12 +480,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f749e4776aaa557488a77bf8cb88c8ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camFollow: {fileID: 0}
-  speed: 500
-  mouseSpeed: 300
-  centered: 1
-  moveAmount: 0
-  camFollowPosition: {x: 0, y: 0, z: 0}
 --- !u!212 &1392579484
 SpriteRenderer:
   m_ObjectHideFlags: 0

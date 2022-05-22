@@ -41,7 +41,8 @@ public class GameController : MonoBehaviour
     }
     private void PlayGame()
     {
-
+        // example of playing sound
+        SoundManager.soundManager.OneSound_MenuButton();
     }
     private void PlayerInput()// this is an example for keyboard player input please do not use this directly
     {
