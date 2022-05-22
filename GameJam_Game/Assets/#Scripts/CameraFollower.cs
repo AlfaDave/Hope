@@ -27,6 +27,10 @@ public class CameraFollower : MonoBehaviour
     public void SetGetCameraFollowPositionFunc(Func<Vector3> GetCamFollowPosFunc){
         this.GetCamFollowPosFunc = GetCamFollowPosFunc;
     }
+    public void SetCamFollow(Vector3 camPos)
+    {
+        SetGetCameraFollowPositionFunc(() => camPos);
+    }
     public void SetCamZoom(float camZoom) {
         SetGetCamZoomFunc(()=> camZoom);
     }
