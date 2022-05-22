@@ -244,6 +244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90d23365f433550448f4523ea180a5a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isOnCamera: 1
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -271,7 +272,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 380
+  orthographic size: 730.8
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -479,6 +480,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f749e4776aaa557488a77bf8cb88c8ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camFollow: {fileID: 0}
+  speed: 500
+  mouseSpeed: 300
+  centered: 1
+  moveAmount: 0
+  camFollowPosition: {x: 0, y: 0, z: 0}
 --- !u!212 &1392579484
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -653,7 +660,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1487027490}
   - component: {fileID: 1487027489}
-  - component: {fileID: 1487027491}
   m_Layer: 0
   m_Name: Square
   m_TagString: Untagged
@@ -720,24 +726,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1487027488}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 800, y: 500, z: 200}
+  m_LocalPosition: {x: 0, y: 0, z: 200}
   m_LocalScale: {x: 32, y: 32, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1487027491
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1487027488}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f749e4776aaa557488a77bf8cb88c8ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1685272893
 GameObject:
   m_ObjectHideFlags: 0
@@ -767,7 +761,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e86f0cd59b5c1543a63e2fae4e83116, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camfollow: {fileID: 519420030}
+  camFollow: {fileID: 519420030}
   point1: {fileID: 1487027490}
   point2: {fileID: 1172256871}
   point3: {fileID: 73584134}
