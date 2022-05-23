@@ -19,7 +19,7 @@ public class SaveGame : MonoBehaviour
     private GameObject gameCont;
     private GameController gCont;
     #region Variables
-    private bool saveHasBeenCreated = false;
+    //private bool saveHasBeenCreated = false;
     #region Save Details
     [SerializeField] internal string username = "Player";
     private string saveFolder = "Save";
@@ -54,6 +54,7 @@ public class SaveGame : MonoBehaviour
         }
     }
     #endregion
+    public bool CheckForSave() { return gCont.PlayerSave; }
     private void LocateGameController()
     {
         gameCont = GameObject.Find("GameController"); // < finding the gameobject only use Find to find initial reference do not use find regularly its
@@ -146,6 +147,7 @@ public class SaveGame : MonoBehaviour
         //data. Saved data Variable = Variable instance location to copy from;
         //data.example = exampleVariable;
         // ADD NEW VARIABLES UNDER HERE IN THE STYLE ON THE LINE ABOVE
+        data.playerSave = gCont.PlayerSave;
         data.player_Sound = gCont.Player_Sound;
         #region Vault Heath Items
         data.vault_Health = gCont.Vault_Health;
@@ -170,10 +172,10 @@ public class SaveGame : MonoBehaviour
         data.room_Mid_Left_2 = gCont.Room_Mid_Left_2;
         data.room_Mid_Right_1 = gCont.Room_Mid_Right_1;
         data.room_Mid_Right_2 = gCont.Room_Mid_Right_2;
-        data.room_Bottom_left_1 = gCont.Room_Bottom_Left_1;
-        data.room_Bottom_left_2 = gCont.Room_Bottom_Left_2;
-        data.room_Bottom_Right_1 = gCont.Room_Bottom_Right_1;
-        data.room_Bottom_Right_2 = gCont.Room_Bottom_Right_2;
+        data.room_Bot_left_1 = gCont.Room_Bot_Left_1;
+        data.room_Bot_left_2 = gCont.Room_Bot_Left_2;
+        data.room_Bot_Right_1 = gCont.Room_Bot_Right_1;
+        data.room_Bot_Right_2 = gCont.Room_Bot_Right_2;
         /// <summary>
         /// room Upgrade levels only 0 rock 1 first type of room 2 second type of room 3 third type of room
         /// </summary>
@@ -185,10 +187,10 @@ public class SaveGame : MonoBehaviour
         data.roomUpgrade_Mid_Left_2 = gCont.RoomUpgrade_Mid_Left_2;
         data.roomUpgrade_Mid_Right_1 = gCont.RoomUpgrade_Mid_Right_1;
         data.roomUpgrade_Mid_Right_2 = gCont.RoomUpgrade_Mid_Right_2;
-        data.roomUpgrade_Bottom_Left_1 = gCont.RoomUpgrade_Bottom_Left_1;
-        data.roomUpgrade_Bottom_Left_2 = gCont.RoomUpgrade_Bottom_Left_2;
-        data.roomUpgrade_Bottom_Right_1 = gCont.RoomUpgrade_Bottom_Right_1;
-        data.roomUpgrade_Bottom_Right_2 = gCont.RoomUpgrade_Bottom_Right_2;
+        data.roomUpgrade_Bot_Left_1 = gCont.RoomUpgrade_Bot_Left_1;
+        data.roomUpgrade_Bot_Left_2 = gCont.RoomUpgrade_Bot_Left_2;
+        data.roomUpgrade_Bot_Right_1 = gCont.RoomUpgrade_Bot_Right_1;
+        data.roomUpgrade_Bot_Right_2 = gCont.RoomUpgrade_Bot_Right_2;
         data.bedroom_1 = gCont.Bedroom_1;
         data.bedroom_2 = gCont.Bedroom_2;
         data.bedroom_3 = gCont.Bedroom_3;
@@ -238,9 +240,10 @@ public class SaveGame : MonoBehaviour
             GameData data = (GameData)bf.Deserialize(file_Career);
             file_Career.Close();
             #region Load player data
-            //Saved Data to load = data.Variable in this file to load the date too;
-            //exampleVariable = data.example;
-            // ADD NEW VARIABLES UNDER HERE IN THE STYLE ON THE LINE ABOVE
+             //Saved Data to load = data.Variable in this file to load the date too;
+             //exampleVariable = data.example;
+             // ADD NEW VARIABLES UNDER HERE IN THE STYLE ON THE LINE ABOVE
+            gCont.PlayerSave = data.playerSave;
             gCont.Player_Sound = data.player_Sound;
             #region Vault Heath Items
             gCont.Vault_Health = data.vault_Health;
@@ -265,10 +268,10 @@ public class SaveGame : MonoBehaviour
             gCont.Room_Mid_Left_2 = data.room_Mid_Left_2;
             gCont.Room_Mid_Right_1 = data.room_Mid_Right_1;
             gCont.Room_Mid_Right_2 = data.room_Mid_Right_2;
-            gCont.Room_Bottom_Left_1 = data.room_Bottom_left_1;
-            gCont.Room_Bottom_Left_2 = data.room_Bottom_left_2;
-            gCont.Room_Bottom_Right_1 = data.room_Bottom_Right_1;
-            gCont.Room_Bottom_Right_2 = data.room_Bottom_Right_2;
+            gCont.Room_Bot_Left_1 = data.room_Bot_left_1;
+            gCont.Room_Bot_Left_2 = data.room_Bot_left_2;
+            gCont.Room_Bot_Right_1 = data.room_Bot_Right_1;
+            gCont.Room_Bot_Right_2 = data.room_Bot_Right_2;
             /// <summary>
             /// room Upgrade levels only 0 rock 1 first type of room 2 second type of room 3 third type of room
             /// </summary>
@@ -280,10 +283,10 @@ public class SaveGame : MonoBehaviour
             gCont.RoomUpgrade_Mid_Left_2 = data.roomUpgrade_Mid_Left_2;
             gCont.RoomUpgrade_Mid_Right_1 = data.roomUpgrade_Mid_Right_1;
             gCont.RoomUpgrade_Mid_Right_2 = data.roomUpgrade_Mid_Right_2;
-            gCont.RoomUpgrade_Bottom_Left_1 = data.roomUpgrade_Bottom_Left_1;
-            gCont.RoomUpgrade_Bottom_Left_2 = data.roomUpgrade_Bottom_Left_2;
-            gCont.RoomUpgrade_Bottom_Right_1 = data.roomUpgrade_Bottom_Right_1;
-            gCont.RoomUpgrade_Bottom_Right_2 = data.roomUpgrade_Bottom_Right_2;
+            gCont.RoomUpgrade_Bot_Left_1 = data.roomUpgrade_Bot_Left_1;
+            gCont.RoomUpgrade_Bot_Left_2 = data.roomUpgrade_Bot_Left_2;
+            gCont.RoomUpgrade_Bot_Right_1 = data.roomUpgrade_Bot_Right_1;
+            gCont.RoomUpgrade_Bot_Right_2 = data.roomUpgrade_Bot_Right_2;
             gCont.Bedroom_1 = data.bedroom_1;
             gCont.Bedroom_2 = data.bedroom_2;
             gCont.Bedroom_3 = data.bedroom_3;
@@ -364,6 +367,7 @@ public class SaveGame : MonoBehaviour
 public class GameData
 {
     #region Game Player items
+    public bool playerSave;
     public bool player_Sound;
     public int vault_Health;
     public int wall_Left_Upgrade;
@@ -387,10 +391,10 @@ public class GameData
     public bool room_Mid_Left_2;
     public bool room_Mid_Right_1;
     public bool room_Mid_Right_2;
-    public bool room_Bottom_left_1;
-    public bool room_Bottom_left_2;
-    public bool room_Bottom_Right_1;
-    public bool room_Bottom_Right_2;
+    public bool room_Bot_left_1;
+    public bool room_Bot_left_2;
+    public bool room_Bot_Right_1;
+    public bool room_Bot_Right_2;
     /// <summary>
     /// room Upgrade levels only 0 rock 1 first type of room 2 second type of room 3 third type of room
     /// </summary>
@@ -402,10 +406,10 @@ public class GameData
     public int roomUpgrade_Mid_Left_2;
     public int roomUpgrade_Mid_Right_1;
     public int roomUpgrade_Mid_Right_2;
-    public int roomUpgrade_Bottom_Left_1;
-    public int roomUpgrade_Bottom_Left_2;
-    public int roomUpgrade_Bottom_Right_1;
-    public int roomUpgrade_Bottom_Right_2;
+    public int roomUpgrade_Bot_Left_1;
+    public int roomUpgrade_Bot_Left_2;
+    public int roomUpgrade_Bot_Right_1;
+    public int roomUpgrade_Bot_Right_2;
     public bool bedroom_1;
     public bool bedroom_2;
     public bool bedroom_3;
@@ -431,5 +435,8 @@ public class GameData
     public int player_Wood;
     public int player_Tech;
     public int player_Seeds;
+    #endregion
+    #region Gameplay Mechanics
+    //public float wait_BetweenPress;
     #endregion
 }

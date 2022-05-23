@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
+    public bool PlayerSave { get; set; }
     public bool Player_Sound { get; set; }
     #region Vault Heath Items
     public int Vault_Health { get; set; }
@@ -28,10 +29,10 @@ public class GameController : MonoBehaviour
     public bool Room_Mid_Left_2 { get; set; }
     public bool Room_Mid_Right_1 { get; set; }
     public bool Room_Mid_Right_2 { get; set; }
-    public bool Room_Bottom_Left_1 { get; set; }
-    public bool Room_Bottom_Left_2 { get; set; }
-    public bool Room_Bottom_Right_1 { get; set; }
-    public bool Room_Bottom_Right_2 { get; set; }
+    public bool Room_Bot_Left_1 { get; set; }
+    public bool Room_Bot_Left_2 { get; set; }
+    public bool Room_Bot_Right_1 { get; set; }
+    public bool Room_Bot_Right_2 { get; set; }
     /// <summary>
     /// room Upgrade levels only 0 rock 1 first type of room 2 second type of room 3 third type of room
     /// </summary>
@@ -43,10 +44,10 @@ public class GameController : MonoBehaviour
     public int RoomUpgrade_Mid_Left_2 { get; set; }
     public int RoomUpgrade_Mid_Right_1 { get; set; }
     public int RoomUpgrade_Mid_Right_2 { get; set; }
-    public int RoomUpgrade_Bottom_Left_1 { get; set; }
-    public int RoomUpgrade_Bottom_Left_2 { get; set; }
-    public int RoomUpgrade_Bottom_Right_1 { get; set; }
-    public int RoomUpgrade_Bottom_Right_2 { get; set; }
+    public int RoomUpgrade_Bot_Left_1 { get; set; }
+    public int RoomUpgrade_Bot_Left_2 { get; set; }
+    public int RoomUpgrade_Bot_Right_1 { get; set; }
+    public int RoomUpgrade_Bot_Right_2 { get; set; }
     public bool Bedroom_1 { get; set; }
     public bool Bedroom_2 { get; set; }
     public bool Bedroom_3 { get; set; }
@@ -73,7 +74,9 @@ public class GameController : MonoBehaviour
     public int Player_Tech { get; set; }
     public int Player_Seeds { get; set; }
     #endregion
-    [SerializeField] internal GameObject example;
+    #region Game Mechanics
+    
+    #endregion
     private int setToZero = 0;
     public static GameController gameC;
 
@@ -93,10 +96,6 @@ public class GameController : MonoBehaviour
     private void SetDefaults()
     {
         if (Player_Turns == 0) { Player_Turns = setToZero; }
-    }
-    private void Start()
-    {
-        Application.targetFrameRate = 60;
     }
     private void Update()// does an update every frame your computers max cpu process speed can cope with very unreliable for physics.
     {

@@ -1,21 +1,18 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(AudioSource))]
-public class _Manager_Intro : MonoBehaviour
-{
+public class Intro : MonoBehaviour {
     private bool gameStarted = false;
     private float countdown = 7.5f;
     public AudioClip theme;
     AudioSource audioSource;
     private bool loadCalled = false;
-
-    void Start()
-    {
+    
+    void Start () {
         audioSource = GetComponent<AudioSource>();
-        audioSource.PlayOneShot(theme, 0.5f);
+        //AudioController.PlayMusicPlaylist("SplashIntro");
     }
     private void FixedUpdate()
     {
@@ -24,9 +21,9 @@ public class _Manager_Intro : MonoBehaviour
             countdown -= Time.fixedDeltaTime;
             if (countdown <= 0)
             {
-                SceneManager.LoadScene("Main");
+                SaveGame.gameSave.LoadLevel("Main");
                 //SceneManager.LoadScene("SignIn");
             }
         }
-    }
+    }    
 }
