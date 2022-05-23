@@ -28,7 +28,6 @@ public class SaveGame : MonoBehaviour
     private string tempPath;
     [SerializeField] internal enum WhichSaveSpot { Save_1 }
     [SerializeField] internal WhichSaveSpot whichSaveSpot;
-    private int exampleVariable;
     #endregion
 
     #endregion
@@ -145,13 +144,80 @@ public class SaveGame : MonoBehaviour
         // data here
         #region Save player data
         //data. Saved data Variable = Variable instance location to copy from;
-        data.example = exampleVariable;
+        //data.example = exampleVariable;
         // ADD NEW VARIABLES UNDER HERE IN THE STYLE ON THE LINE ABOVE
         data.player_Sound = gCont.Player_Sound;
-        data.player_Score = gCont.Player_Score;
-
+        #region Vault Heath Items
+        data.vault_Health = gCont.Vault_Health;
+        data.wall_Left_Upgrade = gCont.Wall_Left_Upgrade;
+        data.wall_Left_Health = gCont.Wall_Left_Health;
+        data.wall_Right_Upgrade = gCont.Wall_Right_Upgrade;
+        data.wall_Right_Health = gCont.Wall_Right_Health;
         #endregion
-        bf.Serialize(file_Career, data);
+        #region Vault Room Upgrades
+        data.stairs_1 = gCont.Stairs_1;
+        data.stairs_2 = gCont.Stairs_2;
+        data.stairs_3 = gCont.Stairs_3;
+
+        /// <summary>
+        /// Rooms are ordered in layers with left and right number 1 room is closest to the stairs
+        /// </summary>
+        data.room_Top_Left_1 = gCont.Room_Top_Left_1;
+        data.room_Top_Left_2 = gCont.Room_Top_Left_2;
+        data.room_Top_Right_1 = gCont.Room_Top_Right_1;
+        data.room_Top_Right_2 = gCont.Room_Top_Right_2;
+        data.room_Mid_Left_1 = gCont.Room_Mid_Left_1;
+        data.room_Mid_Left_2 = gCont.Room_Mid_Left_2;
+        data.room_Mid_Right_1 = gCont.Room_Mid_Right_1;
+        data.room_Mid_Right_2 = gCont.Room_Mid_Right_2;
+        data.room_Bottom_left_1 = gCont.Room_Bottom_Left_1;
+        data.room_Bottom_left_2 = gCont.Room_Bottom_Left_2;
+        data.room_Bottom_Right_1 = gCont.Room_Bottom_Right_1;
+        data.room_Bottom_Right_2 = gCont.Room_Bottom_Right_2;
+        /// <summary>
+        /// room Upgrade levels only 0 rock 1 first type of room 2 second type of room 3 third type of room
+        /// </summary>
+        data.roomUpgrade_Top_Left_1 = gCont.RoomUpgrade_Top_Left_1;
+        data.roomUpgrade_Top_Left_2 = gCont.RoomUpgrade_Top_Left_2;
+        data.roomUpgrade_Top_Right_1 = gCont.RoomUpgrade_Top_Right_1;
+        data.roomUpgrade_Top_Right_2 = gCont.RoomUpgrade_Top_Right_2;
+        data.roomUpgrade_Mid_Left_1 = gCont.RoomUpgrade_Mid_Left_1;
+        data.roomUpgrade_Mid_Left_2 = gCont.RoomUpgrade_Mid_Left_2;
+        data.roomUpgrade_Mid_Right_1 = gCont.RoomUpgrade_Mid_Right_1;
+        data.roomUpgrade_Mid_Right_2 = gCont.RoomUpgrade_Mid_Right_2;
+        data.roomUpgrade_Bottom_Left_1 = gCont.RoomUpgrade_Bottom_Left_1;
+        data.roomUpgrade_Bottom_Left_2 = gCont.RoomUpgrade_Bottom_Left_2;
+        data.roomUpgrade_Bottom_Right_1 = gCont.RoomUpgrade_Bottom_Right_1;
+        data.roomUpgrade_Bottom_Right_2 = gCont.RoomUpgrade_Bottom_Right_2;
+        data.bedroom_1 = gCont.Bedroom_1;
+        data.bedroom_2 = gCont.Bedroom_2;
+        data.bedroom_3 = gCont.Bedroom_3;
+        data.bedroom_4 = gCont.Bedroom_4;
+        data.bedroom_5 = gCont.Bedroom_5;
+        data.bedroom_6 = gCont.Bedroom_6;
+        data.bedroom_1_Occupants = gCont.Bedroom_1_Occupants;
+        data.bedroom_2_Occupants = gCont.Bedroom_2_Occupants;
+        data.bedroom_3_Occupants = gCont.Bedroom_3_Occupants;
+        data.bedroom_4_Occupants = gCont.Bedroom_4_Occupants;
+        data.bedroom_5_Occupants = gCont.Bedroom_5_Occupants;
+        data.bedroom_6_Occupants = gCont.Bedroom_6_Occupants;
+        #endregion
+        #region Main Game Stats
+        data.player_Turns = gCont.Player_Turns;
+        data.player_Tasks = gCont.Player_Tasks;
+        data.player_Civilians = gCont.Player_Civilians;
+        data.player_Science = gCont.Player_Science;
+        #endregion
+        #region Main Game Resources
+        data.player_Food = gCont.Player_Food;
+        data.player_Metal = gCont.Player_Metal;
+        data.player_Wood = gCont.Player_Wood;
+        data.player_Tech = gCont.Player_Tech;
+        data.player_Seeds = gCont.Player_Seeds;
+        #endregion
+
+    #endregion
+    bf.Serialize(file_Career, data);
         file_Career.Close();
     }
     #endregion
@@ -173,10 +239,77 @@ public class SaveGame : MonoBehaviour
             file_Career.Close();
             #region Load player data
             //Saved Data to load = data.Variable in this file to load the date too;
-            exampleVariable = data.example;
+            //exampleVariable = data.example;
             // ADD NEW VARIABLES UNDER HERE IN THE STYLE ON THE LINE ABOVE
-            gCont.Player_Score = data.player_Score;
             gCont.Player_Sound = data.player_Sound;
+            #region Vault Heath Items
+            gCont.Vault_Health = data.vault_Health;
+            gCont.Wall_Left_Upgrade = data.wall_Left_Upgrade;
+            gCont.Wall_Left_Health = data.wall_Left_Health;
+            gCont.Wall_Right_Upgrade = data.wall_Right_Upgrade;
+            gCont.Wall_Right_Health = data.wall_Right_Health;
+            #endregion
+            #region Vault Room Upgrades
+            gCont.Stairs_1 = data.stairs_1;
+            gCont.Stairs_2 = data.stairs_2;
+            gCont.Stairs_3 = data.stairs_3;
+
+            /// <summary>
+            /// Rooms are ordered in layers with left and right number 1 room is closest to the stairs
+            /// </summary>
+            gCont.Room_Top_Left_1 = data.room_Top_Left_1;
+            gCont.Room_Top_Left_2 = data.room_Top_Left_2;
+            gCont.Room_Top_Right_1 = data.room_Top_Right_1;
+            gCont.Room_Top_Right_2 = data.room_Top_Right_2;
+            gCont.Room_Mid_Left_1 = data.room_Mid_Left_1;
+            gCont.Room_Mid_Left_2 = data.room_Mid_Left_2;
+            gCont.Room_Mid_Right_1 = data.room_Mid_Right_1;
+            gCont.Room_Mid_Right_2 = data.room_Mid_Right_2;
+            gCont.Room_Bottom_Left_1 = data.room_Bottom_left_1;
+            gCont.Room_Bottom_Left_2 = data.room_Bottom_left_2;
+            gCont.Room_Bottom_Right_1 = data.room_Bottom_Right_1;
+            gCont.Room_Bottom_Right_2 = data.room_Bottom_Right_2;
+            /// <summary>
+            /// room Upgrade levels only 0 rock 1 first type of room 2 second type of room 3 third type of room
+            /// </summary>
+            gCont.RoomUpgrade_Top_Left_1 = data.roomUpgrade_Top_Left_1;
+            gCont.RoomUpgrade_Top_Left_2 = data.roomUpgrade_Top_Left_2;
+            gCont.RoomUpgrade_Top_Right_1 = data.roomUpgrade_Top_Right_1;
+            gCont.RoomUpgrade_Top_Right_2 = data.roomUpgrade_Top_Right_2;
+            gCont.RoomUpgrade_Mid_Left_1 = data.roomUpgrade_Mid_Left_1;
+            gCont.RoomUpgrade_Mid_Left_2 = data.roomUpgrade_Mid_Left_2;
+            gCont.RoomUpgrade_Mid_Right_1 = data.roomUpgrade_Mid_Right_1;
+            gCont.RoomUpgrade_Mid_Right_2 = data.roomUpgrade_Mid_Right_2;
+            gCont.RoomUpgrade_Bottom_Left_1 = data.roomUpgrade_Bottom_Left_1;
+            gCont.RoomUpgrade_Bottom_Left_2 = data.roomUpgrade_Bottom_Left_2;
+            gCont.RoomUpgrade_Bottom_Right_1 = data.roomUpgrade_Bottom_Right_1;
+            gCont.RoomUpgrade_Bottom_Right_2 = data.roomUpgrade_Bottom_Right_2;
+            gCont.Bedroom_1 = data.bedroom_1;
+            gCont.Bedroom_2 = data.bedroom_2;
+            gCont.Bedroom_3 = data.bedroom_3;
+            gCont.Bedroom_4 = data.bedroom_4;
+            gCont.Bedroom_5 = data.bedroom_5;
+            gCont.Bedroom_6 = data.bedroom_6;
+            gCont.Bedroom_1_Occupants = data.bedroom_1_Occupants;
+            gCont.Bedroom_2_Occupants = data.bedroom_2_Occupants;
+            gCont.Bedroom_3_Occupants = data.bedroom_3_Occupants;
+            gCont.Bedroom_4_Occupants = data.bedroom_4_Occupants;
+            gCont.Bedroom_5_Occupants = data.bedroom_5_Occupants;
+            gCont.Bedroom_6_Occupants = data.bedroom_6_Occupants;
+            #endregion
+            #region Main Game Stats
+            gCont.Player_Turns = data.player_Turns;
+            gCont.Player_Tasks = data.player_Tasks;
+            gCont.Player_Civilians = data.player_Civilians;
+            gCont.Player_Science = data.player_Science;
+            #endregion
+            #region Main Game Resources
+            gCont.Player_Food = data.player_Food;
+            gCont.Player_Metal = data.player_Metal;
+            gCont.Player_Wood = data.player_Wood;
+            gCont.Player_Tech = data.player_Tech;
+            gCont.Player_Seeds = data.player_Seeds;
+            #endregion
 
             #endregion
         }
@@ -231,9 +364,72 @@ public class SaveGame : MonoBehaviour
 public class GameData
 {
     #region Game Player items
-    public int example;
-    
-    public int player_Score;
     public bool player_Sound;
+    public int vault_Health;
+    public int wall_Left_Upgrade;
+    public int wall_Left_Health;
+    public int wall_Right_Health;
+    public int wall_Right_Upgrade;
+    #endregion
+    #region Vault Room Upgrades
+    public bool stairs_1;
+    public bool stairs_2;
+    public bool stairs_3;
+
+    /// <summary>
+    /// Rooms are ordered in layers with left and right number 1 room is closest to the stairs
+    /// </summary>
+    public bool room_Top_Left_1;
+    public bool room_Top_Left_2;
+    public bool room_Top_Right_1;
+    public bool room_Top_Right_2;
+    public bool room_Mid_Left_1;
+    public bool room_Mid_Left_2;
+    public bool room_Mid_Right_1;
+    public bool room_Mid_Right_2;
+    public bool room_Bottom_left_1;
+    public bool room_Bottom_left_2;
+    public bool room_Bottom_Right_1;
+    public bool room_Bottom_Right_2;
+    /// <summary>
+    /// room Upgrade levels only 0 rock 1 first type of room 2 second type of room 3 third type of room
+    /// </summary>
+    public int roomUpgrade_Top_Left_1;
+    public int roomUpgrade_Top_Left_2;
+    public int roomUpgrade_Top_Right_1;
+    public int roomUpgrade_Top_Right_2;
+    public int roomUpgrade_Mid_Left_1;
+    public int roomUpgrade_Mid_Left_2;
+    public int roomUpgrade_Mid_Right_1;
+    public int roomUpgrade_Mid_Right_2;
+    public int roomUpgrade_Bottom_Left_1;
+    public int roomUpgrade_Bottom_Left_2;
+    public int roomUpgrade_Bottom_Right_1;
+    public int roomUpgrade_Bottom_Right_2;
+    public bool bedroom_1;
+    public bool bedroom_2;
+    public bool bedroom_3;
+    public bool bedroom_4;
+    public bool bedroom_5;
+    public bool bedroom_6;
+    public int bedroom_1_Occupants;
+    public int bedroom_2_Occupants;
+    public int bedroom_3_Occupants;
+    public int bedroom_4_Occupants;
+    public int bedroom_5_Occupants;
+    public int bedroom_6_Occupants;
+    #endregion
+    #region Main Game Stats
+    public int player_Turns;
+    public int player_Tasks;
+    public int player_Civilians;
+    public int player_Science;
+    #endregion
+    #region Main Game Resources
+    public int player_Food;
+    public int player_Metal;
+    public int player_Wood;
+    public int player_Tech;
+    public int player_Seeds;
     #endregion
 }
