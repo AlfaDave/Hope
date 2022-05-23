@@ -5,7 +5,74 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour
 {
     public bool Player_Sound { get; set; }
-    public int Player_Score { get; set; }
+    #region Vault Heath Items
+    public int Vault_Health { get; set; }
+    public int Wall_Left_Upgrade { get; set; }
+    public int Wall_Left_Health { get; set; }
+    public int Wall_Right_Upgrade { get; set; }
+    public int Wall_Right_Health { get; set; }
+    #endregion
+    #region Vault Room Upgrades
+    public bool Stairs_1 { get; set; }
+    public bool Stairs_2 { get; set; }
+    public bool Stairs_3 { get; set; }
+
+    /// <summary>
+    /// Rooms are ordered in layers with left and right number 1 room is closest to the stairs
+    /// </summary>
+    public bool Room_Top_Left_1 { get; set; }
+    public bool Room_Top_Left_2 { get; set; }
+    public bool Room_Top_Right_1 { get; set; }
+    public bool Room_Top_Right_2 { get; set; }
+    public bool Room_Mid_Left_1 { get; set; }
+    public bool Room_Mid_Left_2 { get; set; }
+    public bool Room_Mid_Right_1 { get; set; }
+    public bool Room_Mid_Right_2 { get; set; }
+    public bool Room_Bottom_Left_1 { get; set; }
+    public bool Room_Bottom_Left_2 { get; set; }
+    public bool Room_Bottom_Right_1 { get; set; }
+    public bool Room_Bottom_Right_2 { get; set; }
+    /// <summary>
+    /// room Upgrade levels only 0 rock 1 first type of room 2 second type of room 3 third type of room
+    /// </summary>
+    public int RoomUpgrade_Top_Left_1 { get; set; }
+    public int RoomUpgrade_Top_Left_2 { get; set; }
+    public int RoomUpgrade_Top_Right_1 { get; set; }
+    public int RoomUpgrade_Top_Right_2 { get; set; }
+    public int RoomUpgrade_Mid_Left_1 { get; set; }
+    public int RoomUpgrade_Mid_Left_2 { get; set; }
+    public int RoomUpgrade_Mid_Right_1 { get; set; }
+    public int RoomUpgrade_Mid_Right_2 { get; set; }
+    public int RoomUpgrade_Bottom_Left_1 { get; set; }
+    public int RoomUpgrade_Bottom_Left_2 { get; set; }
+    public int RoomUpgrade_Bottom_Right_1 { get; set; }
+    public int RoomUpgrade_Bottom_Right_2 { get; set; }
+    public bool Bedroom_1 { get; set; }
+    public bool Bedroom_2 { get; set; }
+    public bool Bedroom_3 { get; set; }
+    public bool Bedroom_4 { get; set; }
+    public bool Bedroom_5 { get; set; }
+    public bool Bedroom_6 { get; set; }
+    public int Bedroom_1_Occupants { get; set; }
+    public int Bedroom_2_Occupants { get; set; }
+    public int Bedroom_3_Occupants { get; set; }
+    public int Bedroom_4_Occupants { get; set; }
+    public int Bedroom_5_Occupants { get; set; }
+    public int Bedroom_6_Occupants { get; set; }
+    #endregion
+    #region Main Game Stats
+    public int Player_Turns { get; set; }
+    public int Player_Tasks { get; set; }
+    public int Player_Civilians { get; set; }
+    public int Player_Science { get; set; }
+    #endregion
+    #region Main Game Resources
+    public int Player_Food { get; set; }
+    public int Player_Metal { get; set; }
+    public int Player_Wood { get; set; }
+    public int Player_Tech { get; set; }
+    public int Player_Seeds { get; set; }
+    #endregion
     [SerializeField] internal GameObject example;
     private int setToZero = 0;
     public static GameController gameC;
@@ -25,7 +92,7 @@ public class GameController : MonoBehaviour
     }
     private void SetDefaults()
     {
-        if (Player_Score == 0) { Player_Score = setToZero; }
+        if (Player_Turns == 0) { Player_Turns = setToZero; }
     }
     private void Start()
     {
