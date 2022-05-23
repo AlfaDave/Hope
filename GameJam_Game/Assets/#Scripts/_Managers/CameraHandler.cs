@@ -6,21 +6,22 @@ public class CameraHandler : MonoBehaviour
 {
     private Vector3 camFollowPosition;
     public CameraFollower camFollow;
-    public Transform point1, point2, point3, point4;
-    private float zoom = 396f;
+    private float zoom = 1100f;
     private float zoomChangeAmount =160;
     private bool centered = true;
     private float moveAmount = 600f;
     private float edgeSize = 25f;
     private bool edgeScrolling = true;
+    private Vector3 homeLocation = new Vector3(2875, 537, -10);
 
     private void Start()
     {
+
+        camFollowPosition.y = homeLocation.y;
+        camFollowPosition.x = homeLocation.x;
         //camFollow.Setup(() => point1.transform.position, () => zoom);
         camFollow.Setup(() => camFollowPosition, () => zoom);
-
-        camFollow.SetGetCameraFollowPositionFunc(()=>point1.transform.position);
-        camFollow.SetCamFollowPos(new Vector3(0, 0,-10));
+        camFollow.SetCamFollowPos(homeLocation);
         camFollow.SetCamZoom(zoom);
     }
     private void Update()
@@ -87,8 +88,8 @@ public class CameraHandler : MonoBehaviour
         if (!centered)
         {
             centered = true;
-            camFollowPosition.y = 0;
-            camFollowPosition.x = 0;
+            camFollowPosition.y = homeLocation.y;
+            camFollowPosition.x = homeLocation.x;
         }
     }
     private void ControlZoom()
@@ -102,7 +103,7 @@ public class CameraHandler : MonoBehaviour
         if (Input.GetKey(KeyCode.Underscore)) { zoom += zoomChangeAmount * Time.deltaTime; }
         if (Input.GetKey(KeyCode.KeypadMinus)) { zoom += zoomChangeAmount * Time.deltaTime; }
         if (Input.mouseScrollDelta.y < 0) { zoom += zoomChangeAmount * Time.deltaTime * 12f; }
-        zoom = Mathf.Clamp(zoom, 250f, 730f);
+        zoom = Mathf.Clamp(zoom, 515f, 1100f);
         camFollow.SetCamZoom(zoom);
     }
     private void SetCameraPosition(int axis, bool polarity, float moveAmount)
