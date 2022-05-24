@@ -4,16 +4,12 @@ using UnityEngine;
 
 public class SetDefs : MonoBehaviour
 {
-    private GameObject gameCont;
-    private GameController gCont;
-    private GameObject gameSave;
-    private SaveGame gSave;
+    [SerializeField] internal GameController gCont;
+    [SerializeField] internal SaveGame gSave;
     private void Start()
     {
-        gameCont = GameObject.Find("GameController");
-        gCont = gameCont.GetComponent<GameController>();
-        gameSave = GameObject.Find("GameSave");
-        gSave = gameCont.GetComponent<SaveGame>();
+        gCont = GameObject.Find("GameController").GetComponent<GameController>();
+        gSave = GameObject.Find("GameSave").GetComponent<SaveGame>();
         if (!gCont.PlayerSave)
         {
             SetDefaults();

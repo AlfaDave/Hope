@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
 public class Intro : MonoBehaviour {
-    private bool gameStarted = false;
+    //private bool gameStarted = false;
     private float countdown = 7.5f;
     public AudioClip theme;
     AudioSource audioSource;

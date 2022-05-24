@@ -8,7 +8,7 @@ public class Game_Logic : MonoBehaviour
     private GameController GC;
     [SerializeField] internal GameObject res_Metal, res_Wood, res_Food, res_Tech;
     [SerializeField] internal GameObject hatch, wall_Left, wall_Right, stairs_1, stairs_2, stairs_3;
-    [SerializeField]internal GameObject underGarden_Lvl1_L1, radio_Lvl1_L2, expedition_Lvl1_R1, training_Lvl1_R2, workshop_Lvl2_L1, workshop_Lvl2_L2, generator_Lvl2_R1, generator_Lvl2_R2, research_Lvl3_L1, research_Lvl3_L2, livingSpace_Lvl3_R1, LivingSpace_Lvl3_R2, bedroom_Lvl1_L, bedroom_Lvl1_R, bedroom_Lvl2_L, bedroom_Lvl2_R, bedroom_Lvl3_L, bedroom_Lvl3_R;
+    [SerializeField] internal GameObject underGarden_Lvl1_L1, radio_Lvl1_L2, expedition_Lvl1_R1, training_Lvl1_R2, workshop_Lvl2_L1, workshop_Lvl2_L2, generator_Lvl2_R1, generator_Lvl2_R2, research_Lvl3_L1, research_Lvl3_L2, livingSpace_Lvl3_R1, livingSpace_Lvl3_R2, bedroom_Lvl1_L, bedroom_Lvl1_R, bedroom_Lvl2_L, bedroom_Lvl2_R, bedroom_Lvl3_L, bedroom_Lvl3_R;
     #region Buttons for gathering
     private Button res_Metal_Button, res_Wood_Button, res_Food_Button, res_Tech_Button;
     #endregion
@@ -23,19 +23,33 @@ public class Game_Logic : MonoBehaviour
     #endregion
     #region Upgrade GameObjects
     #region Bedrooms
-    public GameObject bedroom_Lvl1_L_Rock, bedroom_Lvl1_L_Up_1, bedroom_Lvl1_L_Up_2, bedroom_Lvl1_L_Up_3, bedroom_Lvl1_L_Up_4, bedroom_Lvl1_L_Up_5, bedroom_Lvl1_L_Up_6, bedroom_Lvl1_L_Up_7, bedroom_Lvl1_L_Up_8, bedroom_Lvl1_L_Up_9, bedroom_Lvl1_L_Up_10;
-    public GameObject bedroom_Lvl2_L_Rock, bedroom_Lvl2_L_Up_1, bedroom_Lvl2_L_Up_2, bedroom_Lvl2_L_Up_3, bedroom_Lvl2_L_Up_4, bedroom_Lvl2_L_Up_5, bedroom_Lvl2_L_Up_6, bedroom_Lvl2_L_Up_7, bedroom_Lvl2_L_Up_8, bedroom_Lvl2_L_Up_9, bedroom_Lvl2_L_Up_10;
-    public GameObject bedroom_Lvl3_L_Rock, bedroom_Lvl3_L_Up_1, bedroom_Lvl3_L_Up_2, bedroom_Lvl3_L_Up_3, bedroom_Lvl3_L_Up_4, bedroom_Lvl3_L_Up_5, bedroom_Lvl3_L_Up_6, bedroom_Lvl3_L_Up_7, bedroom_Lvl3_L_Up_8, bedroom_Lvl3_L_Up_9, bedroom_Lvl3_L_Up_10;
-    public GameObject bedroom_Lvl1_R_Rock, bedroom_Lvl1_R_Up_1, bedroom_Lvl1_R_Up_2, bedroom_Lvl1_R_Up_3, bedroom_Lvl1_R_Up_4, bedroom_Lvl1_R_Up_5, bedroom_Lvl1_R_Up_6, bedroom_Lvl1_R_Up_7, bedroom_Lvl1_R_Up_8, bedroom_Lvl1_R_Up_9, bedroom_Lvl1_R_Up_10;
-    public GameObject bedroom_Lvl2_R_Rock, bedroom_Lvl2_R_Up_1, bedroom_Lvl2_R_Up_2, bedroom_Lvl2_R_Up_3, bedroom_Lvl2_R_Up_4, bedroom_Lvl2_R_Up_5, bedroom_Lvl2_R_Up_6, bedroom_Lvl2_R_Up_7, bedroom_Lvl2_R_Up_8, bedroom_Lvl2_R_Up_9, bedroom_Lvl2_R_Up_10;
-    public GameObject bedroom_Lvl3_R_Rock, bedroom_Lvl3_R_Up_1, bedroom_Lvl3_R_Up_2, bedroom_Lvl3_R_Up_3, bedroom_Lvl3_R_Up_4, bedroom_Lvl3_R_Up_5, bedroom_Lvl3_R_Up_6, bedroom_Lvl3_R_Up_7, bedroom_Lvl3_R_Up_8, bedroom_Lvl3_R_Up_9, bedroom_Lvl3_R_Up_10;
+    private GameObject bedroom_Lvl1_L_Rock, bedroom_Lvl1_L_Up_1, bedroom_Lvl1_L_Up_2, bedroom_Lvl1_L_Up_3, bedroom_Lvl1_L_Up_4, bedroom_Lvl1_L_Up_5, bedroom_Lvl1_L_Up_6, bedroom_Lvl1_L_Up_7, bedroom_Lvl1_L_Up_8, bedroom_Lvl1_L_Up_9, bedroom_Lvl1_L_Up_10;
+    private GameObject bedroom_Lvl2_L_Rock, bedroom_Lvl2_L_Up_1, bedroom_Lvl2_L_Up_2, bedroom_Lvl2_L_Up_3, bedroom_Lvl2_L_Up_4, bedroom_Lvl2_L_Up_5, bedroom_Lvl2_L_Up_6, bedroom_Lvl2_L_Up_7, bedroom_Lvl2_L_Up_8, bedroom_Lvl2_L_Up_9, bedroom_Lvl2_L_Up_10;
+    private GameObject bedroom_Lvl3_L_Rock, bedroom_Lvl3_L_Up_1, bedroom_Lvl3_L_Up_2, bedroom_Lvl3_L_Up_3, bedroom_Lvl3_L_Up_4, bedroom_Lvl3_L_Up_5, bedroom_Lvl3_L_Up_6, bedroom_Lvl3_L_Up_7, bedroom_Lvl3_L_Up_8, bedroom_Lvl3_L_Up_9, bedroom_Lvl3_L_Up_10;
+    private GameObject bedroom_Lvl1_R_Rock, bedroom_Lvl1_R_Up_1, bedroom_Lvl1_R_Up_2, bedroom_Lvl1_R_Up_3, bedroom_Lvl1_R_Up_4, bedroom_Lvl1_R_Up_5, bedroom_Lvl1_R_Up_6, bedroom_Lvl1_R_Up_7, bedroom_Lvl1_R_Up_8, bedroom_Lvl1_R_Up_9, bedroom_Lvl1_R_Up_10;
+    private GameObject bedroom_Lvl2_R_Rock, bedroom_Lvl2_R_Up_1, bedroom_Lvl2_R_Up_2, bedroom_Lvl2_R_Up_3, bedroom_Lvl2_R_Up_4, bedroom_Lvl2_R_Up_5, bedroom_Lvl2_R_Up_6, bedroom_Lvl2_R_Up_7, bedroom_Lvl2_R_Up_8, bedroom_Lvl2_R_Up_9, bedroom_Lvl2_R_Up_10;
+    private GameObject bedroom_Lvl3_R_Rock, bedroom_Lvl3_R_Up_1, bedroom_Lvl3_R_Up_2, bedroom_Lvl3_R_Up_3, bedroom_Lvl3_R_Up_4, bedroom_Lvl3_R_Up_5, bedroom_Lvl3_R_Up_6, bedroom_Lvl3_R_Up_7, bedroom_Lvl3_R_Up_8, bedroom_Lvl3_R_Up_9, bedroom_Lvl3_R_Up_10;
     #endregion
     #region Stairs
-    public GameObject stairs_1_Locked, stairs_1_Unlocked, stairs_2_Locked, stairs_2_Unlocked, stairs_3_Locked, stairs_3_Unlocked;
+    private GameObject stairs_1_Locked, stairs_1_Unlocked, stairs_2_Locked, stairs_2_Unlocked, stairs_3_Locked, stairs_3_Unlocked;
     #endregion
     #region Walls
-    public GameObject wall_Left_None, wall_Left_Up_1, wall_Left_Up_2, wall_Left_Up_3, wall_Left_Up_4, wall_Left_Up_5, wall_Left_Up_6, wall_Left_Up_7, wall_Left_Up_8, wall_Left_Up_9, wall_Left_Up_10;
-    public GameObject wall_Right_None, wall_Right_Up_1, wall_Right_Up_2, wall_Right_Up_3, wall_Right_Up_4, wall_Right_Up_5, wall_Right_Up_6, wall_Right_Up_7, wall_Right_Up_8, wall_Right_Up_9, wall_Right_Up_10;
+    private GameObject wall_Left_None, wall_Left_Up_1, wall_Left_Up_2, wall_Left_Up_3, wall_Left_Up_4, wall_Left_Up_5, wall_Left_Up_6, wall_Left_Up_7, wall_Left_Up_8, wall_Left_Up_9, wall_Left_Up_10;
+    private GameObject wall_Right_None, wall_Right_Up_1, wall_Right_Up_2, wall_Right_Up_3, wall_Right_Up_4, wall_Right_Up_5, wall_Right_Up_6, wall_Right_Up_7, wall_Right_Up_8, wall_Right_Up_9, wall_Right_Up_10;
+    #endregion
+    #region Main Rooms
+    private GameObject underGarden_Lvl1_L1_Def, underGarden_Lvl1_L1_Up_1, underGarden_Lvl1_L1_Up_2, underGarden_Lvl1_L1_Up_3, underGarden_Lvl1_L1_Up_4, underGarden_Lvl1_L1_Up_5;
+    private GameObject radio_Lvl1_L2_Def, radio_Lvl1_L2_Up_1, radio_Lvl1_L2_Up_2, radio_Lvl1_L2_Up_3, radio_Lvl1_L2_Up_4, radio_Lvl1_L2_Up_5;
+    private GameObject expedition_Lvl1_R1_Def, expedition_Lvl1_R1_Up_1, expedition_Lvl1_R1_Up_2, expedition_Lvl1_R1_Up_3, expedition_Lvl1_R1_Up_4, expedition_Lvl1_R1_Up_5;
+    private GameObject training_Lvl1_R2_Def, training_Lvl1_R2_Up_1, training_Lvl1_R2_Up_2, training_Lvl1_R2_Up_3, training_Lvl1_R2_Up_4, training_Lvl1_R2_Up_5;
+    private GameObject workshop_Lvl2_L1_Def, workshop_Lvl2_L1_Up_1, workshop_Lvl2_L1_Up_2, workshop_Lvl2_L1_Up_3, workshop_Lvl2_L1_Up_4, workshop_Lvl2_L1_Up_5;
+    private GameObject workshop_Lvl2_L2_Def, workshop_Lvl2_L2_Up_1, workshop_Lvl2_L2_Up_2, workshop_Lvl2_L2_Up_3, workshop_Lvl2_L2_Up_4, workshop_Lvl2_L2_Up_5;
+    private GameObject generator_Lvl2_R1_Def, generator_Lvl2_R1_Up_1, generator_Lvl2_R1_Up_2, generator_Lvl2_R1_Up_3, generator_Lvl2_R1_Up_4, generator_Lvl2_R1_Up_5;
+    private GameObject generator_Lvl2_R2_Def, generator_Lvl2_R2_Up_1, generator_Lvl2_R2_Up_2, generator_Lvl2_R2_Up_3, generator_Lvl2_R2_Up_4, generator_Lvl2_R2_Up_5;
+    private GameObject research_Lvl3_L1_Def, research_Lvl3_L1_Up_1, research_Lvl3_L1_Up_2, research_Lvl3_L1_Up_3, research_Lvl3_L1_Up_4, research_Lvl3_L1_Up_5;
+    private GameObject research_Lvl3_L2_Def, research_Lvl3_L2_Up_1, research_Lvl3_L2_Up_2, research_Lvl3_L2_Up_3, research_Lvl3_L2_Up_4, research_Lvl3_L2_Up_5;
+    private GameObject livingSpace_Lvl3_R1_Def, livingSpace_Lvl3_R1_Up_1, livingSpace_Lvl3_R1_Up_2, livingSpace_Lvl3_R1_Up_3, livingSpace_Lvl3_R1_Up_4, livingSpace_Lvl3_R1_Up_5;
+    private GameObject livingSpace_Lvl3_R2_Def, livingSpace_Lvl3_R2_Up_1, livingSpace_Lvl3_R2_Up_2, livingSpace_Lvl3_R2_Up_3, livingSpace_Lvl3_R2_Up_4, livingSpace_Lvl3_R2_Up_5;
     #endregion
     #endregion
 
@@ -51,7 +65,10 @@ public class Game_Logic : MonoBehaviour
     private void Start()
     {
         GC = GameObject.Find("GameController").GetComponent<GameController>();
-        LinkButtons(); LinkArtGameObjects();
+        LinkButtons();
+        LinkArtGameObjects();
+        TurnAllItemsOff();
+        SetDefaultBuildingsViews();
         CheckRoomUnlockProgress();
     }
     private void SetupPlayArea()
@@ -64,105 +81,105 @@ public class Game_Logic : MonoBehaviour
         res_Wood_Button = res_Wood.GetComponent<Button>();
         res_Food_Button = res_Food.GetComponent<Button>();
         res_Tech_Button = res_Tech.GetComponent<Button>();
-        hatch_Button = hatch.transform.GetChild(0).GetComponent<Button>();
-        wall_Left_Button = wall_Left.transform.GetChild(0).GetComponent<Button>();
-        wall_Right_Button = wall_Right.transform.GetChild(0).GetComponent<Button>();
-        stairs_1_Button = stairs_1.transform.GetChild(0).GetComponent<Button>();
-        stairs_2_Button = stairs_2.transform.GetChild(0).GetComponent<Button>();
-        stairs_3_Button = stairs_3.transform.GetChild(0).GetComponent<Button>();
-        underGarden_Lvl1_L1_Button = underGarden_Lvl1_L1.transform.GetChild(0).GetComponent<Button>();
-        radio_Lvl1_L2_Button = radio_Lvl1_L2.transform.GetChild(0).GetComponent<Button>();
-        expedition_Lvl1_R1_Button = expedition_Lvl1_R1.transform.GetChild(0).GetComponent<Button>();
-        training_Lvl1_R2_Button = training_Lvl1_R2.transform.GetChild(0).GetComponent<Button>();
-        workshop_Lvl2_L1_Button = workshop_Lvl2_L1.transform.GetChild(0).GetComponent<Button>();
-        workshop_Lvl2_L2_Button = workshop_Lvl2_L2.transform.GetChild(0).GetComponent<Button>();
-        generator_Lvl2_R1_Button = generator_Lvl2_R1.transform.GetChild(0).GetComponent<Button>();
-        generator_Lvl2_R2_Button = generator_Lvl2_R2.transform.GetChild(0).GetComponent<Button>();
-        research_Lvl3_L1_Button = research_Lvl3_L1.transform.GetChild(0).GetComponent<Button>();
-        research_Lvl3_L2_Button = research_Lvl3_L2.transform.GetChild(0).GetComponent<Button>();
-        livingSpace_Lvl3_R1_Button = livingSpace_Lvl3_R1.transform.GetChild(0).GetComponent<Button>();
-        livingSpace_Lvl3_R2_Button = LivingSpace_Lvl3_R2.transform.GetChild(0).GetComponent<Button>();
-        bedroom_lvl1_L_Button = bedroom_Lvl1_L.transform.GetChild(0).GetComponent<Button>();
-        bedroom_Lvl1_R_Button = bedroom_Lvl1_R.transform.GetChild(0).GetComponent<Button>();
-        bedroom_Lvl2_L_Button = bedroom_Lvl2_L.transform.GetChild(0).GetComponent<Button>();
-        bedroom_Lvl2_R_Button = bedroom_Lvl2_R.transform.GetChild(0).GetComponent<Button>();
-        bedroom_Lvl3_L_Button = bedroom_Lvl3_L.transform.GetChild(0).GetComponent<Button>();
-        bedroom_Lvl3_R_Button = bedroom_Lvl3_R.transform.GetChild(0).GetComponent<Button>();
+        hatch_Button = hatch.transform.GetChild(2).GetComponent<Button>();
+        wall_Left_Button = wall_Left.transform.GetChild(1).GetComponent<Button>();
+        wall_Right_Button = wall_Right.transform.GetChild(1).GetComponent<Button>();
+        //stairs_1_Button = stairs_1.transform.GetChild(0).GetComponent<Button>();
+        stairs_2_Button = stairs_2.transform.GetChild(1).GetComponent<Button>();
+        stairs_3_Button = stairs_3.transform.GetChild(1).GetComponent<Button>();
+        underGarden_Lvl1_L1_Button = underGarden_Lvl1_L1.transform.GetChild(1).GetComponent<Button>();
+        radio_Lvl1_L2_Button = radio_Lvl1_L2.transform.GetChild(1).GetComponent<Button>();
+        expedition_Lvl1_R1_Button = expedition_Lvl1_R1.transform.GetChild(1).GetComponent<Button>();
+        training_Lvl1_R2_Button = training_Lvl1_R2.transform.GetChild(1).GetComponent<Button>();
+        workshop_Lvl2_L1_Button = workshop_Lvl2_L1.transform.GetChild(1).GetComponent<Button>();
+        workshop_Lvl2_L2_Button = workshop_Lvl2_L2.transform.GetChild(1).GetComponent<Button>();
+        generator_Lvl2_R1_Button = generator_Lvl2_R1.transform.GetChild(1).GetComponent<Button>();
+        generator_Lvl2_R2_Button = generator_Lvl2_R2.transform.GetChild(1).GetComponent<Button>();
+        research_Lvl3_L1_Button = research_Lvl3_L1.transform.GetChild(1).GetComponent<Button>();
+        research_Lvl3_L2_Button = research_Lvl3_L2.transform.GetChild(1).GetComponent<Button>();
+        livingSpace_Lvl3_R1_Button = livingSpace_Lvl3_R1.transform.GetChild(1).GetComponent<Button>();
+        livingSpace_Lvl3_R2_Button = livingSpace_Lvl3_R2.transform.GetChild(1).GetComponent<Button>();
+        bedroom_lvl1_L_Button = bedroom_Lvl1_L.transform.GetChild(1).GetComponent<Button>();
+        bedroom_Lvl1_R_Button = bedroom_Lvl1_R.transform.GetChild(1).GetComponent<Button>();
+        bedroom_Lvl2_L_Button = bedroom_Lvl2_L.transform.GetChild(1).GetComponent<Button>();
+        bedroom_Lvl2_R_Button = bedroom_Lvl2_R.transform.GetChild(1).GetComponent<Button>();
+        bedroom_Lvl3_L_Button = bedroom_Lvl3_L.transform.GetChild(1).GetComponent<Button>();
+        bedroom_Lvl3_R_Button = bedroom_Lvl3_R.transform.GetChild(1).GetComponent<Button>();
     }
     private void LinkArtGameObjects()
     {
         #region Bedrooms + Upgrades
-        bedroom_Lvl1_L_Rock = bedroom_Lvl1_L.transform.GetChild(1).gameObject;
-        bedroom_Lvl1_L_Up_1 = bedroom_Lvl1_L.transform.GetChild(2).gameObject;
-        bedroom_Lvl1_L_Up_2 = bedroom_Lvl1_L.transform.GetChild(3).gameObject;
-        bedroom_Lvl1_L_Up_3 = bedroom_Lvl1_L.transform.GetChild(4).gameObject;
-        bedroom_Lvl1_L_Up_4 = bedroom_Lvl1_L.transform.GetChild(5).gameObject;
-        bedroom_Lvl1_L_Up_5 = bedroom_Lvl1_L.transform.GetChild(6).gameObject;
-        bedroom_Lvl1_L_Up_6 = bedroom_Lvl1_L.transform.GetChild(7).gameObject;
-        bedroom_Lvl1_L_Up_7 = bedroom_Lvl1_L.transform.GetChild(8).gameObject;
-        bedroom_Lvl1_L_Up_8 = bedroom_Lvl1_L.transform.GetChild(9).gameObject;
-        bedroom_Lvl1_L_Up_9 = bedroom_Lvl1_L.transform.GetChild(10).gameObject;
-        bedroom_Lvl1_L_Up_10 = bedroom_Lvl1_L.transform.GetChild(11).gameObject;
+        bedroom_Lvl1_L_Rock = bedroom_Lvl1_L.transform.GetChild(2).gameObject;
+        bedroom_Lvl1_L_Up_1 = bedroom_Lvl1_L.transform.GetChild(3).gameObject;
+        bedroom_Lvl1_L_Up_2 = bedroom_Lvl1_L.transform.GetChild(4).gameObject;
+        bedroom_Lvl1_L_Up_3 = bedroom_Lvl1_L.transform.GetChild(5).gameObject;
+        bedroom_Lvl1_L_Up_4 = bedroom_Lvl1_L.transform.GetChild(6).gameObject;
+        bedroom_Lvl1_L_Up_5 = bedroom_Lvl1_L.transform.GetChild(7).gameObject;
+        bedroom_Lvl1_L_Up_6 = bedroom_Lvl1_L.transform.GetChild(8).gameObject;
+        bedroom_Lvl1_L_Up_7 = bedroom_Lvl1_L.transform.GetChild(9).gameObject;
+        bedroom_Lvl1_L_Up_8 = bedroom_Lvl1_L.transform.GetChild(10).gameObject;
+        bedroom_Lvl1_L_Up_9 = bedroom_Lvl1_L.transform.GetChild(11).gameObject;
+        bedroom_Lvl1_L_Up_10 = bedroom_Lvl1_L.transform.GetChild(12).gameObject;
 
-        bedroom_Lvl2_L_Rock = bedroom_Lvl2_L.transform.GetChild(1).gameObject;
-        bedroom_Lvl2_L_Up_1 = bedroom_Lvl2_L.transform.GetChild(2).gameObject;
-        bedroom_Lvl2_L_Up_2 = bedroom_Lvl2_L.transform.GetChild(3).gameObject;
-        bedroom_Lvl2_L_Up_3 = bedroom_Lvl2_L.transform.GetChild(4).gameObject;
-        bedroom_Lvl2_L_Up_4 = bedroom_Lvl2_L.transform.GetChild(5).gameObject;
-        bedroom_Lvl2_L_Up_5 = bedroom_Lvl2_L.transform.GetChild(6).gameObject;
-        bedroom_Lvl2_L_Up_6 = bedroom_Lvl2_L.transform.GetChild(7).gameObject;
-        bedroom_Lvl2_L_Up_7 = bedroom_Lvl2_L.transform.GetChild(8).gameObject;
-        bedroom_Lvl2_L_Up_8 = bedroom_Lvl2_L.transform.GetChild(9).gameObject;
-        bedroom_Lvl2_L_Up_9 = bedroom_Lvl2_L.transform.GetChild(10).gameObject;
-        bedroom_Lvl2_L_Up_10 = bedroom_Lvl2_L.transform.GetChild(11).gameObject;
+        bedroom_Lvl2_L_Rock = bedroom_Lvl2_L.transform.GetChild(2).gameObject;
+        bedroom_Lvl2_L_Up_1 = bedroom_Lvl2_L.transform.GetChild(3).gameObject;
+        bedroom_Lvl2_L_Up_2 = bedroom_Lvl2_L.transform.GetChild(4).gameObject;
+        bedroom_Lvl2_L_Up_3 = bedroom_Lvl2_L.transform.GetChild(5).gameObject;
+        bedroom_Lvl2_L_Up_4 = bedroom_Lvl2_L.transform.GetChild(6).gameObject;
+        bedroom_Lvl2_L_Up_5 = bedroom_Lvl2_L.transform.GetChild(7).gameObject;
+        bedroom_Lvl2_L_Up_6 = bedroom_Lvl2_L.transform.GetChild(8).gameObject;
+        bedroom_Lvl2_L_Up_7 = bedroom_Lvl2_L.transform.GetChild(9).gameObject;
+        bedroom_Lvl2_L_Up_8 = bedroom_Lvl2_L.transform.GetChild(10).gameObject;
+        bedroom_Lvl2_L_Up_9 = bedroom_Lvl2_L.transform.GetChild(11).gameObject;
+        bedroom_Lvl2_L_Up_10 = bedroom_Lvl2_L.transform.GetChild(12).gameObject;
 
-        bedroom_Lvl3_L_Rock = bedroom_Lvl3_L.transform.GetChild(1).gameObject;
-        bedroom_Lvl3_L_Up_1 = bedroom_Lvl3_L.transform.GetChild(2).gameObject;
-        bedroom_Lvl3_L_Up_2 = bedroom_Lvl3_L.transform.GetChild(3).gameObject;
-        bedroom_Lvl3_L_Up_3 = bedroom_Lvl3_L.transform.GetChild(4).gameObject;
-        bedroom_Lvl3_L_Up_4 = bedroom_Lvl3_L.transform.GetChild(5).gameObject;
-        bedroom_Lvl3_L_Up_5 = bedroom_Lvl3_L.transform.GetChild(6).gameObject;
-        bedroom_Lvl3_L_Up_6 = bedroom_Lvl3_L.transform.GetChild(7).gameObject;
-        bedroom_Lvl3_L_Up_7 = bedroom_Lvl3_L.transform.GetChild(8).gameObject;
-        bedroom_Lvl3_L_Up_8 = bedroom_Lvl3_L.transform.GetChild(9).gameObject;
-        bedroom_Lvl3_L_Up_9 = bedroom_Lvl3_L.transform.GetChild(10).gameObject;
-        bedroom_Lvl3_L_Up_10 = bedroom_Lvl3_L.transform.GetChild(11).gameObject;
+        bedroom_Lvl3_L_Rock = bedroom_Lvl3_L.transform.GetChild(2).gameObject;
+        bedroom_Lvl3_L_Up_1 = bedroom_Lvl3_L.transform.GetChild(3).gameObject;
+        bedroom_Lvl3_L_Up_2 = bedroom_Lvl3_L.transform.GetChild(4).gameObject;
+        bedroom_Lvl3_L_Up_3 = bedroom_Lvl3_L.transform.GetChild(5).gameObject;
+        bedroom_Lvl3_L_Up_4 = bedroom_Lvl3_L.transform.GetChild(6).gameObject;
+        bedroom_Lvl3_L_Up_5 = bedroom_Lvl3_L.transform.GetChild(7).gameObject;
+        bedroom_Lvl3_L_Up_6 = bedroom_Lvl3_L.transform.GetChild(8).gameObject;
+        bedroom_Lvl3_L_Up_7 = bedroom_Lvl3_L.transform.GetChild(9).gameObject;
+        bedroom_Lvl3_L_Up_8 = bedroom_Lvl3_L.transform.GetChild(10).gameObject;
+        bedroom_Lvl3_L_Up_9 = bedroom_Lvl3_L.transform.GetChild(11).gameObject;
+        bedroom_Lvl3_L_Up_10 = bedroom_Lvl3_L.transform.GetChild(12).gameObject;
 
-        bedroom_Lvl1_R_Rock = bedroom_Lvl1_R.transform.GetChild(1).gameObject;
-        bedroom_Lvl1_R_Up_1 = bedroom_Lvl1_R.transform.GetChild(2).gameObject;
-        bedroom_Lvl1_R_Up_2 = bedroom_Lvl1_R.transform.GetChild(3).gameObject;
-        bedroom_Lvl1_R_Up_3 = bedroom_Lvl1_R.transform.GetChild(4).gameObject;
-        bedroom_Lvl1_R_Up_4 = bedroom_Lvl1_R.transform.GetChild(5).gameObject;
-        bedroom_Lvl1_R_Up_5 = bedroom_Lvl1_R.transform.GetChild(6).gameObject;
-        bedroom_Lvl1_R_Up_6 = bedroom_Lvl1_R.transform.GetChild(7).gameObject;
-        bedroom_Lvl1_R_Up_7 = bedroom_Lvl1_R.transform.GetChild(8).gameObject;
-        bedroom_Lvl1_R_Up_8 = bedroom_Lvl1_R.transform.GetChild(9).gameObject;
-        bedroom_Lvl1_R_Up_9 = bedroom_Lvl1_R.transform.GetChild(10).gameObject;
-        bedroom_Lvl1_R_Up_10 = bedroom_Lvl1_R.transform.GetChild(11).gameObject;
+        bedroom_Lvl1_R_Rock = bedroom_Lvl1_R.transform.GetChild(2).gameObject;
+        bedroom_Lvl1_R_Up_1 = bedroom_Lvl1_R.transform.GetChild(3).gameObject;
+        bedroom_Lvl1_R_Up_2 = bedroom_Lvl1_R.transform.GetChild(4).gameObject;
+        bedroom_Lvl1_R_Up_3 = bedroom_Lvl1_R.transform.GetChild(5).gameObject;
+        bedroom_Lvl1_R_Up_4 = bedroom_Lvl1_R.transform.GetChild(6).gameObject;
+        bedroom_Lvl1_R_Up_5 = bedroom_Lvl1_R.transform.GetChild(7).gameObject;
+        bedroom_Lvl1_R_Up_6 = bedroom_Lvl1_R.transform.GetChild(8).gameObject;
+        bedroom_Lvl1_R_Up_7 = bedroom_Lvl1_R.transform.GetChild(9).gameObject;
+        bedroom_Lvl1_R_Up_8 = bedroom_Lvl1_R.transform.GetChild(10).gameObject;
+        bedroom_Lvl1_R_Up_9 = bedroom_Lvl1_R.transform.GetChild(11).gameObject;
+        bedroom_Lvl1_R_Up_10 = bedroom_Lvl1_R.transform.GetChild(12).gameObject;
 
-        bedroom_Lvl2_R_Rock = bedroom_Lvl2_R.transform.GetChild(1).gameObject;
-        bedroom_Lvl2_R_Up_1 = bedroom_Lvl2_R.transform.GetChild(2).gameObject;
-        bedroom_Lvl2_R_Up_2 = bedroom_Lvl2_R.transform.GetChild(3).gameObject;
-        bedroom_Lvl2_R_Up_3 = bedroom_Lvl2_R.transform.GetChild(4).gameObject;
-        bedroom_Lvl2_R_Up_4 = bedroom_Lvl2_R.transform.GetChild(5).gameObject;
-        bedroom_Lvl2_R_Up_5 = bedroom_Lvl2_R.transform.GetChild(6).gameObject;
-        bedroom_Lvl2_R_Up_6 = bedroom_Lvl2_R.transform.GetChild(7).gameObject;
-        bedroom_Lvl2_R_Up_7 = bedroom_Lvl2_R.transform.GetChild(8).gameObject;
-        bedroom_Lvl2_R_Up_8 = bedroom_Lvl2_R.transform.GetChild(9).gameObject;
-        bedroom_Lvl2_R_Up_9 = bedroom_Lvl2_R.transform.GetChild(10).gameObject;
-        bedroom_Lvl2_R_Up_10 = bedroom_Lvl2_R.transform.GetChild(11).gameObject;
+        bedroom_Lvl2_R_Rock = bedroom_Lvl2_R.transform.GetChild(2).gameObject;
+        bedroom_Lvl2_R_Up_1 = bedroom_Lvl2_R.transform.GetChild(3).gameObject;
+        bedroom_Lvl2_R_Up_2 = bedroom_Lvl2_R.transform.GetChild(4).gameObject;
+        bedroom_Lvl2_R_Up_3 = bedroom_Lvl2_R.transform.GetChild(5).gameObject;
+        bedroom_Lvl2_R_Up_4 = bedroom_Lvl2_R.transform.GetChild(6).gameObject;
+        bedroom_Lvl2_R_Up_5 = bedroom_Lvl2_R.transform.GetChild(7).gameObject;
+        bedroom_Lvl2_R_Up_6 = bedroom_Lvl2_R.transform.GetChild(8).gameObject;
+        bedroom_Lvl2_R_Up_7 = bedroom_Lvl2_R.transform.GetChild(9).gameObject;
+        bedroom_Lvl2_R_Up_8 = bedroom_Lvl2_R.transform.GetChild(10).gameObject;
+        bedroom_Lvl2_R_Up_9 = bedroom_Lvl2_R.transform.GetChild(11).gameObject;
+        bedroom_Lvl2_R_Up_10 = bedroom_Lvl2_R.transform.GetChild(12).gameObject;
 
-        bedroom_Lvl3_R_Rock = bedroom_Lvl3_R.transform.GetChild(1).gameObject;
-        bedroom_Lvl3_R_Up_1 = bedroom_Lvl3_R.transform.GetChild(2).gameObject;
-        bedroom_Lvl3_R_Up_2 = bedroom_Lvl3_R.transform.GetChild(3).gameObject;
-        bedroom_Lvl3_R_Up_3 = bedroom_Lvl3_R.transform.GetChild(4).gameObject;
-        bedroom_Lvl3_R_Up_4 = bedroom_Lvl3_R.transform.GetChild(5).gameObject;
-        bedroom_Lvl3_R_Up_5 = bedroom_Lvl3_R.transform.GetChild(6).gameObject;
-        bedroom_Lvl3_R_Up_6 = bedroom_Lvl3_R.transform.GetChild(7).gameObject;
-        bedroom_Lvl3_R_Up_7 = bedroom_Lvl3_R.transform.GetChild(8).gameObject;
-        bedroom_Lvl3_R_Up_8 = bedroom_Lvl3_R.transform.GetChild(9).gameObject;
-        bedroom_Lvl3_R_Up_9 = bedroom_Lvl3_R.transform.GetChild(10).gameObject;
-        bedroom_Lvl3_R_Up_10 = bedroom_Lvl3_R.transform.GetChild(11).gameObject;
+        bedroom_Lvl3_R_Rock = bedroom_Lvl3_R.transform.GetChild(2).gameObject;
+        bedroom_Lvl3_R_Up_1 = bedroom_Lvl3_R.transform.GetChild(3).gameObject;
+        bedroom_Lvl3_R_Up_2 = bedroom_Lvl3_R.transform.GetChild(4).gameObject;
+        bedroom_Lvl3_R_Up_3 = bedroom_Lvl3_R.transform.GetChild(5).gameObject;
+        bedroom_Lvl3_R_Up_4 = bedroom_Lvl3_R.transform.GetChild(6).gameObject;
+        bedroom_Lvl3_R_Up_5 = bedroom_Lvl3_R.transform.GetChild(7).gameObject;
+        bedroom_Lvl3_R_Up_6 = bedroom_Lvl3_R.transform.GetChild(8).gameObject;
+        bedroom_Lvl3_R_Up_7 = bedroom_Lvl3_R.transform.GetChild(9).gameObject;
+        bedroom_Lvl3_R_Up_8 = bedroom_Lvl3_R.transform.GetChild(10).gameObject;
+        bedroom_Lvl3_R_Up_9 = bedroom_Lvl3_R.transform.GetChild(11).gameObject;
+        bedroom_Lvl3_R_Up_10 = bedroom_Lvl3_R.transform.GetChild(12).gameObject;
         #endregion
         #region Stairs
         stairs_1_Locked = stairs_1.transform.GetChild(0).gameObject;
@@ -173,28 +190,125 @@ public class Game_Logic : MonoBehaviour
         stairs_3_Unlocked = stairs_3.transform.GetChild(2).gameObject;
         #endregion
         #region Walls
-        wall_Left_None = wall_Left.transform.GetChild(1).gameObject;
-        wall_Left_Up_1 = wall_Left.transform.GetChild(2).gameObject;
-        wall_Left_Up_2 = wall_Left.transform.GetChild(3).gameObject;
-        wall_Left_Up_3 = wall_Left.transform.GetChild(4).gameObject;
-        wall_Left_Up_4 = wall_Left.transform.GetChild(5).gameObject;
-        wall_Left_Up_5 = wall_Left.transform.GetChild(6).gameObject;
-        wall_Left_Up_6 = wall_Left.transform.GetChild(7).gameObject;
-        wall_Left_Up_7 = wall_Left.transform.GetChild(8).gameObject;
-        wall_Left_Up_8 = wall_Left.transform.GetChild(9).gameObject;
-        wall_Left_Up_9 = wall_Left.transform.GetChild(10).gameObject;
-        wall_Left_Up_10 = wall_Left.transform.GetChild(11).gameObject;
-        wall_Right_None = wall_Right.transform.GetChild(1).gameObject;
-        wall_Right_Up_1 = wall_Right.transform.GetChild(2).gameObject;
-        wall_Right_Up_2 = wall_Right.transform.GetChild(3).gameObject;
-        wall_Right_Up_3 = wall_Right.transform.GetChild(4).gameObject;
-        wall_Right_Up_4 = wall_Right.transform.GetChild(5).gameObject;
-        wall_Right_Up_5 = wall_Right.transform.GetChild(6).gameObject;
-        wall_Right_Up_6 = wall_Right.transform.GetChild(7).gameObject;
-        wall_Right_Up_7 = wall_Right.transform.GetChild(8).gameObject;
-        wall_Right_Up_8 = wall_Right.transform.GetChild(9).gameObject;
-        wall_Right_Up_9 = wall_Right.transform.GetChild(10).gameObject;
-        wall_Right_Up_10 = wall_Right.transform.GetChild(11).gameObject;
+        wall_Left_None = wall_Left.transform.GetChild(2).gameObject;
+        wall_Left_Up_1 = wall_Left.transform.GetChild(3).gameObject;
+        wall_Left_Up_2 = wall_Left.transform.GetChild(4).gameObject;
+        wall_Left_Up_3 = wall_Left.transform.GetChild(5).gameObject;
+        wall_Left_Up_4 = wall_Left.transform.GetChild(6).gameObject;
+        wall_Left_Up_5 = wall_Left.transform.GetChild(7).gameObject;
+        wall_Left_Up_6 = wall_Left.transform.GetChild(8).gameObject;
+        wall_Left_Up_7 = wall_Left.transform.GetChild(9).gameObject;
+        wall_Left_Up_8 = wall_Left.transform.GetChild(10).gameObject;
+        wall_Left_Up_9 = wall_Left.transform.GetChild(11).gameObject;
+        wall_Left_Up_10 = wall_Left.transform.GetChild(12).gameObject;
+        //
+        wall_Right_None = wall_Right.transform.GetChild(2).gameObject;
+        wall_Right_Up_1 = wall_Right.transform.GetChild(3).gameObject;
+        wall_Right_Up_2 = wall_Right.transform.GetChild(4).gameObject;
+        wall_Right_Up_3 = wall_Right.transform.GetChild(5).gameObject;
+        wall_Right_Up_4 = wall_Right.transform.GetChild(6).gameObject;
+        wall_Right_Up_5 = wall_Right.transform.GetChild(7).gameObject;
+        wall_Right_Up_6 = wall_Right.transform.GetChild(8).gameObject;
+        wall_Right_Up_7 = wall_Right.transform.GetChild(9).gameObject;
+        wall_Right_Up_8 = wall_Right.transform.GetChild(10).gameObject;
+        wall_Right_Up_9 = wall_Right.transform.GetChild(11).gameObject;
+        wall_Right_Up_10 = wall_Right.transform.GetChild(12).gameObject;
+        #endregion
+        #region UnderGardenRoom + Upgrades
+        underGarden_Lvl1_L1_Def = underGarden_Lvl1_L1.transform.GetChild(2).gameObject;
+        underGarden_Lvl1_L1_Up_1 = underGarden_Lvl1_L1.transform.GetChild(3).gameObject;
+        underGarden_Lvl1_L1_Up_2 = underGarden_Lvl1_L1.transform.GetChild(4).gameObject;
+        underGarden_Lvl1_L1_Up_3 = underGarden_Lvl1_L1.transform.GetChild(5).gameObject;
+        underGarden_Lvl1_L1_Up_4 = underGarden_Lvl1_L1.transform.GetChild(6).gameObject;
+        underGarden_Lvl1_L1_Up_5 = underGarden_Lvl1_L1.transform.GetChild(7).gameObject;
+        #endregion
+        #region RadioRoom + Upgrades
+        radio_Lvl1_L2_Def = radio_Lvl1_L2.transform.GetChild(2).gameObject;
+        radio_Lvl1_L2_Up_1 = radio_Lvl1_L2.transform.GetChild(3).gameObject;
+        radio_Lvl1_L2_Up_2 = radio_Lvl1_L2.transform.GetChild(4).gameObject;
+        radio_Lvl1_L2_Up_3 = radio_Lvl1_L2.transform.GetChild(5).gameObject;
+        radio_Lvl1_L2_Up_4 = radio_Lvl1_L2.transform.GetChild(6).gameObject;
+        radio_Lvl1_L2_Up_5 = radio_Lvl1_L2.transform.GetChild(7).gameObject;
+        #endregion
+        #region ExpeditionRoom + Upgrades
+        expedition_Lvl1_R1_Def = expedition_Lvl1_R1.transform.GetChild(2).gameObject;
+        expedition_Lvl1_R1_Up_1 = expedition_Lvl1_R1.transform.GetChild(3).gameObject;
+        expedition_Lvl1_R1_Up_2 = expedition_Lvl1_R1.transform.GetChild(4).gameObject;
+        expedition_Lvl1_R1_Up_3 = expedition_Lvl1_R1.transform.GetChild(5).gameObject;
+        expedition_Lvl1_R1_Up_4 = expedition_Lvl1_R1.transform.GetChild(6).gameObject;
+        expedition_Lvl1_R1_Up_5 = expedition_Lvl1_R1.transform.GetChild(7).gameObject;
+        #endregion
+        #region TrainingRoom + Upgrades
+        training_Lvl1_R2_Def = training_Lvl1_R2.transform.GetChild(2).gameObject;
+        training_Lvl1_R2_Up_1 = training_Lvl1_R2.transform.GetChild(3).gameObject;
+        training_Lvl1_R2_Up_2 = training_Lvl1_R2.transform.GetChild(4).gameObject;
+        training_Lvl1_R2_Up_3 = training_Lvl1_R2.transform.GetChild(5).gameObject;
+        training_Lvl1_R2_Up_4 = training_Lvl1_R2.transform.GetChild(6).gameObject;
+        training_Lvl1_R2_Up_5 = training_Lvl1_R2.transform.GetChild(7).gameObject;
+        #endregion
+        #region Workshop1Room + Upgrades
+        workshop_Lvl2_L1_Def = workshop_Lvl2_L1.transform.GetChild(2).gameObject;
+        workshop_Lvl2_L1_Up_1 = workshop_Lvl2_L1.transform.GetChild(3).gameObject;
+        workshop_Lvl2_L1_Up_2 = workshop_Lvl2_L1.transform.GetChild(4).gameObject;
+        workshop_Lvl2_L1_Up_3 = workshop_Lvl2_L1.transform.GetChild(5).gameObject;
+        workshop_Lvl2_L1_Up_4 = workshop_Lvl2_L1.transform.GetChild(6).gameObject;
+        workshop_Lvl2_L1_Up_5 = workshop_Lvl2_L1.transform.GetChild(7).gameObject;
+        #endregion
+        #region Workshop2Room + Upgrades
+        workshop_Lvl2_L2_Def = workshop_Lvl2_L2.transform.GetChild(2).gameObject;
+        workshop_Lvl2_L2_Up_1 = workshop_Lvl2_L2.transform.GetChild(3).gameObject;
+        workshop_Lvl2_L2_Up_2 = workshop_Lvl2_L2.transform.GetChild(4).gameObject;
+        workshop_Lvl2_L2_Up_3 = workshop_Lvl2_L2.transform.GetChild(5).gameObject;
+        workshop_Lvl2_L2_Up_4 = workshop_Lvl2_L2.transform.GetChild(6).gameObject;
+        workshop_Lvl2_L2_Up_5 = workshop_Lvl2_L2.transform.GetChild(7).gameObject;
+        #endregion
+        #region Generator1Room + Upgrades
+        generator_Lvl2_R1_Def = generator_Lvl2_R1.transform.GetChild(2).gameObject;
+        generator_Lvl2_R1_Up_1 = generator_Lvl2_R1.transform.GetChild(3).gameObject;
+        generator_Lvl2_R1_Up_2 = generator_Lvl2_R1.transform.GetChild(4).gameObject;
+        generator_Lvl2_R1_Up_3 = generator_Lvl2_R1.transform.GetChild(5).gameObject;
+        generator_Lvl2_R1_Up_4 = generator_Lvl2_R1.transform.GetChild(6).gameObject;
+        generator_Lvl2_R1_Up_5 = generator_Lvl2_R1.transform.GetChild(7).gameObject;
+        #endregion
+        #region Generator2Room + Upgrades
+        generator_Lvl2_R2_Def = generator_Lvl2_R2.transform.GetChild(2).gameObject;
+        generator_Lvl2_R2_Up_1 = generator_Lvl2_R2.transform.GetChild(3).gameObject;
+        generator_Lvl2_R2_Up_2 = generator_Lvl2_R2.transform.GetChild(4).gameObject;
+        generator_Lvl2_R2_Up_3 = generator_Lvl2_R2.transform.GetChild(5).gameObject;
+        generator_Lvl2_R2_Up_4 = generator_Lvl2_R2.transform.GetChild(6).gameObject;
+        generator_Lvl2_R2_Up_5 = generator_Lvl2_R2.transform.GetChild(7).gameObject;
+        #endregion
+        #region Research1Room + Upgrades
+        research_Lvl3_L1_Def = research_Lvl3_L1.transform.GetChild(2).gameObject;
+        research_Lvl3_L1_Up_1 = research_Lvl3_L1.transform.GetChild(3).gameObject;
+        research_Lvl3_L1_Up_2 = research_Lvl3_L1.transform.GetChild(4).gameObject;
+        research_Lvl3_L1_Up_3 = research_Lvl3_L1.transform.GetChild(5).gameObject;
+        research_Lvl3_L1_Up_4 = research_Lvl3_L1.transform.GetChild(6).gameObject;
+        research_Lvl3_L1_Up_5 = research_Lvl3_L1.transform.GetChild(7).gameObject;
+        #endregion
+        #region Research2Room + Upgrades
+        research_Lvl3_L2_Def = research_Lvl3_L2.transform.GetChild(2).gameObject;
+        research_Lvl3_L2_Up_1 = research_Lvl3_L2.transform.GetChild(3).gameObject;
+        research_Lvl3_L2_Up_2 = research_Lvl3_L2.transform.GetChild(4).gameObject;
+        research_Lvl3_L2_Up_3 = research_Lvl3_L2.transform.GetChild(5).gameObject;
+        research_Lvl3_L2_Up_4 = research_Lvl3_L2.transform.GetChild(6).gameObject;
+        research_Lvl3_L2_Up_5 = research_Lvl3_L2.transform.GetChild(7).gameObject;
+        #endregion
+        #region LivingSpace1Room + Upgrades
+        livingSpace_Lvl3_R1_Def = livingSpace_Lvl3_R1.transform.GetChild(2).gameObject;
+        livingSpace_Lvl3_R1_Up_1 = livingSpace_Lvl3_R1.transform.GetChild(3).gameObject;
+        livingSpace_Lvl3_R1_Up_2 = livingSpace_Lvl3_R1.transform.GetChild(4).gameObject;
+        livingSpace_Lvl3_R1_Up_3 = livingSpace_Lvl3_R1.transform.GetChild(5).gameObject;
+        livingSpace_Lvl3_R1_Up_4 = livingSpace_Lvl3_R1.transform.GetChild(6).gameObject;
+        livingSpace_Lvl3_R1_Up_5 = livingSpace_Lvl3_R1.transform.GetChild(7).gameObject;
+        #endregion
+        #region LivingSpace2Room + Upgrades
+        livingSpace_Lvl3_R2_Def = livingSpace_Lvl3_R2.transform.GetChild(2).gameObject;
+        livingSpace_Lvl3_R2_Up_1 = livingSpace_Lvl3_R2.transform.GetChild(3).gameObject;
+        livingSpace_Lvl3_R2_Up_2 = livingSpace_Lvl3_R2.transform.GetChild(4).gameObject;
+        livingSpace_Lvl3_R2_Up_3 = livingSpace_Lvl3_R2.transform.GetChild(5).gameObject;
+        livingSpace_Lvl3_R2_Up_4 = livingSpace_Lvl3_R2.transform.GetChild(6).gameObject;
+        livingSpace_Lvl3_R2_Up_5 = livingSpace_Lvl3_R2.transform.GetChild(7).gameObject;
         #endregion
     }
     private void SetAllButtonsDeactive()
@@ -259,10 +373,368 @@ public class Game_Logic : MonoBehaviour
         bedroom_Lvl3_L_Button.interactable = false;
         bedroom_Lvl3_R_Button.interactable = false;
     }
-    private void LivingSpacesBonus() { }
+    private void TurnAllItemsOff()
+    {
+        #region Upgrade GameObjects
+        #region Bedrooms
+        bedroom_Lvl1_L_Rock.SetActive(false);
+        bedroom_Lvl1_L_Up_1.SetActive(false);
+        bedroom_Lvl1_L_Up_2.SetActive(false);
+        bedroom_Lvl1_L_Up_3.SetActive(false);
+        bedroom_Lvl1_L_Up_4.SetActive(false);
+        bedroom_Lvl1_L_Up_5.SetActive(false);
+        bedroom_Lvl1_L_Up_6.SetActive(false);
+        bedroom_Lvl1_L_Up_7.SetActive(false);
+        bedroom_Lvl1_L_Up_8.SetActive(false);
+        bedroom_Lvl1_L_Up_9.SetActive(false);
+        bedroom_Lvl1_L_Up_10.SetActive(false);
+        bedroom_Lvl2_L_Rock.SetActive(false);
+        bedroom_Lvl2_L_Up_1.SetActive(false);
+        bedroom_Lvl2_L_Up_2.SetActive(false);
+        bedroom_Lvl2_L_Up_3.SetActive(false);
+        bedroom_Lvl2_L_Up_4.SetActive(false);
+        bedroom_Lvl2_L_Up_5.SetActive(false);
+        bedroom_Lvl2_L_Up_6.SetActive(false);
+        bedroom_Lvl2_L_Up_7.SetActive(false);
+        bedroom_Lvl2_L_Up_8.SetActive(false);
+        bedroom_Lvl2_L_Up_9.SetActive(false);
+        bedroom_Lvl2_L_Up_10.SetActive(false);
+        bedroom_Lvl3_L_Rock.SetActive(false);
+        bedroom_Lvl3_L_Up_1.SetActive(false);
+        bedroom_Lvl3_L_Up_2.SetActive(false);
+        bedroom_Lvl3_L_Up_3.SetActive(false);
+        bedroom_Lvl3_L_Up_4.SetActive(false);
+        bedroom_Lvl3_L_Up_5.SetActive(false);
+        bedroom_Lvl3_L_Up_6.SetActive(false);
+        bedroom_Lvl3_L_Up_7.SetActive(false);
+        bedroom_Lvl3_L_Up_8.SetActive(false);
+        bedroom_Lvl3_L_Up_9.SetActive(false);
+        bedroom_Lvl3_L_Up_10.SetActive(false);
+        bedroom_Lvl1_R_Rock.SetActive(false);
+        bedroom_Lvl1_R_Up_1.SetActive(false);
+        bedroom_Lvl1_R_Up_2.SetActive(false);
+        bedroom_Lvl1_R_Up_3.SetActive(false);
+        bedroom_Lvl1_R_Up_4.SetActive(false);
+        bedroom_Lvl1_R_Up_5.SetActive(false);
+        bedroom_Lvl1_R_Up_6.SetActive(false);
+        bedroom_Lvl1_R_Up_7.SetActive(false);
+        bedroom_Lvl1_R_Up_8.SetActive(false);
+        bedroom_Lvl1_R_Up_9.SetActive(false);
+        bedroom_Lvl1_R_Up_10.SetActive(false);
+        bedroom_Lvl2_R_Rock.SetActive(false);
+        bedroom_Lvl2_R_Up_1.SetActive(false);
+        bedroom_Lvl2_R_Up_2.SetActive(false);
+        bedroom_Lvl2_R_Up_3.SetActive(false);
+        bedroom_Lvl2_R_Up_4.SetActive(false);
+        bedroom_Lvl2_R_Up_5.SetActive(false);
+        bedroom_Lvl2_R_Up_6.SetActive(false);
+        bedroom_Lvl2_R_Up_7.SetActive(false);
+        bedroom_Lvl2_R_Up_8.SetActive(false);
+        bedroom_Lvl2_R_Up_9.SetActive(false);
+        bedroom_Lvl2_R_Up_10.SetActive(false);
+        bedroom_Lvl3_R_Rock.SetActive(false);
+        bedroom_Lvl3_R_Up_1.SetActive(false);
+        bedroom_Lvl3_R_Up_2.SetActive(false);
+        bedroom_Lvl3_R_Up_3.SetActive(false);
+        bedroom_Lvl3_R_Up_4.SetActive(false);
+        bedroom_Lvl3_R_Up_5.SetActive(false);
+        bedroom_Lvl3_R_Up_6.SetActive(false);
+        bedroom_Lvl3_R_Up_7.SetActive(false);
+        bedroom_Lvl3_R_Up_8.SetActive(false);
+        bedroom_Lvl3_R_Up_9.SetActive(false);
+        bedroom_Lvl3_R_Up_10.SetActive(false);
+        #endregion
+        #region Stairs
+        stairs_1_Locked.SetActive(false);
+        stairs_1_Unlocked.SetActive(false);
+        stairs_2_Locked.SetActive(false);
+        stairs_2_Unlocked.SetActive(false);
+        stairs_3_Locked.SetActive(false);
+        stairs_3_Unlocked.SetActive(false);
+        #endregion
+        #region Walls
+        wall_Left_None.SetActive(false);
+        wall_Left_Up_1.SetActive(false);
+        wall_Left_Up_2.SetActive(false);
+        wall_Left_Up_3.SetActive(false);
+        wall_Left_Up_4.SetActive(false);
+        wall_Left_Up_5.SetActive(false);
+        wall_Left_Up_6.SetActive(false);
+        wall_Left_Up_7.SetActive(false);
+        wall_Left_Up_8.SetActive(false);
+        wall_Left_Up_9.SetActive(false);
+        wall_Left_Up_10.SetActive(false);
+        wall_Right_None.SetActive(false);
+        wall_Right_Up_1.SetActive(false);
+        wall_Right_Up_2.SetActive(false);
+        wall_Right_Up_3.SetActive(false);
+        wall_Right_Up_4.SetActive(false);
+        wall_Right_Up_5.SetActive(false);
+        wall_Right_Up_6.SetActive(false);
+        wall_Right_Up_7.SetActive(false);
+        wall_Right_Up_8.SetActive(false);
+        wall_Right_Up_9.SetActive(false);
+        wall_Right_Up_10.SetActive(false);
+        #endregion
+        #region Main Rooms
+        underGarden_Lvl1_L1_Def.SetActive(false);
+        underGarden_Lvl1_L1_Up_1.SetActive(false);
+        underGarden_Lvl1_L1_Up_2.SetActive(false);
+        underGarden_Lvl1_L1_Up_3.SetActive(false);
+        underGarden_Lvl1_L1_Up_4.SetActive(false);
+        underGarden_Lvl1_L1_Up_5.SetActive(false);
+        radio_Lvl1_L2_Def.SetActive(false);
+        radio_Lvl1_L2_Up_1.SetActive(false);
+        radio_Lvl1_L2_Up_2.SetActive(false);
+        radio_Lvl1_L2_Up_3.SetActive(false);
+        radio_Lvl1_L2_Up_4.SetActive(false);
+        radio_Lvl1_L2_Up_5.SetActive(false);
+        expedition_Lvl1_R1_Def.SetActive(false);
+        expedition_Lvl1_R1_Up_1.SetActive(false);
+        expedition_Lvl1_R1_Up_2.SetActive(false);
+        expedition_Lvl1_R1_Up_3.SetActive(false);
+        expedition_Lvl1_R1_Up_4.SetActive(false);
+        expedition_Lvl1_R1_Up_5.SetActive(false);
+        training_Lvl1_R2_Def.SetActive(false);
+        training_Lvl1_R2_Up_1.SetActive(false);
+        training_Lvl1_R2_Up_2.SetActive(false);
+        training_Lvl1_R2_Up_3.SetActive(false);
+        training_Lvl1_R2_Up_4.SetActive(false);
+        training_Lvl1_R2_Up_5.SetActive(false);
+        workshop_Lvl2_L1_Def.SetActive(false);
+        workshop_Lvl2_L1_Up_1.SetActive(false);
+        workshop_Lvl2_L1_Up_2.SetActive(false);
+        workshop_Lvl2_L1_Up_3.SetActive(false);
+        workshop_Lvl2_L1_Up_4.SetActive(false);
+        workshop_Lvl2_L1_Up_5.SetActive(false);
+        workshop_Lvl2_L2_Def.SetActive(false);
+        workshop_Lvl2_L2_Up_1.SetActive(false);
+        workshop_Lvl2_L2_Up_2.SetActive(false);
+        workshop_Lvl2_L2_Up_3.SetActive(false);
+        workshop_Lvl2_L2_Up_4.SetActive(false);
+        workshop_Lvl2_L2_Up_5.SetActive(false);
+        generator_Lvl2_R1_Def.SetActive(false);
+        generator_Lvl2_R1_Up_1.SetActive(false);
+        generator_Lvl2_R1_Up_2.SetActive(false);
+        generator_Lvl2_R1_Up_3.SetActive(false);
+        generator_Lvl2_R1_Up_4.SetActive(false);
+        generator_Lvl2_R1_Up_5.SetActive(false);
+        generator_Lvl2_R2_Def.SetActive(false);
+        generator_Lvl2_R2_Up_1.SetActive(false);
+        generator_Lvl2_R2_Up_2.SetActive(false);
+        generator_Lvl2_R2_Up_3.SetActive(false);
+        generator_Lvl2_R2_Up_4.SetActive(false);
+        generator_Lvl2_R2_Up_5.SetActive(false);
+        research_Lvl3_L1_Def.SetActive(false);
+        research_Lvl3_L1_Up_1.SetActive(false);
+        research_Lvl3_L1_Up_2.SetActive(false);
+        research_Lvl3_L1_Up_3.SetActive(false);
+        research_Lvl3_L1_Up_4.SetActive(false);
+        research_Lvl3_L1_Up_5.SetActive(false);
+        research_Lvl3_L2_Def.SetActive(false);
+        research_Lvl3_L2_Up_1.SetActive(false);
+        research_Lvl3_L2_Up_2.SetActive(false);
+        research_Lvl3_L2_Up_3.SetActive(false);
+        research_Lvl3_L2_Up_4.SetActive(false);
+        research_Lvl3_L2_Up_5.SetActive(false);
+        livingSpace_Lvl3_R1_Def.SetActive(false);
+        livingSpace_Lvl3_R1_Up_1.SetActive(false);
+        livingSpace_Lvl3_R1_Up_2.SetActive(false);
+        livingSpace_Lvl3_R1_Up_3.SetActive(false);
+        livingSpace_Lvl3_R1_Up_4.SetActive(false);
+        livingSpace_Lvl3_R1_Up_5.SetActive(false);
+        livingSpace_Lvl3_R2_Def.SetActive(false);
+        livingSpace_Lvl3_R2_Up_1.SetActive(false);
+        livingSpace_Lvl3_R2_Up_2.SetActive(false);
+        livingSpace_Lvl3_R2_Up_3.SetActive(false);
+        livingSpace_Lvl3_R2_Up_4.SetActive(false);
+        livingSpace_Lvl3_R2_Up_5.SetActive(false);
+        #endregion
+        #endregion
+    }
+private void LivingSpacesBonus() { }
     private void ResearchBonus() { }
     private void WorkshopBonus() { }
     private void PowerGeneratorBonus() { }
+    private void SetDefaultBuildingsViews()
+    {
+        #region Upgrade GameObjects
+        #region Bedrooms
+        bedroom_Lvl1_L_Rock.SetActive(true);
+        bedroom_Lvl1_L_Up_1.SetActive(false);
+        bedroom_Lvl1_L_Up_2.SetActive(false);
+        bedroom_Lvl1_L_Up_3.SetActive(false);
+        bedroom_Lvl1_L_Up_4.SetActive(false);
+        bedroom_Lvl1_L_Up_5.SetActive(false);
+        bedroom_Lvl1_L_Up_6.SetActive(false);
+        bedroom_Lvl1_L_Up_7.SetActive(false);
+        bedroom_Lvl1_L_Up_8.SetActive(false);
+        bedroom_Lvl1_L_Up_9.SetActive(false);
+        bedroom_Lvl1_L_Up_10.SetActive(false);
+        bedroom_Lvl2_L_Rock.SetActive(true);
+        bedroom_Lvl2_L_Up_1.SetActive(false);
+        bedroom_Lvl2_L_Up_2.SetActive(false);
+        bedroom_Lvl2_L_Up_3.SetActive(false);
+        bedroom_Lvl2_L_Up_4.SetActive(false);
+        bedroom_Lvl2_L_Up_5.SetActive(false);
+        bedroom_Lvl2_L_Up_6.SetActive(false);
+        bedroom_Lvl2_L_Up_7.SetActive(false);
+        bedroom_Lvl2_L_Up_8.SetActive(false);
+        bedroom_Lvl2_L_Up_9.SetActive(false);
+        bedroom_Lvl2_L_Up_10.SetActive(false);
+        bedroom_Lvl3_L_Rock.SetActive(true);
+        bedroom_Lvl3_L_Up_1.SetActive(false);
+        bedroom_Lvl3_L_Up_2.SetActive(false);
+        bedroom_Lvl3_L_Up_3.SetActive(false);
+        bedroom_Lvl3_L_Up_4.SetActive(false);
+        bedroom_Lvl3_L_Up_5.SetActive(false);
+        bedroom_Lvl3_L_Up_6.SetActive(false);
+        bedroom_Lvl3_L_Up_7.SetActive(false);
+        bedroom_Lvl3_L_Up_8.SetActive(false);
+        bedroom_Lvl3_L_Up_9.SetActive(false);
+        bedroom_Lvl3_L_Up_10.SetActive(false);
+        bedroom_Lvl1_R_Rock.SetActive(true);
+        bedroom_Lvl1_R_Up_1.SetActive(false);
+        bedroom_Lvl1_R_Up_2.SetActive(false);
+        bedroom_Lvl1_R_Up_3.SetActive(false);
+        bedroom_Lvl1_R_Up_4.SetActive(false);
+        bedroom_Lvl1_R_Up_5.SetActive(false);
+        bedroom_Lvl1_R_Up_6.SetActive(false);
+        bedroom_Lvl1_R_Up_7.SetActive(false);
+        bedroom_Lvl1_R_Up_8.SetActive(false);
+        bedroom_Lvl1_R_Up_9.SetActive(false);
+        bedroom_Lvl1_R_Up_10.SetActive(false);
+        bedroom_Lvl2_R_Rock.SetActive(true);
+        bedroom_Lvl2_R_Up_1.SetActive(false);
+        bedroom_Lvl2_R_Up_2.SetActive(false);
+        bedroom_Lvl2_R_Up_3.SetActive(false);
+        bedroom_Lvl2_R_Up_4.SetActive(false);
+        bedroom_Lvl2_R_Up_5.SetActive(false);
+        bedroom_Lvl2_R_Up_6.SetActive(false);
+        bedroom_Lvl2_R_Up_7.SetActive(false);
+        bedroom_Lvl2_R_Up_8.SetActive(false);
+        bedroom_Lvl2_R_Up_9.SetActive(false);
+        bedroom_Lvl2_R_Up_10.SetActive(false);
+        bedroom_Lvl3_R_Rock.SetActive(true);
+        bedroom_Lvl3_R_Up_1.SetActive(false);
+        bedroom_Lvl3_R_Up_2.SetActive(false);
+        bedroom_Lvl3_R_Up_3.SetActive(false);
+        bedroom_Lvl3_R_Up_4.SetActive(false);
+        bedroom_Lvl3_R_Up_5.SetActive(false);
+        bedroom_Lvl3_R_Up_6.SetActive(false);
+        bedroom_Lvl3_R_Up_7.SetActive(false);
+        bedroom_Lvl3_R_Up_8.SetActive(false);
+        bedroom_Lvl3_R_Up_9.SetActive(false);
+        bedroom_Lvl3_R_Up_10.SetActive(false);
+        #endregion
+        #region Stairs
+        stairs_1_Locked.SetActive(false);
+        stairs_1_Unlocked.SetActive(true);
+        stairs_2_Locked.SetActive(true);
+        stairs_2_Unlocked.SetActive(false);
+        stairs_3_Locked.SetActive(true);
+        stairs_3_Unlocked.SetActive(false);
+        #endregion
+        #region Walls
+        wall_Left_None.SetActive(true);
+        wall_Left_Up_1.SetActive(false);
+        wall_Left_Up_2.SetActive(false);
+        wall_Left_Up_3.SetActive(false);
+        wall_Left_Up_4.SetActive(false);
+        wall_Left_Up_5.SetActive(false);
+        wall_Left_Up_6.SetActive(false);
+        wall_Left_Up_7.SetActive(false);
+        wall_Left_Up_8.SetActive(false);
+        wall_Left_Up_9.SetActive(false);
+        wall_Left_Up_10.SetActive(false);
+        wall_Right_None.SetActive(true);
+        wall_Right_Up_1.SetActive(false);
+        wall_Right_Up_2.SetActive(false);
+        wall_Right_Up_3.SetActive(false);
+        wall_Right_Up_4.SetActive(false);
+        wall_Right_Up_5.SetActive(false);
+        wall_Right_Up_6.SetActive(false);
+        wall_Right_Up_7.SetActive(false);
+        wall_Right_Up_8.SetActive(false);
+        wall_Right_Up_9.SetActive(false);
+        wall_Right_Up_10.SetActive(false);
+        #endregion
+        #region Main Rooms
+        underGarden_Lvl1_L1_Def.SetActive(true);
+        underGarden_Lvl1_L1_Up_1.SetActive(false);
+        underGarden_Lvl1_L1_Up_2.SetActive(false);
+        underGarden_Lvl1_L1_Up_3.SetActive(false);
+        underGarden_Lvl1_L1_Up_4.SetActive(false);
+        underGarden_Lvl1_L1_Up_5.SetActive(false);
+        radio_Lvl1_L2_Def.SetActive(true);
+        radio_Lvl1_L2_Up_1.SetActive(false);
+        radio_Lvl1_L2_Up_2.SetActive(false);
+        radio_Lvl1_L2_Up_3.SetActive(false);
+        radio_Lvl1_L2_Up_4.SetActive(false);
+        radio_Lvl1_L2_Up_5.SetActive(false);
+        expedition_Lvl1_R1_Def.SetActive(true);
+        expedition_Lvl1_R1_Up_1.SetActive(false);
+        expedition_Lvl1_R1_Up_2.SetActive(false);
+        expedition_Lvl1_R1_Up_3.SetActive(false);
+        expedition_Lvl1_R1_Up_4.SetActive(false);
+        expedition_Lvl1_R1_Up_5.SetActive(false);
+        training_Lvl1_R2_Def.SetActive(true);
+        training_Lvl1_R2_Up_1.SetActive(false);
+        training_Lvl1_R2_Up_2.SetActive(false);
+        training_Lvl1_R2_Up_3.SetActive(false);
+        training_Lvl1_R2_Up_4.SetActive(false);
+        training_Lvl1_R2_Up_5.SetActive(false);
+        workshop_Lvl2_L1_Def.SetActive(true);
+        workshop_Lvl2_L1_Up_1.SetActive(false);
+        workshop_Lvl2_L1_Up_2.SetActive(false);
+        workshop_Lvl2_L1_Up_3.SetActive(false);
+        workshop_Lvl2_L1_Up_4.SetActive(false);
+        workshop_Lvl2_L1_Up_5.SetActive(false);
+        workshop_Lvl2_L2_Def.SetActive(true);
+        workshop_Lvl2_L2_Up_1.SetActive(false);
+        workshop_Lvl2_L2_Up_2.SetActive(false);
+        workshop_Lvl2_L2_Up_3.SetActive(false);
+        workshop_Lvl2_L2_Up_4.SetActive(false);
+        workshop_Lvl2_L2_Up_5.SetActive(false);
+        generator_Lvl2_R1_Def.SetActive(true);
+        generator_Lvl2_R1_Up_1.SetActive(false);
+        generator_Lvl2_R1_Up_2.SetActive(false);
+        generator_Lvl2_R1_Up_3.SetActive(false);
+        generator_Lvl2_R1_Up_4.SetActive(false);
+        generator_Lvl2_R1_Up_5.SetActive(false);
+        generator_Lvl2_R2_Def.SetActive(true);
+        generator_Lvl2_R2_Up_1.SetActive(false);
+        generator_Lvl2_R2_Up_2.SetActive(false);
+        generator_Lvl2_R2_Up_3.SetActive(false);
+        generator_Lvl2_R2_Up_4.SetActive(false);
+        generator_Lvl2_R2_Up_5.SetActive(false);
+        research_Lvl3_L1_Def.SetActive(true);
+        research_Lvl3_L1_Up_1.SetActive(false);
+        research_Lvl3_L1_Up_2.SetActive(false);
+        research_Lvl3_L1_Up_3.SetActive(false);
+        research_Lvl3_L1_Up_4.SetActive(false);
+        research_Lvl3_L1_Up_5.SetActive(false);
+        research_Lvl3_L2_Def.SetActive(true);
+        research_Lvl3_L2_Up_1.SetActive(false);
+        research_Lvl3_L2_Up_2.SetActive(false);
+        research_Lvl3_L2_Up_3.SetActive(false);
+        research_Lvl3_L2_Up_4.SetActive(false);
+        research_Lvl3_L2_Up_5.SetActive(false);
+        livingSpace_Lvl3_R1_Def.SetActive(true);
+        livingSpace_Lvl3_R1_Up_1.SetActive(false);
+        livingSpace_Lvl3_R1_Up_2.SetActive(false);
+        livingSpace_Lvl3_R1_Up_3.SetActive(false);
+        livingSpace_Lvl3_R1_Up_4.SetActive(false);
+        livingSpace_Lvl3_R1_Up_5.SetActive(false);
+        livingSpace_Lvl3_R2_Def.SetActive(true);
+        livingSpace_Lvl3_R2_Up_1.SetActive(false);
+        livingSpace_Lvl3_R2_Up_2.SetActive(false);
+        livingSpace_Lvl3_R2_Up_3.SetActive(false);
+        livingSpace_Lvl3_R2_Up_4.SetActive(false);
+        livingSpace_Lvl3_R2_Up_5.SetActive(false);
+        #endregion
+        #endregion
+    }
     private void CheckRoomUnlockProgress()
     {
         CheckBedroomUnlockProgress();
@@ -276,17 +748,17 @@ public class Game_Logic : MonoBehaviour
     private void CheckBedroomUnlockProgress()// Need to add visual presentation of unlocks
     {// this checks if these buildings are unlocked via click amounts and on lvl2 & 3 also checks if previous building is unlocked
         if (!GC.Bedroom_Lvl1_L)
-        { if (GC.Bedroom_Lvl1_L_Clik_Unlock >= 50) { GC.Bedroom_Lvl1_L = true; } }// need to make the visual sprite change
+        { if (GC.Bedroom_Lvl1_L_Clik_Unlock >= 50) { GC.Bedroom_Lvl1_L = true; bedroom_Lvl1_L_Rock.SetActive(false); bedroom_Lvl1_L_Up_1.SetActive(true); } }
         if (!GC.Bedroom_Lvl1_R)
-        { if (GC.Bedroom_Lvl1_R_Clik_Unlock >= 50) { GC.Bedroom_Lvl1_R = true; } }
+        { if (GC.Bedroom_Lvl1_R_Clik_Unlock >= 50) { GC.Bedroom_Lvl1_R = true; bedroom_Lvl1_R_Rock.SetActive(false); bedroom_Lvl1_R_Up_1.SetActive(false); } }
         if (!GC.Bedroom_Lvl2_L)
-        { if (GC.Bedroom_Lvl2_L_Clik_Unlock >= 250 && GC.Workshop_Lvl2_L2) { GC.Bedroom_Lvl2_L = true; } }
+        { if (GC.Bedroom_Lvl2_L_Clik_Unlock >= 250 && GC.Workshop_Lvl2_L2) { GC.Bedroom_Lvl2_L = true; bedroom_Lvl2_L_Rock.SetActive(false); bedroom_Lvl2_L_Up_1.SetActive(false); } }
         if (!GC.Bedroom_Lvl2_R)
-        { if (GC.Bedroom_Lvl2_R_Clik_Unlock >= 250 && GC.Generator_Lvl2_R2) { GC.Bedroom_Lvl2_R = true; } }
+        { if (GC.Bedroom_Lvl2_R_Clik_Unlock >= 250 && GC.Generator_Lvl2_R2) { GC.Bedroom_Lvl2_R = true; bedroom_Lvl2_R_Rock.SetActive(false); bedroom_Lvl2_R_Up_1.SetActive(false); } }
         if (!GC.Bedroom_Lvl3_L)
-        { if (GC.Bedroom_Lvl3_L_Clik_Unlock >= 1000 && GC.Research_Lvl3_L2) { GC.Bedroom_Lvl3_L = true; } }
+        { if (GC.Bedroom_Lvl3_L_Clik_Unlock >= 1000 && GC.Research_Lvl3_L2) { GC.Bedroom_Lvl3_L = true; bedroom_Lvl3_L_Rock.SetActive(false); bedroom_Lvl3_L_Up_1.SetActive(false); } }
         if (!GC.Bedroom_Lvl3_R)
-        { if (GC.Bedroom_Lvl3_R_Clik_Unlock >= 1000 && GC.LivingSpace_Lvl3_R2) { GC.Bedroom_Lvl3_R = true; } }
+        { if (GC.Bedroom_Lvl3_R_Clik_Unlock >= 1000 && GC.LivingSpace_Lvl3_R2) { GC.Bedroom_Lvl3_R = true; bedroom_Lvl3_R_Rock.SetActive(false); bedroom_Lvl3_R_Up_1.SetActive(false); } }
     }
     private void CheckStairsUnlockProgress()// no visual unlock needs adding
     {
@@ -299,44 +771,44 @@ public class Game_Logic : MonoBehaviour
     {
         if (!GC.Generator_Lvl2_R1)
         {
-            if (GC.Stairs_2 && GC.Player_Metal >= 50 && GC.Player_Wood >= 50 && GC.Player_Tech >= 50) { GC.Player_Metal -= 50; GC.Player_Wood -= 50;GC.Player_Tech -= 50; GC.Generator_Lvl2_R1 = true; }
+            if (GC.Stairs_2 && GC.Player_Metal >= 50 && GC.Player_Wood >= 50 && GC.Player_Tech >= 50) { GC.Player_Metal -= 50; GC.Player_Wood -= 50;GC.Player_Tech -= 50; GC.Generator_Lvl2_R1 = true; generator_Lvl2_R1_Def.SetActive(false); generator_Lvl2_R1_Up_1.SetActive(false); }
         }
         if (!GC.Generator_Lvl2_R2)
         {
-            if (GC.Generator_Lvl2_R1 && GC.Player_Metal >= 250 && GC.Player_Wood >= 250 && GC.Player_Tech >= 250) { GC.Player_Metal -= 250; GC.Player_Wood -= 250; GC.Player_Tech -= 250; GC.Generator_Lvl2_R2 = true; }
+            if (GC.Generator_Lvl2_R1 && GC.Player_Metal >= 250 && GC.Player_Wood >= 250 && GC.Player_Tech >= 250) { GC.Player_Metal -= 250; GC.Player_Wood -= 250; GC.Player_Tech -= 250; GC.Generator_Lvl2_R2 = true; generator_Lvl2_R2_Def.SetActive(false); generator_Lvl2_R2_Up_1.SetActive(false); }
         }
     }
     private void CheckWorkshopUnlockProgress()// no visual unlock needs adding
     {
         if (!GC.Workshop_Lvl2_L1)
         {
-            if (GC.Stairs_2 && GC.Player_Metal >= 50 && GC.Player_Wood >= 50 && GC.Player_Tech >= 50) { GC.Player_Metal -= 50; GC.Player_Wood -= 50; GC.Player_Tech -= 50; GC.Workshop_Lvl2_L1 = true; }
+            if (GC.Stairs_2 && GC.Player_Metal >= 50 && GC.Player_Wood >= 50 && GC.Player_Tech >= 50) { GC.Player_Metal -= 50; GC.Player_Wood -= 50; GC.Player_Tech -= 50; GC.Workshop_Lvl2_L1 = true; workshop_Lvl2_L1_Def.SetActive(false); workshop_Lvl2_L1_Up_1.SetActive(false); }
         }
         if (!GC.Workshop_Lvl2_L2)
         {
-            if (GC.Workshop_Lvl2_L1 && GC.Player_Metal >= 250 && GC.Player_Wood >= 250 && GC.Player_Tech >= 250) { GC.Player_Metal -= 250; GC.Player_Wood -= 250; GC.Player_Tech -= 250; GC.Workshop_Lvl2_L2 = true; }
+            if (GC.Workshop_Lvl2_L1 && GC.Player_Metal >= 250 && GC.Player_Wood >= 250 && GC.Player_Tech >= 250) { GC.Player_Metal -= 250; GC.Player_Wood -= 250; GC.Player_Tech -= 250; GC.Workshop_Lvl2_L2 = true; workshop_Lvl2_L2_Def.SetActive(false); workshop_Lvl2_L2_Up_1.SetActive(false); }
         }
     }
     private void CheckLivingSpaceUnlockProgress()// no visual unlock needs adding
     {
         if (!GC.LivingSpace_Lvl3_R1)
         {
-            if (GC.Stairs_3 && GC.Player_Metal >= 500 && GC.Player_Wood >= 500 && GC.Player_Tech >= 500) { GC.Player_Metal -= 500; GC.Player_Wood -= 500; GC.Player_Tech -= 500; GC.LivingSpace_Lvl3_R1 = true; }
+            if (GC.Stairs_3 && GC.Player_Metal >= 500 && GC.Player_Wood >= 500 && GC.Player_Tech >= 500) { GC.Player_Metal -= 500; GC.Player_Wood -= 500; GC.Player_Tech -= 500; GC.LivingSpace_Lvl3_R1 = true; livingSpace_Lvl3_R1_Def.SetActive(false); livingSpace_Lvl3_R1_Up_1.SetActive(false); }
         }
         if (!GC.LivingSpace_Lvl3_R2)
         {
-            if (GC.LivingSpace_Lvl3_R1 && GC.Player_Metal >= 1000 && GC.Player_Wood >= 1000 && GC.Player_Tech >= 1000) { GC.Player_Metal -= 1000; GC.Player_Wood -= 1000; GC.Player_Tech -= 1000; GC.LivingSpace_Lvl3_R2 = true; }
+            if (GC.LivingSpace_Lvl3_R1 && GC.Player_Metal >= 1000 && GC.Player_Wood >= 1000 && GC.Player_Tech >= 1000) { GC.Player_Metal -= 1000; GC.Player_Wood -= 1000; GC.Player_Tech -= 1000; GC.LivingSpace_Lvl3_R2 = true; livingSpace_Lvl3_R2_Def.SetActive(false); livingSpace_Lvl3_R2_Up_1.SetActive(false); }
         }
     }
     private void CheckResearchUnlockProgress()// no visual unlock needs adding
     {
         if (!GC.Research_Lvl3_L1)
         {
-            if (GC.Stairs_3 && GC.Player_Metal >= 500 && GC.Player_Wood >= 500 && GC.Player_Tech >= 500) { GC.Player_Metal -= 500; GC.Player_Wood -= 500; GC.Player_Tech -= 500; GC.Research_Lvl3_L1 = true; }
+            if (GC.Stairs_3 && GC.Player_Metal >= 500 && GC.Player_Wood >= 500 && GC.Player_Tech >= 500) { GC.Player_Metal -= 500; GC.Player_Wood -= 500; GC.Player_Tech -= 500; GC.Research_Lvl3_L1 = true; research_Lvl3_L1_Def.SetActive(false); research_Lvl3_L1_Up_1.SetActive(false); }
         }
         if (!GC.Research_Lvl3_L2)
         {
-            if (GC.Research_Lvl3_L1 && GC.Player_Metal >= 1000 && GC.Player_Wood >= 1000 && GC.Player_Tech >= 1000) { GC.Player_Metal -= 1000; GC.Player_Wood -= 1000; GC.Player_Tech -= 1000; GC.Research_Lvl3_L2 = true; }
+            if (GC.Research_Lvl3_L1 && GC.Player_Metal >= 1000 && GC.Player_Wood >= 1000 && GC.Player_Tech >= 1000) { GC.Player_Metal -= 1000; GC.Player_Wood -= 1000; GC.Player_Tech -= 1000; GC.Research_Lvl3_L2 = true; research_Lvl3_L2_Def.SetActive(false); research_Lvl3_L2_Up_1.SetActive(false); }
         }
     }
     #endregion

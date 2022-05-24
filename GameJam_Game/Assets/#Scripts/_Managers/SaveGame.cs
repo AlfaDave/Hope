@@ -15,8 +15,7 @@ public class SaveGame : MonoBehaviour
   /// you will need to add your varible to the Load_Slot() function.
   /// you will need to add your varible with a different name variation to the public class GameData the reason it needs a different name is for readability.
   /// </summary>
-
-    private GameObject gameCont;
+  
     private GameController gCont;
     #region Variables
     //private bool saveHasBeenCreated = false;
@@ -57,9 +56,8 @@ public class SaveGame : MonoBehaviour
     public bool CheckForSave() { return gCont.PlayerSave; }
     private void LocateGameController()
     {
-        gameCont = GameObject.Find("GameController"); // < finding the gameobject only use Find to find initial reference do not use find regularly its
                                                         // super heavy cpu usage and will kill framerate if its put in update or fixed update for example.
-        gCont = gameCont.GetComponent<GameController>(); // < linking the script by using the gameobject reference found on line above
+        gCont = GameObject.Find("GameController").GetComponent<GameController>(); // < linking the script by using the gameobject reference 
     }
     #region Save Controller
     
