@@ -19,7 +19,7 @@ public class SaveGame : MonoBehaviour
     private GameObject gameCont;
     private GameController gCont;
     #region Variables
-    private bool saveHasBeenCreated = false;
+    //private bool saveHasBeenCreated = false;
     #region Save Details
     [SerializeField] internal string username = "Player";
     private string saveFolder = "Save";
@@ -54,6 +54,7 @@ public class SaveGame : MonoBehaviour
         }
     }
     #endregion
+    public bool CheckForSave() { return gCont.PlayerSave; }
     private void LocateGameController()
     {
         gameCont = GameObject.Find("GameController"); // < finding the gameobject only use Find to find initial reference do not use find regularly its
@@ -146,6 +147,7 @@ public class SaveGame : MonoBehaviour
         //data. Saved data Variable = Variable instance location to copy from;
         //data.example = exampleVariable;
         // ADD NEW VARIABLES UNDER HERE IN THE STYLE ON THE LINE ABOVE
+        data.playerSave = gCont.PlayerSave;
         data.player_Sound = gCont.Player_Sound;
         #region Vault Heath Items
         data.vault_Health = gCont.Vault_Health;
@@ -154,53 +156,67 @@ public class SaveGame : MonoBehaviour
         data.wall_Right_Upgrade = gCont.Wall_Right_Upgrade;
         data.wall_Right_Health = gCont.Wall_Right_Health;
         #endregion
+
+        #region DefaultBuildings
+        data.room_Radio = gCont.Room_Radio;
+        data.room_Expedition = gCont.Room_Expedition;
+        data.room_UndergroundGarden = gCont.Room_UndergroundGarden;
+        data.room_Training = gCont.Room_Training;
+        #endregion
         #region Vault Room Upgrades
         data.stairs_1 = gCont.Stairs_1;
         data.stairs_2 = gCont.Stairs_2;
         data.stairs_3 = gCont.Stairs_3;
-
+        data.stairs_2_Clicks_Unlock = gCont.Stairs_2_Clicks_Unlock;
+        data.stairs_3_Clicks_Unlock = gCont.Stairs_3_Clicks_Unlock;
         /// <summary>
         /// Rooms are ordered in layers with left and right number 1 room is closest to the stairs
         /// </summary>
-        data.room_Top_Left_1 = gCont.Room_Top_Left_1;
-        data.room_Top_Left_2 = gCont.Room_Top_Left_2;
-        data.room_Top_Right_1 = gCont.Room_Top_Right_1;
-        data.room_Top_Right_2 = gCont.Room_Top_Right_2;
-        data.room_Mid_Left_1 = gCont.Room_Mid_Left_1;
-        data.room_Mid_Left_2 = gCont.Room_Mid_Left_2;
-        data.room_Mid_Right_1 = gCont.Room_Mid_Right_1;
-        data.room_Mid_Right_2 = gCont.Room_Mid_Right_2;
-        data.room_Bottom_left_1 = gCont.Room_Bottom_Left_1;
-        data.room_Bottom_left_2 = gCont.Room_Bottom_Left_2;
-        data.room_Bottom_Right_1 = gCont.Room_Bottom_Right_1;
-        data.room_Bottom_Right_2 = gCont.Room_Bottom_Right_2;
+        data.underGarden_Lvl1_L1 = gCont.UnderGarden_Lvl1_L1;
+        data.radio_Lvl1_L2 = gCont.Radio_Lvl1_L2;
+        data.expedition_Lvl1_R1 = gCont.Expedition_Lvl1_R1;
+        data.training_Lvl1_R2 = gCont.Training_Lvl1_R2;
+        data.workshop_Lvl2_L1 = gCont.Workshop_Lvl2_L1;
+        data.workshop_Lvl2_L2 = gCont.Workshop_Lvl2_L2;
+        data.generator_Lvl2_R1 = gCont.Generator_Lvl2_R1;
+        data.generator_Lvl2_R2 = gCont.Generator_Lvl2_R2;
+        data.research_Lvl3_L1 = gCont.Research_Lvl3_L1;
+        data.research_Lvl3_L2 = gCont.Research_Lvl3_L2;
+        data.livingSpace_Lvl3_R1 = gCont.LivingSpace_Lvl3_R1;
+        data.livingSpace_Lvl3_R2 = gCont.LivingSpace_Lvl3_R2;
         /// <summary>
         /// room Upgrade levels only 0 rock 1 first type of room 2 second type of room 3 third type of room
         /// </summary>
-        data.roomUpgrade_Top_Left_1 = gCont.RoomUpgrade_Top_Left_1;
-        data.roomUpgrade_Top_Left_2 = gCont.RoomUpgrade_Top_Left_2;
-        data.roomUpgrade_Top_Right_1 = gCont.RoomUpgrade_Top_Right_1;
-        data.roomUpgrade_Top_Right_2 = gCont.RoomUpgrade_Top_Right_2;
-        data.roomUpgrade_Mid_Left_1 = gCont.RoomUpgrade_Mid_Left_1;
-        data.roomUpgrade_Mid_Left_2 = gCont.RoomUpgrade_Mid_Left_2;
-        data.roomUpgrade_Mid_Right_1 = gCont.RoomUpgrade_Mid_Right_1;
-        data.roomUpgrade_Mid_Right_2 = gCont.RoomUpgrade_Mid_Right_2;
-        data.roomUpgrade_Bottom_Left_1 = gCont.RoomUpgrade_Bottom_Left_1;
-        data.roomUpgrade_Bottom_Left_2 = gCont.RoomUpgrade_Bottom_Left_2;
-        data.roomUpgrade_Bottom_Right_1 = gCont.RoomUpgrade_Bottom_Right_1;
-        data.roomUpgrade_Bottom_Right_2 = gCont.RoomUpgrade_Bottom_Right_2;
-        data.bedroom_1 = gCont.Bedroom_1;
-        data.bedroom_2 = gCont.Bedroom_2;
-        data.bedroom_3 = gCont.Bedroom_3;
-        data.bedroom_4 = gCont.Bedroom_4;
-        data.bedroom_5 = gCont.Bedroom_5;
-        data.bedroom_6 = gCont.Bedroom_6;
+        data.underGarden_Upg_Lvl1_L1 = gCont.UnderGarden_Upg_Lvl1_L1;
+        data.radio_Upg_Lvl1_L2 = gCont.Radio_Upg_Lvl1_L2;
+        data.expedition_Upg_Lvl1_R1 = gCont.Expedition_Upg_Lvl1_R1;
+        data.training_Upg_Lvl1_R2 = gCont.Training_Upg_Lvl1_R2;
+        data.workshop_Upg_Lvl2_L1 = gCont.Workshop_Upg_Lvl2_L1;
+        data.workshop_Upg_Lvl2_L2 = gCont.Workshop_Upg_Lvl2_L2;
+        data.generator_Upg_Lvl2_R1 = gCont.Generator_Upg_Lvl2_R1;
+        data.generator_Upg_Lvl2_R2 = gCont.Generator_Upg_Lvl2_R2;
+        data.research_Upg_Lvl3_L1 = gCont.Research_Upg_Lvl3_L1;
+        data.research_Upg_Lvl3_L2 = gCont.Research_Upg_Lvl3_L2;
+        data.livingSpace_Upg_Lvl3_R1 = gCont.LivingSpace_Upg_Lvl3_R1;
+        data.livingSpace_Upg_Lvl3_R2 = gCont.LivingSpace_Upg_Lvl3_R2;
+        data.bedroom_1 = gCont.Bedroom_Lvl1_L;
+        data.bedroom_2 = gCont.Bedroom_Lvl1_R;
+        data.bedroom_3 = gCont.Bedroom_Lvl2_L;
+        data.bedroom_4 = gCont.Bedroom_Lvl2_R;
+        data.bedroom_5 = gCont.Bedroom_Lvl3_L;
+        data.bedroom_6 = gCont.Bedroom_Lvl3_R;
         data.bedroom_1_Occupants = gCont.Bedroom_1_Occupants;
         data.bedroom_2_Occupants = gCont.Bedroom_2_Occupants;
         data.bedroom_3_Occupants = gCont.Bedroom_3_Occupants;
         data.bedroom_4_Occupants = gCont.Bedroom_4_Occupants;
         data.bedroom_5_Occupants = gCont.Bedroom_5_Occupants;
         data.bedroom_6_Occupants = gCont.Bedroom_6_Occupants;
+        data.bedroom_1_Clicks_Unlock = gCont.Bedroom_Lvl1_L_Clik_Unlock;
+        data.bedroom_2_Clicks_Unlock = gCont.Bedroom_Lvl1_R_Clik_Unlock;
+        data.bedroom_3_Clicks_Unlock = gCont.Bedroom_Lvl2_L_Clik_Unlock;
+        data.bedroom_4_Clicks_Unlock = gCont.Bedroom_Lvl2_R_Clik_Unlock;
+        data.bedroom_5_Clicks_Unlock = gCont.Bedroom_Lvl3_L_Clik_Unlock;
+        data.bedroom_6_Clicks_Unlock = gCont.Bedroom_Lvl3_R_Clik_Unlock;
         #endregion
         #region Main Game Stats
         data.player_Turns = gCont.Player_Turns;
@@ -238,9 +254,10 @@ public class SaveGame : MonoBehaviour
             GameData data = (GameData)bf.Deserialize(file_Career);
             file_Career.Close();
             #region Load player data
-            //Saved Data to load = data.Variable in this file to load the date too;
-            //exampleVariable = data.example;
-            // ADD NEW VARIABLES UNDER HERE IN THE STYLE ON THE LINE ABOVE
+             //Saved Data to load = data.Variable in this file to load the date too;
+             //exampleVariable = data.example;
+             // ADD NEW VARIABLES UNDER HERE IN THE STYLE ON THE LINE ABOVE
+            gCont.PlayerSave = data.playerSave;
             gCont.Player_Sound = data.player_Sound;
             #region Vault Heath Items
             gCont.Vault_Health = data.vault_Health;
@@ -249,53 +266,66 @@ public class SaveGame : MonoBehaviour
             gCont.Wall_Right_Upgrade = data.wall_Right_Upgrade;
             gCont.Wall_Right_Health = data.wall_Right_Health;
             #endregion
+            #region DefaultBuildings
+            gCont.Room_Radio = data.room_Radio;
+            gCont.Room_Expedition = data.room_Expedition;
+            gCont.Room_UndergroundGarden = data.room_UndergroundGarden;
+            gCont.Room_Training = data.room_Training;
+            #endregion
             #region Vault Room Upgrades
             gCont.Stairs_1 = data.stairs_1;
             gCont.Stairs_2 = data.stairs_2;
             gCont.Stairs_3 = data.stairs_3;
-
+            gCont.Stairs_2_Clicks_Unlock = data.stairs_2_Clicks_Unlock;
+            gCont.Stairs_3_Clicks_Unlock = data.stairs_3_Clicks_Unlock;
             /// <summary>
             /// Rooms are ordered in layers with left and right number 1 room is closest to the stairs
             /// </summary>
-            gCont.Room_Top_Left_1 = data.room_Top_Left_1;
-            gCont.Room_Top_Left_2 = data.room_Top_Left_2;
-            gCont.Room_Top_Right_1 = data.room_Top_Right_1;
-            gCont.Room_Top_Right_2 = data.room_Top_Right_2;
-            gCont.Room_Mid_Left_1 = data.room_Mid_Left_1;
-            gCont.Room_Mid_Left_2 = data.room_Mid_Left_2;
-            gCont.Room_Mid_Right_1 = data.room_Mid_Right_1;
-            gCont.Room_Mid_Right_2 = data.room_Mid_Right_2;
-            gCont.Room_Bottom_Left_1 = data.room_Bottom_left_1;
-            gCont.Room_Bottom_Left_2 = data.room_Bottom_left_2;
-            gCont.Room_Bottom_Right_1 = data.room_Bottom_Right_1;
-            gCont.Room_Bottom_Right_2 = data.room_Bottom_Right_2;
+            gCont.UnderGarden_Lvl1_L1 = data.underGarden_Lvl1_L1;
+            gCont.Radio_Lvl1_L2 = data.radio_Lvl1_L2;
+            gCont.Expedition_Lvl1_R1 = data.expedition_Lvl1_R1;
+            gCont.Training_Lvl1_R2 = data.training_Lvl1_R2;
+            gCont.Workshop_Lvl2_L1 = data.workshop_Lvl2_L1;
+            gCont.Workshop_Lvl2_L2 = data.workshop_Lvl2_L2;
+            gCont.Generator_Lvl2_R1 = data.generator_Lvl2_R1;
+            gCont.Generator_Lvl2_R2 = data.generator_Lvl2_R2;
+            gCont.Research_Lvl3_L1 = data.research_Lvl3_L1;
+            gCont.Research_Lvl3_L2 = data.research_Lvl3_L2;
+            gCont.LivingSpace_Lvl3_R1 = data.livingSpace_Lvl3_R1;
+            gCont.LivingSpace_Lvl3_R2 = data.livingSpace_Lvl3_R2;
             /// <summary>
             /// room Upgrade levels only 0 rock 1 first type of room 2 second type of room 3 third type of room
             /// </summary>
-            gCont.RoomUpgrade_Top_Left_1 = data.roomUpgrade_Top_Left_1;
-            gCont.RoomUpgrade_Top_Left_2 = data.roomUpgrade_Top_Left_2;
-            gCont.RoomUpgrade_Top_Right_1 = data.roomUpgrade_Top_Right_1;
-            gCont.RoomUpgrade_Top_Right_2 = data.roomUpgrade_Top_Right_2;
-            gCont.RoomUpgrade_Mid_Left_1 = data.roomUpgrade_Mid_Left_1;
-            gCont.RoomUpgrade_Mid_Left_2 = data.roomUpgrade_Mid_Left_2;
-            gCont.RoomUpgrade_Mid_Right_1 = data.roomUpgrade_Mid_Right_1;
-            gCont.RoomUpgrade_Mid_Right_2 = data.roomUpgrade_Mid_Right_2;
-            gCont.RoomUpgrade_Bottom_Left_1 = data.roomUpgrade_Bottom_Left_1;
-            gCont.RoomUpgrade_Bottom_Left_2 = data.roomUpgrade_Bottom_Left_2;
-            gCont.RoomUpgrade_Bottom_Right_1 = data.roomUpgrade_Bottom_Right_1;
-            gCont.RoomUpgrade_Bottom_Right_2 = data.roomUpgrade_Bottom_Right_2;
-            gCont.Bedroom_1 = data.bedroom_1;
-            gCont.Bedroom_2 = data.bedroom_2;
-            gCont.Bedroom_3 = data.bedroom_3;
-            gCont.Bedroom_4 = data.bedroom_4;
-            gCont.Bedroom_5 = data.bedroom_5;
-            gCont.Bedroom_6 = data.bedroom_6;
+            gCont.UnderGarden_Upg_Lvl1_L1 = data.underGarden_Upg_Lvl1_L1;
+            gCont.Radio_Upg_Lvl1_L2 = data.radio_Upg_Lvl1_L2;
+            gCont.Expedition_Upg_Lvl1_R1 = data.expedition_Upg_Lvl1_R1;
+            gCont.Training_Upg_Lvl1_R2 = data.training_Upg_Lvl1_R2;
+            gCont.Workshop_Upg_Lvl2_L1 = data.workshop_Upg_Lvl2_L1;
+            gCont.Workshop_Upg_Lvl2_L2 = data.workshop_Upg_Lvl2_L2;
+            gCont.Generator_Upg_Lvl2_R1 = data.generator_Upg_Lvl2_R1;
+            gCont.Generator_Upg_Lvl2_R2 = data.generator_Upg_Lvl2_R2;
+            gCont.Research_Upg_Lvl3_L1 = data.research_Upg_Lvl3_L1;
+            gCont.Research_Upg_Lvl3_L2 = data.research_Upg_Lvl3_L2;
+            gCont.LivingSpace_Upg_Lvl3_R1 = data.livingSpace_Upg_Lvl3_R1;
+            gCont.LivingSpace_Upg_Lvl3_R2 = data.livingSpace_Upg_Lvl3_R2;
+            gCont.Bedroom_Lvl1_L = data.bedroom_1;
+            gCont.Bedroom_Lvl1_R = data.bedroom_2;
+            gCont.Bedroom_Lvl2_L = data.bedroom_3;
+            gCont.Bedroom_Lvl2_R = data.bedroom_4;
+            gCont.Bedroom_Lvl3_L = data.bedroom_5;
+            gCont.Bedroom_Lvl3_R = data.bedroom_6;
             gCont.Bedroom_1_Occupants = data.bedroom_1_Occupants;
             gCont.Bedroom_2_Occupants = data.bedroom_2_Occupants;
             gCont.Bedroom_3_Occupants = data.bedroom_3_Occupants;
             gCont.Bedroom_4_Occupants = data.bedroom_4_Occupants;
             gCont.Bedroom_5_Occupants = data.bedroom_5_Occupants;
             gCont.Bedroom_6_Occupants = data.bedroom_6_Occupants;
+            gCont.Bedroom_Lvl1_L_Clik_Unlock = data.bedroom_1_Clicks_Unlock;
+            gCont.Bedroom_Lvl1_R_Clik_Unlock = data.bedroom_2_Clicks_Unlock;
+            gCont.Bedroom_Lvl2_L_Clik_Unlock = data.bedroom_3_Clicks_Unlock;
+            gCont.Bedroom_Lvl2_R_Clik_Unlock = data.bedroom_4_Clicks_Unlock;
+            gCont.Bedroom_Lvl3_L_Clik_Unlock = data.bedroom_5_Clicks_Unlock;
+            gCont.Bedroom_Lvl3_R_Clik_Unlock = data.bedroom_6_Clicks_Unlock;
             #endregion
             #region Main Game Stats
             gCont.Player_Turns = data.player_Turns;
@@ -364,6 +394,7 @@ public class SaveGame : MonoBehaviour
 public class GameData
 {
     #region Game Player items
+    public bool playerSave;
     public bool player_Sound;
     public int vault_Health;
     public int wall_Left_Upgrade;
@@ -371,41 +402,49 @@ public class GameData
     public int wall_Right_Health;
     public int wall_Right_Upgrade;
     #endregion
+    #region Default Buildings
+    public int room_Radio;
+    public int room_Expedition;
+    public int room_UndergroundGarden;
+    public int room_Training;
+    #endregion
     #region Vault Room Upgrades
     public bool stairs_1;
     public bool stairs_2;
     public bool stairs_3;
+    public int stairs_2_Clicks_Unlock;
+    public int stairs_3_Clicks_Unlock;
 
     /// <summary>
     /// Rooms are ordered in layers with left and right number 1 room is closest to the stairs
     /// </summary>
-    public bool room_Top_Left_1;
-    public bool room_Top_Left_2;
-    public bool room_Top_Right_1;
-    public bool room_Top_Right_2;
-    public bool room_Mid_Left_1;
-    public bool room_Mid_Left_2;
-    public bool room_Mid_Right_1;
-    public bool room_Mid_Right_2;
-    public bool room_Bottom_left_1;
-    public bool room_Bottom_left_2;
-    public bool room_Bottom_Right_1;
-    public bool room_Bottom_Right_2;
+    public bool underGarden_Lvl1_L1;
+    public bool radio_Lvl1_L2;
+    public bool expedition_Lvl1_R1;
+    public bool training_Lvl1_R2;
+    public bool workshop_Lvl2_L1;
+    public bool workshop_Lvl2_L2;
+    public bool generator_Lvl2_R1;
+    public bool generator_Lvl2_R2;
+    public bool research_Lvl3_L1;
+    public bool research_Lvl3_L2;
+    public bool livingSpace_Lvl3_R1;
+    public bool livingSpace_Lvl3_R2;
     /// <summary>
     /// room Upgrade levels only 0 rock 1 first type of room 2 second type of room 3 third type of room
     /// </summary>
-    public int roomUpgrade_Top_Left_1;
-    public int roomUpgrade_Top_Left_2;
-    public int roomUpgrade_Top_Right_1;
-    public int roomUpgrade_Top_Right_2;
-    public int roomUpgrade_Mid_Left_1;
-    public int roomUpgrade_Mid_Left_2;
-    public int roomUpgrade_Mid_Right_1;
-    public int roomUpgrade_Mid_Right_2;
-    public int roomUpgrade_Bottom_Left_1;
-    public int roomUpgrade_Bottom_Left_2;
-    public int roomUpgrade_Bottom_Right_1;
-    public int roomUpgrade_Bottom_Right_2;
+    public int underGarden_Upg_Lvl1_L1;
+    public int radio_Upg_Lvl1_L2;
+    public int expedition_Upg_Lvl1_R1;
+    public int training_Upg_Lvl1_R2;
+    public int workshop_Upg_Lvl2_L1;
+    public int workshop_Upg_Lvl2_L2;
+    public int generator_Upg_Lvl2_R1;
+    public int generator_Upg_Lvl2_R2;
+    public int research_Upg_Lvl3_L1;
+    public int research_Upg_Lvl3_L2;
+    public int livingSpace_Upg_Lvl3_R1;
+    public int livingSpace_Upg_Lvl3_R2;
     public bool bedroom_1;
     public bool bedroom_2;
     public bool bedroom_3;
@@ -418,6 +457,12 @@ public class GameData
     public int bedroom_4_Occupants;
     public int bedroom_5_Occupants;
     public int bedroom_6_Occupants;
+    public int bedroom_1_Clicks_Unlock;
+    public int bedroom_2_Clicks_Unlock;
+    public int bedroom_3_Clicks_Unlock;
+    public int bedroom_4_Clicks_Unlock;
+    public int bedroom_5_Clicks_Unlock;
+    public int bedroom_6_Clicks_Unlock;
     #endregion
     #region Main Game Stats
     public int player_Turns;
@@ -431,5 +476,8 @@ public class GameData
     public int player_Wood;
     public int player_Tech;
     public int player_Seeds;
+    #endregion
+    #region Gameplay Mechanics
+    //public float wait_BetweenPress;
     #endregion
 }

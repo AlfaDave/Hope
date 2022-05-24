@@ -4,7 +4,14 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
+    public bool PlayerSave { get; set; }
     public bool Player_Sound { get; set; }
+    #region Default Buildings
+    public int Room_Radio { get; set; }
+    public int Room_Expedition { get; set; }
+    public int Room_UndergroundGarden { get; set; }
+    public int Room_Training { get; set; }
+    #endregion
     #region Vault Heath Items
     public int Vault_Health { get; set; }
     public int Wall_Left_Upgrade { get; set; }
@@ -16,49 +23,56 @@ public class GameController : MonoBehaviour
     public bool Stairs_1 { get; set; }
     public bool Stairs_2 { get; set; }
     public bool Stairs_3 { get; set; }
-
+    public int Stairs_2_Clicks_Unlock { get; set; }
+    public int Stairs_3_Clicks_Unlock { get; set; }
     /// <summary>
     /// Rooms are ordered in layers with left and right number 1 room is closest to the stairs
     /// </summary>
-    public bool Room_Top_Left_1 { get; set; }
-    public bool Room_Top_Left_2 { get; set; }
-    public bool Room_Top_Right_1 { get; set; }
-    public bool Room_Top_Right_2 { get; set; }
-    public bool Room_Mid_Left_1 { get; set; }
-    public bool Room_Mid_Left_2 { get; set; }
-    public bool Room_Mid_Right_1 { get; set; }
-    public bool Room_Mid_Right_2 { get; set; }
-    public bool Room_Bottom_Left_1 { get; set; }
-    public bool Room_Bottom_Left_2 { get; set; }
-    public bool Room_Bottom_Right_1 { get; set; }
-    public bool Room_Bottom_Right_2 { get; set; }
+    public bool UnderGarden_Lvl1_L1 { get; set; }
+    public bool Radio_Lvl1_L2 { get; set; }
+    public bool Expedition_Lvl1_R1 { get; set; }
+    public bool Training_Lvl1_R2 { get; set; }
+    public bool Workshop_Lvl2_L1 { get; set; }
+    public bool Workshop_Lvl2_L2 { get; set; }
+    public bool Generator_Lvl2_R1 { get; set; }
+    public bool Generator_Lvl2_R2 { get; set; }
+    public bool Research_Lvl3_L1 { get; set; }
+    public bool Research_Lvl3_L2 { get; set; }
+    public bool LivingSpace_Lvl3_R1 { get; set; }
+    public bool LivingSpace_Lvl3_R2 { get; set; }
     /// <summary>
     /// room Upgrade levels only 0 rock 1 first type of room 2 second type of room 3 third type of room
     /// </summary>
-    public int RoomUpgrade_Top_Left_1 { get; set; }
-    public int RoomUpgrade_Top_Left_2 { get; set; }
-    public int RoomUpgrade_Top_Right_1 { get; set; }
-    public int RoomUpgrade_Top_Right_2 { get; set; }
-    public int RoomUpgrade_Mid_Left_1 { get; set; }
-    public int RoomUpgrade_Mid_Left_2 { get; set; }
-    public int RoomUpgrade_Mid_Right_1 { get; set; }
-    public int RoomUpgrade_Mid_Right_2 { get; set; }
-    public int RoomUpgrade_Bottom_Left_1 { get; set; }
-    public int RoomUpgrade_Bottom_Left_2 { get; set; }
-    public int RoomUpgrade_Bottom_Right_1 { get; set; }
-    public int RoomUpgrade_Bottom_Right_2 { get; set; }
-    public bool Bedroom_1 { get; set; }
-    public bool Bedroom_2 { get; set; }
-    public bool Bedroom_3 { get; set; }
-    public bool Bedroom_4 { get; set; }
-    public bool Bedroom_5 { get; set; }
-    public bool Bedroom_6 { get; set; }
+    public int UnderGarden_Upg_Lvl1_L1 { get; set; }
+    public int Radio_Upg_Lvl1_L2 { get; set; }
+    public int Expedition_Upg_Lvl1_R1 { get; set; }
+    public int Training_Upg_Lvl1_R2 { get; set; }
+    public int Workshop_Upg_Lvl2_L1 { get; set; }
+    public int Workshop_Upg_Lvl2_L2 { get; set; }
+    public int Generator_Upg_Lvl2_R1 { get; set; }
+    public int Generator_Upg_Lvl2_R2 { get; set; }
+    public int Research_Upg_Lvl3_L1 { get; set; }
+    public int Research_Upg_Lvl3_L2 { get; set; }
+    public int LivingSpace_Upg_Lvl3_R1 { get; set; }
+    public int LivingSpace_Upg_Lvl3_R2 { get; set; }
+    public bool Bedroom_Lvl1_L { get; set; }
+    public bool Bedroom_Lvl1_R { get; set; }
+    public bool Bedroom_Lvl2_L { get; set; }
+    public bool Bedroom_Lvl2_R { get; set; }
+    public bool Bedroom_Lvl3_L { get; set; }
+    public bool Bedroom_Lvl3_R { get; set; }
     public int Bedroom_1_Occupants { get; set; }
     public int Bedroom_2_Occupants { get; set; }
     public int Bedroom_3_Occupants { get; set; }
     public int Bedroom_4_Occupants { get; set; }
     public int Bedroom_5_Occupants { get; set; }
     public int Bedroom_6_Occupants { get; set; }
+    public int Bedroom_Lvl1_L_Clik_Unlock { get; set; }
+    public int Bedroom_Lvl1_R_Clik_Unlock { get; set; }
+    public int Bedroom_Lvl2_L_Clik_Unlock { get; set; }
+    public int Bedroom_Lvl2_R_Clik_Unlock { get; set; }
+    public int Bedroom_Lvl3_L_Clik_Unlock { get; set; }
+    public int Bedroom_Lvl3_R_Clik_Unlock { get; set; }
     #endregion
     #region Main Game Stats
     public int Player_Turns { get; set; }
@@ -73,7 +87,9 @@ public class GameController : MonoBehaviour
     public int Player_Tech { get; set; }
     public int Player_Seeds { get; set; }
     #endregion
-    [SerializeField] internal GameObject example;
+    #region Game Mechanics
+    
+    #endregion
     private int setToZero = 0;
     public static GameController gameC;
 
@@ -93,10 +109,6 @@ public class GameController : MonoBehaviour
     private void SetDefaults()
     {
         if (Player_Turns == 0) { Player_Turns = setToZero; }
-    }
-    private void Start()
-    {
-        Application.targetFrameRate = 60;
     }
     private void Update()// does an update every frame your computers max cpu process speed can cope with very unreliable for physics.
     {
