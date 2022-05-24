@@ -5,7 +5,7 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager soundManager;
-    private float volumeSFX=1, backgroundMusic=1;
+    private float volumeSFX=0.5f, backgroundMusic=0.5f;
     public AudioClip backingMusic, sfxMenuButton, sfxElectClick, sfxMetalClick, sfxBuildingMatClick, sfxFoodClick, sfxRemoveRockClick; 
 
     void Awake()
@@ -24,6 +24,7 @@ public class SoundManager : MonoBehaviour
     {
         //BackgroundMusic();
         OneSound_MenuButton();
+        SetBGMusicVolume();// setting bg music volume to 0.3f
     }
     public void BackgroundMusic()
     {
@@ -100,5 +101,11 @@ public class SoundManager : MonoBehaviour
     public void SetMusicVolume(float volume)
     {
         backgroundMusic = volume;
+    }
+    private void SetBGMusicVolume()
+    {
+        GameObject BGMusic = GameObject.Find("BackgroundMusicOnLoop");
+        AudioSource audioBGMusic = BGMusic.GetComponent<AudioSource>();
+        audioBGMusic.volume = 0.3f;
     }
 }

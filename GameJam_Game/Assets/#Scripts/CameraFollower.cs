@@ -64,7 +64,7 @@ public class CameraFollower : MonoBehaviour
     {
         float camZoom = GetCamZoomFunc();
         float camZoomDif = camZoom - myCam.orthographicSize;
-        float camZoomSpeed = 1f;
+        float camZoomSpeed = 10f;
 
         myCam.orthographicSize += camZoomDif * camZoomSpeed * Time.deltaTime;
         if (camZoomDif > 0)
