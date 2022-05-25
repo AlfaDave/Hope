@@ -58,6 +58,7 @@ public class Game_Logic : MonoBehaviour
     private float WaitWorkshopBonus = 0;
     private float WaitPowerGenBonus = 0;
     private float WaitLivingSpace = 0;
+    private int purchaseValue = 250;
     private void CheckClickWaitingTime()
     {
 
@@ -740,9 +741,9 @@ private void LivingSpacesBonus() { }
         CheckBedroomUnlockProgress();
         CheckStairsUnlockProgress();
         CheckGeneratorUnlockProgress();
-        CheckWorkshopUnlockProgress();
-        CheckLivingSpaceUnlockProgress();
-        CheckResearchUnlockProgress();
+        BuyWorkshopUnlockProgress();
+        BuyLivingSpaceUnlockProgress();
+        //BuyResearchUnlockProgress();
     }
     #region Need To add visual Unlock images to the check button items
     private void CheckBedroomUnlockProgress()// Need to add visual presentation of unlocks
@@ -778,7 +779,7 @@ private void LivingSpacesBonus() { }
             if (GC.Generator_Lvl2_R1 && GC.Player_Metal >= 250 && GC.Player_Wood >= 250 && GC.Player_Tech >= 250) { GC.Player_Metal -= 250; GC.Player_Wood -= 250; GC.Player_Tech -= 250; GC.Generator_Lvl2_R2 = true; generator_Lvl2_R2_Def.SetActive(false); generator_Lvl2_R2_Up_1.SetActive(false); }
         }
     }
-    private void CheckWorkshopUnlockProgress()// no visual unlock needs adding
+    private void BuyWorkshopUnlockProgress()// no visual unlock needs adding
     {
         if (!GC.Workshop_Lvl2_L1)
         {
@@ -789,7 +790,7 @@ private void LivingSpacesBonus() { }
             if (GC.Workshop_Lvl2_L1 && GC.Player_Metal >= 250 && GC.Player_Wood >= 250 && GC.Player_Tech >= 250) { GC.Player_Metal -= 250; GC.Player_Wood -= 250; GC.Player_Tech -= 250; GC.Workshop_Lvl2_L2 = true; workshop_Lvl2_L2_Def.SetActive(false); workshop_Lvl2_L2_Up_1.SetActive(false); }
         }
     }
-    private void CheckLivingSpaceUnlockProgress()// no visual unlock needs adding
+    private void BuyLivingSpaceUnlockProgress()// no visual unlock needs adding
     {
         if (!GC.LivingSpace_Lvl3_R1)
         {
@@ -800,16 +801,1173 @@ private void LivingSpacesBonus() { }
             if (GC.LivingSpace_Lvl3_R1 && GC.Player_Metal >= 1000 && GC.Player_Wood >= 1000 && GC.Player_Tech >= 1000) { GC.Player_Metal -= 1000; GC.Player_Wood -= 1000; GC.Player_Tech -= 1000; GC.LivingSpace_Lvl3_R2 = true; livingSpace_Lvl3_R2_Def.SetActive(false); livingSpace_Lvl3_R2_Up_1.SetActive(false); }
         }
     }
-    private void CheckResearchUnlockProgress()// no visual unlock needs adding
+    #region Purchase Buildings & Upgrades
+    #region Expedition & Upgrades // not figured out the values to spend on unlocks
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Upgrade_Expedition_Building()
     {
-        if (!GC.Research_Lvl3_L1)
+        switch (GC.Expedition_Upg_Lvl1_R1)
         {
-            if (GC.Stairs_3 && GC.Player_Metal >= 500 && GC.Player_Wood >= 500 && GC.Player_Tech >= 500) { GC.Player_Metal -= 500; GC.Player_Wood -= 500; GC.Player_Tech -= 500; GC.Research_Lvl3_L1 = true; research_Lvl3_L1_Def.SetActive(false); research_Lvl3_L1_Up_1.SetActive(false); }
-        }
-        if (!GC.Research_Lvl3_L2)
-        {
-            if (GC.Research_Lvl3_L1 && GC.Player_Metal >= 1000 && GC.Player_Wood >= 1000 && GC.Player_Tech >= 1000) { GC.Player_Metal -= 1000; GC.Player_Wood -= 1000; GC.Player_Tech -= 1000; GC.Research_Lvl3_L2 = true; research_Lvl3_L2_Def.SetActive(false); research_Lvl3_L2_Up_1.SetActive(false); }
+            case 0:
+                Buy_Up_1_Expedition();
+                break;
+            case 1:
+                Buy_Up_2_Expedition();
+                break;
+            case 2:
+                Buy_Up_3_Expedition();
+                break;
+            case 3:
+                Buy_Up_4_Expedition();
+                break;
+            case 4:
+                Buy_Up_5_Expedition();
+                break;
         }
     }
+    private void Buy_Up_1_Expedition()
+    {
+        if (GC.Player_Metal >= purchaseValue && GC.Player_Wood >= purchaseValue && GC.Player_Tech >= purchaseValue)
+        {
+            GC.Player_Metal -= purchaseValue;
+            GC.Player_Wood -= purchaseValue;
+            GC.Player_Tech -= purchaseValue;
+            GC.Expedition_Upg_Lvl1_R1 = 1;
+            expedition_Lvl1_R1_Def.SetActive(false);
+            expedition_Lvl1_R1_Up_1.SetActive(true);
+        }
+    }
+    private void Buy_Up_2_Expedition()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 2) && GC.Player_Wood >= (purchaseValue * 2) && GC.Player_Tech >= (purchaseValue * 2))
+        {
+            GC.Player_Metal -= (purchaseValue * 2);
+            GC.Player_Wood -= (purchaseValue * 2);
+            GC.Player_Tech -= (purchaseValue * 2);
+            GC.Expedition_Upg_Lvl1_R1 = 2;
+            expedition_Lvl1_R1_Up_1.SetActive(false);
+            expedition_Lvl1_R1_Up_2.SetActive(true);
+        }
+    }
+    private void Buy_Up_3_Expedition()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 4) && GC.Player_Wood >= (purchaseValue * 4) && GC.Player_Tech >= (purchaseValue * 4))
+        {
+            GC.Player_Metal -= (purchaseValue * 4);
+            GC.Player_Wood -= (purchaseValue * 4);
+            GC.Player_Tech -= (purchaseValue * 4);
+            GC.Expedition_Upg_Lvl1_R1 = 3;
+            expedition_Lvl1_R1_Up_2.SetActive(false);
+            expedition_Lvl1_R1_Up_3.SetActive(true);
+        }
+    }
+    private void Buy_Up_4_Expedition()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 8) && GC.Player_Wood >= (purchaseValue * 8) && GC.Player_Tech >= (purchaseValue * 8))
+        {
+            GC.Player_Metal -= (purchaseValue * 8);
+            GC.Player_Wood -= (purchaseValue * 8);
+            GC.Player_Tech -= (purchaseValue * 8);
+            GC.Expedition_Upg_Lvl1_R1 = 4;
+            expedition_Lvl1_R1_Up_3.SetActive(false);
+            expedition_Lvl1_R1_Up_4.SetActive(true);
+        }
+    }
+    private void Buy_Up_5_Expedition()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 16) && GC.Player_Wood >= (purchaseValue * 16) && GC.Player_Tech >= (purchaseValue * 16))
+        {
+            GC.Player_Metal -= (purchaseValue * 16);
+            GC.Player_Wood -= (purchaseValue * 16);
+            GC.Player_Tech -= (purchaseValue * 16);
+            GC.Expedition_Upg_Lvl1_R1 = 5;
+            expedition_Lvl1_R1_Up_4.SetActive(false);
+            expedition_Lvl1_R1_Up_5.SetActive(true);
+        }
+    }
+    #endregion
+    #region Training & Upgrades // not figured out the values to spend on unlocks
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Upgrade_Training_Building()
+    {
+        switch (GC.Training_Upg_Lvl1_R2)
+            {
+                case 0:
+                Buy_Up_1_Training();
+                    break;
+                case 1:
+                Buy_Up_2_Training();
+                    break;
+                case 2:
+                Buy_Up_3_Training();
+                    break;
+                case 3:
+                Buy_Up_4_Training();
+                    break;
+                case 4:
+                Buy_Up_5_Training();
+                    break;
+            }
+    }
+    private void Buy_Up_1_Training()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 2) && GC.Player_Wood >= (purchaseValue * 2) && GC.Player_Tech >= (purchaseValue * 2))
+        {
+            GC.Player_Metal -= (purchaseValue * 2);
+            GC.Player_Wood -= (purchaseValue * 2);
+            GC.Player_Tech -= (purchaseValue * 2);
+            GC.Training_Upg_Lvl1_R2 = 1;
+            training_Lvl1_R2_Def.SetActive(false);
+            training_Lvl1_R2_Up_1.SetActive(true);
+        }
+    }
+    private void Buy_Up_2_Training()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 4) && GC.Player_Wood >= (purchaseValue * 4) && GC.Player_Tech >= (purchaseValue * 4))
+        {
+            GC.Player_Metal -= (purchaseValue * 4);
+            GC.Player_Wood -= (purchaseValue * 4);
+            GC.Player_Tech -= (purchaseValue * 4);
+            GC.Training_Upg_Lvl1_R2 = 2;
+            training_Lvl1_R2_Up_1.SetActive(false);
+            training_Lvl1_R2_Up_2.SetActive(true);
+        }
+    }
+    private void Buy_Up_3_Training()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 8) && GC.Player_Wood >= (purchaseValue * 8) && GC.Player_Tech >= (purchaseValue * 8))
+        {
+            GC.Player_Metal -= (purchaseValue * 8);
+            GC.Player_Wood -= (purchaseValue * 8);
+            GC.Player_Tech -= (purchaseValue * 8);
+            GC.Training_Upg_Lvl1_R2 = 3;
+            training_Lvl1_R2_Up_2.SetActive(false);
+            training_Lvl1_R2_Up_3.SetActive(true);
+        }
+    }
+    private void Buy_Up_4_Training()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 16) && GC.Player_Wood >= (purchaseValue * 16) && GC.Player_Tech >= (purchaseValue * 16))
+        {
+            GC.Player_Metal -= (purchaseValue * 16);
+            GC.Player_Wood -= (purchaseValue * 16);
+            GC.Player_Tech -= (purchaseValue * 16);
+            GC.Training_Upg_Lvl1_R2 = 4;
+            training_Lvl1_R2_Up_3.SetActive(false);
+            training_Lvl1_R2_Up_4.SetActive(true);
+        }
+    }
+    private void Buy_Up_5_Training()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 32) && GC.Player_Wood >= (purchaseValue * 32) && GC.Player_Tech >= (purchaseValue * 32))
+        {
+            GC.Player_Metal -= (purchaseValue * 32);
+            GC.Player_Wood -= (purchaseValue * 32);
+            GC.Player_Tech -= (purchaseValue * 32);
+            GC.Training_Upg_Lvl1_R2 = 5;
+            training_Lvl1_R2_Up_4.SetActive(false);
+            training_Lvl1_R2_Up_5.SetActive(true);
+        }
+    }
+    #endregion
+    // Expedition(1) & Training(2) IS LEVEL 2 RIGHT SIDE
+    #region UnderGarden & Upgrades // not figured out the values to spend on unlocks
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Upgrade_UnderGarden_Building()
+    {
+        switch (GC.UnderGarden_Upg_Lvl1_L1)
+            {
+                case 0:
+                Buy_Up_1_UnderGarden();
+                    break;
+                case 1:
+                Buy_Up_2_UnderGarden();
+                    break;
+                case 2:
+                Buy_Up_3_UnderGarden();
+                    break;
+                case 3:
+                Buy_Up_4_UnderGarden();
+                    break;
+                case 4:
+                Buy_Up_5_UnderGarden();
+                    break;
+            }
+    }
+    private void Buy_Up_1_UnderGarden()
+    {
+        if (GC.Player_Metal >= purchaseValue && GC.Player_Wood >= purchaseValue && GC.Player_Tech >= purchaseValue)
+        {
+            GC.Player_Metal -= purchaseValue;
+            GC.Player_Wood -= purchaseValue;
+            GC.Player_Tech -= purchaseValue;
+            GC.UnderGarden_Upg_Lvl1_L1 = 1;
+            underGarden_Lvl1_L1_Def.SetActive(false);
+            underGarden_Lvl1_L1_Up_1.SetActive(true);
+        }
+    }
+    private void Buy_Up_2_UnderGarden()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 2) && GC.Player_Wood >= (purchaseValue * 2) && GC.Player_Tech >= (purchaseValue * 2))
+        {
+            GC.Player_Metal -= (purchaseValue * 2);
+            GC.Player_Wood -= (purchaseValue * 2);
+            GC.Player_Tech -= (purchaseValue * 2);
+            GC.UnderGarden_Upg_Lvl1_L1 = 2;
+            underGarden_Lvl1_L1_Up_1.SetActive(false);
+            underGarden_Lvl1_L1_Up_2.SetActive(true);
+        }
+    }
+    private void Buy_Up_3_UnderGarden()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 4) && GC.Player_Wood >= (purchaseValue * 4) && GC.Player_Tech >= (purchaseValue * 4))
+        {
+            GC.Player_Metal -= (purchaseValue * 4);
+            GC.Player_Wood -= (purchaseValue * 4);
+            GC.Player_Tech -= (purchaseValue * 4);
+            GC.UnderGarden_Upg_Lvl1_L1 = 3;
+            underGarden_Lvl1_L1_Up_2.SetActive(false);
+            underGarden_Lvl1_L1_Up_3.SetActive(true);
+        }
+    }
+    private void Buy_Up_4_UnderGarden()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 8) && GC.Player_Wood >= (purchaseValue * 8) && GC.Player_Tech >= (purchaseValue * 8))
+        {
+            GC.Player_Metal -= (purchaseValue * 8);
+            GC.Player_Wood -= (purchaseValue * 8);
+            GC.Player_Tech -= (purchaseValue * 8);
+            GC.UnderGarden_Upg_Lvl1_L1 = 4;
+            underGarden_Lvl1_L1_Up_3.SetActive(false);
+            underGarden_Lvl1_L1_Up_4.SetActive(true);
+        }
+    }
+    private void Buy_Up_5_UnderGarden()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 16) && GC.Player_Wood >= (purchaseValue * 16) && GC.Player_Tech >= (purchaseValue * 16))
+        {
+            GC.Player_Metal -= (purchaseValue * 16);
+            GC.Player_Wood -= (purchaseValue * 16);
+            GC.Player_Tech -= (purchaseValue * 16);
+            GC.UnderGarden_Upg_Lvl1_L1 = 5;
+            underGarden_Lvl1_L1_Up_4.SetActive(false);
+            underGarden_Lvl1_L1_Up_5.SetActive(true);
+        }
+    }
+    #endregion
+    #region Radio & Upgrades // not figured out the values to spend on unlocks
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Upgrade_Radio_Building()
+    {
+        switch (GC.Radio_Upg_Lvl1_L2)
+            {
+                case 0:
+                    Buy_Up_1_Radio();
+                    break;
+                case 1:
+                    Buy_Up_2_Radio();
+                    break;
+                case 2:
+                    Buy_Up_3_Radio();
+                    break;
+                case 3:
+                    Buy_Up_4_Radio();
+                    break;
+                case 4:
+                    Buy_Up_5_Radio();
+                    break;
+            }
+    }
+    private void Buy_Up_1_Radio()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 2) && GC.Player_Wood >= (purchaseValue * 2) && GC.Player_Tech >= (purchaseValue * 2))
+        {
+            GC.Player_Metal -= (purchaseValue * 2);
+            GC.Player_Wood -= (purchaseValue * 2);
+            GC.Player_Tech -= (purchaseValue * 2);
+            GC.Radio_Upg_Lvl1_L2 = 1;
+            radio_Lvl1_L2_Def.SetActive(false);
+            radio_Lvl1_L2_Up_1.SetActive(true);
+        }
+    }
+    private void Buy_Up_2_Radio()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 4) && GC.Player_Wood >= (purchaseValue * 4) && GC.Player_Tech >= (purchaseValue * 4))
+        {
+            GC.Player_Metal -= (purchaseValue * 4);
+            GC.Player_Wood -= (purchaseValue * 4);
+            GC.Player_Tech -= (purchaseValue * 4);
+            GC.Radio_Upg_Lvl1_L2 = 2;
+            radio_Lvl1_L2_Up_1.SetActive(false);
+            radio_Lvl1_L2_Up_2.SetActive(true);
+        }
+    }
+    private void Buy_Up_3_Radio()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 8) && GC.Player_Wood >= (purchaseValue * 8) && GC.Player_Tech >= (purchaseValue * 8))
+        {
+            GC.Player_Metal -= (purchaseValue * 8);
+            GC.Player_Wood -= (purchaseValue * 8);
+            GC.Player_Tech -= (purchaseValue * 8);
+            GC.Radio_Upg_Lvl1_L2 = 3;
+            radio_Lvl1_L2_Up_2.SetActive(false);
+            radio_Lvl1_L2_Up_3.SetActive(true);
+        }
+    }
+    private void Buy_Up_4_Radio()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 16) && GC.Player_Wood >= (purchaseValue * 16) && GC.Player_Tech >= (purchaseValue * 16))
+        {
+            GC.Player_Metal -= (purchaseValue * 16);
+            GC.Player_Wood -= (purchaseValue * 16);
+            GC.Player_Tech -= (purchaseValue * 16);
+            GC.Radio_Upg_Lvl1_L2 = 4;
+            radio_Lvl1_L2_Up_3.SetActive(false);
+            radio_Lvl1_L2_Up_4.SetActive(true);
+        }
+    }
+    private void Buy_Up_5_Radio()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 32) && GC.Player_Wood >= (purchaseValue * 32) && GC.Player_Tech >= (purchaseValue * 32))
+        {
+            GC.Player_Metal -= (purchaseValue * 32);
+            GC.Player_Wood -= (purchaseValue * 32);
+            GC.Player_Tech -= (purchaseValue * 32);
+            GC.Radio_Upg_Lvl1_L2 = 5;
+            radio_Lvl1_L2_Up_4.SetActive(false);
+            radio_Lvl1_L2_Up_5.SetActive(true);
+        }
+    }
+    #endregion
+    // UnderGarden(1) & Radio(2) IS LEVEL 1 LEFT SIDE
+    #region Unlock Generator 1 & Upgrades
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Upgrade_Generator_Building_1()
+    {
+        if (!GC.Generator_Lvl2_R1) { Unlock_Generator_1(); }
+        else
+        {
+            switch (GC.Generator_Upg_Lvl2_R1)
+            {
+                case 0:
+                    Buy_Up_1_Generator_1();
+                    break;
+                case 1:
+                    Buy_Up_2_Generator_1();
+                    break;
+                case 2:
+                    Buy_Up_3_Generator_1();
+                    break;
+                case 3:
+                    Buy_Up_4_Generator_1();
+                    break;
+                case 4:
+                    Buy_Up_5_Generator_1();
+                    break;
+            }
+        }
+    }
+    private void Unlock_Generator_1()
+    {
+        if (GC.Stairs_2 && GC.Player_Metal >= (purchaseValue * 2) && GC.Player_Wood >= (purchaseValue * 2) && GC.Player_Tech >= (purchaseValue * 2))
+        {
+            GC.Player_Metal -= (purchaseValue * 2);// purchaseValue is 250
+            GC.Player_Wood -= (purchaseValue * 2);
+            GC.Player_Tech -= (purchaseValue * 2);
+            GC.Generator_Lvl2_R1 = true;
+            GC.Generator_Upg_Lvl2_R1 = 0;
+            generator_Lvl2_R1_Def.SetActive(true);
+        }
+    }
+    private void Buy_Up_1_Generator_1()
+    {
+        if (GC.Player_Metal >= purchaseValue && GC.Player_Wood >= purchaseValue && GC.Player_Tech >= purchaseValue)
+        {
+            GC.Player_Metal -= purchaseValue;
+            GC.Player_Wood -= purchaseValue;
+            GC.Player_Tech -= purchaseValue;
+            GC.Generator_Upg_Lvl2_R1 = 1;
+            generator_Lvl2_R1_Def.SetActive(false);
+            generator_Lvl2_R1_Up_1.SetActive(true);
+        }
+    }
+    private void Buy_Up_2_Generator_1()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 2) && GC.Player_Wood >= (purchaseValue * 2) && GC.Player_Tech >= (purchaseValue * 2))
+        {
+            GC.Player_Metal -= (purchaseValue * 2);
+            GC.Player_Wood -= (purchaseValue * 2);
+            GC.Player_Tech -= (purchaseValue * 2);
+            GC.Generator_Upg_Lvl2_R1 = 2;
+            generator_Lvl2_R1_Up_1.SetActive(false);
+            generator_Lvl2_R1_Up_2.SetActive(true);
+        }
+    }
+    private void Buy_Up_3_Generator_1()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 4) && GC.Player_Wood >= (purchaseValue * 4) && GC.Player_Tech >= (purchaseValue * 4))
+        {
+            GC.Player_Metal -= (purchaseValue * 4);
+            GC.Player_Wood -= (purchaseValue * 4);
+            GC.Player_Tech -= (purchaseValue * 4);
+            GC.Generator_Upg_Lvl2_R1 = 3;
+            generator_Lvl2_R1_Up_2.SetActive(false);
+            generator_Lvl2_R1_Up_3.SetActive(true);
+        }
+    }
+    private void Buy_Up_4_Generator_1()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 8) && GC.Player_Wood >= (purchaseValue * 8) && GC.Player_Tech >= (purchaseValue * 8))
+        {
+            GC.Player_Metal -= (purchaseValue * 8);
+            GC.Player_Wood -= (purchaseValue * 8);
+            GC.Player_Tech -= (purchaseValue * 8);
+            GC.Generator_Upg_Lvl2_R1 = 4;
+            generator_Lvl2_R1_Up_3.SetActive(false);
+            generator_Lvl2_R1_Up_4.SetActive(true);
+        }
+    }
+    private void Buy_Up_5_Generator_1()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 16) && GC.Player_Wood >= (purchaseValue * 16) && GC.Player_Tech >= (purchaseValue * 16))
+        {
+            GC.Player_Metal -= (purchaseValue * 16);
+            GC.Player_Wood -= (purchaseValue * 16);
+            GC.Player_Tech -= (purchaseValue * 16);
+            GC.Generator_Upg_Lvl2_R1 = 5;
+            generator_Lvl2_R1_Up_4.SetActive(false);
+            generator_Lvl2_R1_Up_5.SetActive(true);
+        }
+    }
+    #endregion
+    #region Unlock Generator 2 & Upgrades
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Upgrade_Generator_Building_2()
+    {
+        if (!GC.Generator_Lvl2_R2) { Unlock_Generator_2(); }
+        else
+        {
+            switch (GC.Generator_Upg_Lvl2_R2)
+            {
+                case 0:
+                    Buy_Up_1_Generator_2();
+                    break;
+                case 1:
+                    Buy_Up_2_Generator_2();
+                    break;
+                case 2:
+                    Buy_Up_3_Generator_2();
+                    break;
+                case 3:
+                    Buy_Up_4_Generator_2();
+                    break;
+                case 4:
+                    Buy_Up_5_Generator_2();
+                    break;
+            }
+        }
+    }
+    private void Unlock_Generator_2()
+    {
+        if (GC.Generator_Lvl2_R1 && GC.Player_Metal >= (purchaseValue * 4) && GC.Player_Wood >= (purchaseValue * 4) && GC.Player_Tech >= (purchaseValue * 4))
+        {
+            GC.Player_Metal -= (purchaseValue * 4);// purchaseValue is 250
+            GC.Player_Wood -= (purchaseValue * 4);
+            GC.Player_Tech -= (purchaseValue * 4);
+            GC.Generator_Lvl2_R2 = true;
+            GC.Generator_Upg_Lvl2_R2 = 0;
+            generator_Lvl2_R2_Def.SetActive(true);
+        }
+    }
+    private void Buy_Up_1_Generator_2()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 2) && GC.Player_Wood >= (purchaseValue * 2) && GC.Player_Tech >= (purchaseValue * 2))
+        {
+            GC.Player_Metal -= (purchaseValue * 2);
+            GC.Player_Wood -= (purchaseValue * 2);
+            GC.Player_Tech -= (purchaseValue * 2);
+            GC.Generator_Upg_Lvl2_R2 = 1;
+            generator_Lvl2_R2_Def.SetActive(false);
+            generator_Lvl2_R2_Up_1.SetActive(true);
+        }
+    }
+    private void Buy_Up_2_Generator_2()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 4) && GC.Player_Wood >= (purchaseValue * 4) && GC.Player_Tech >= (purchaseValue * 4))
+        {
+            GC.Player_Metal -= (purchaseValue * 4);
+            GC.Player_Wood -= (purchaseValue * 4);
+            GC.Player_Tech -= (purchaseValue * 4);
+            GC.Generator_Upg_Lvl2_R2 = 2;
+            generator_Lvl2_R2_Up_1.SetActive(false);
+            generator_Lvl2_R2_Up_2.SetActive(true);
+        }
+    }
+    private void Buy_Up_3_Generator_2()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 8) && GC.Player_Wood >= (purchaseValue * 8) && GC.Player_Tech >= (purchaseValue * 8))
+        {
+            GC.Player_Metal -= (purchaseValue * 8);
+            GC.Player_Wood -= (purchaseValue * 8);
+            GC.Player_Tech -= (purchaseValue * 8);
+            GC.Generator_Upg_Lvl2_R2 = 3;
+            generator_Lvl2_R2_Up_2.SetActive(false);
+            generator_Lvl2_R2_Up_3.SetActive(true);
+        }
+    }
+    private void Buy_Up_4_Generator_2()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 16) && GC.Player_Wood >= (purchaseValue * 16) && GC.Player_Tech >= (purchaseValue * 16))
+        {
+            GC.Player_Metal -= (purchaseValue * 16);
+            GC.Player_Wood -= (purchaseValue * 16);
+            GC.Player_Tech -= (purchaseValue * 16);
+            GC.Generator_Upg_Lvl2_R2 = 4;
+            generator_Lvl2_R2_Up_3.SetActive(false);
+            generator_Lvl2_R2_Up_4.SetActive(true);
+        }
+    }
+    private void Buy_Up_5_Generator_2()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 32) && GC.Player_Wood >= (purchaseValue * 32) && GC.Player_Tech >= (purchaseValue * 32))
+        {
+            GC.Player_Metal -= (purchaseValue * 32);
+            GC.Player_Wood -= (purchaseValue * 32);
+            GC.Player_Tech -= (purchaseValue * 32);
+            GC.Generator_Upg_Lvl2_R2 = 5;
+            generator_Lvl2_R2_Up_4.SetActive(false);
+            generator_Lvl2_R2_Up_5.SetActive(true);
+        }
+    }
+    #endregion
+    // GENERATOR IS LEVEL 2 RIGHT SIDE
+    #region Unlock Workshop 1 & Upgrades
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Upgrade_Workshop_Building_1()
+    {
+        if (!GC.Workshop_Lvl2_L1) { Unlock_Workshop_1(); }
+        else
+        {
+            switch (GC.Workshop_Upg_Lvl2_L1)
+            {
+                case 0:
+                    Buy_Up_1_Workshop_1();
+                    break;
+                case 1:
+                    Buy_Up_2_Workshop_1();
+                    break;
+                case 2:
+                    Buy_Up_3_Workshop_1();
+                    break;
+                case 3:
+                    Buy_Up_4_Workshop_1();
+                    break;
+                case 4:
+                    Buy_Up_5_Workshop_1();
+                    break;
+            }
+        }
+    }
+    private void Unlock_Workshop_1()
+    {
+        if (GC.Stairs_2 && GC.Player_Metal >= (purchaseValue * 2) && GC.Player_Wood >= (purchaseValue * 2) && GC.Player_Tech >= (purchaseValue * 2))
+        {
+            GC.Player_Metal -= (purchaseValue * 2);// purchaseValue is 250
+            GC.Player_Wood -= (purchaseValue * 2);
+            GC.Player_Tech -= (purchaseValue * 2);
+            GC.Workshop_Lvl2_L1 = true;
+            GC.Workshop_Upg_Lvl2_L1 = 0;
+            workshop_Lvl2_L1_Def.SetActive(true);
+        }
+    }
+    private void Buy_Up_1_Workshop_1()
+    {
+        if (GC.Player_Metal >= purchaseValue && GC.Player_Wood >= purchaseValue && GC.Player_Tech >= purchaseValue)
+        {
+            GC.Player_Metal -= purchaseValue;
+            GC.Player_Wood -= purchaseValue;
+            GC.Player_Tech -= purchaseValue;
+            GC.Workshop_Upg_Lvl2_L1 = 1;
+            workshop_Lvl2_L1_Def.SetActive(false);
+            workshop_Lvl2_L1_Up_1.SetActive(true);
+        }
+    }
+    private void Buy_Up_2_Workshop_1()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 2) && GC.Player_Wood >= (purchaseValue * 2) && GC.Player_Tech >= (purchaseValue * 2))
+        {
+            GC.Player_Metal -= (purchaseValue * 2);
+            GC.Player_Wood -= (purchaseValue * 2);
+            GC.Player_Tech -= (purchaseValue * 2);
+            GC.Workshop_Upg_Lvl2_L1 = 2;
+            workshop_Lvl2_L1_Up_1.SetActive(false);
+            workshop_Lvl2_L1_Up_2.SetActive(true);
+        }
+    }
+    private void Buy_Up_3_Workshop_1()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 4) && GC.Player_Wood >= (purchaseValue * 4) && GC.Player_Tech >= (purchaseValue * 4))
+        {
+            GC.Player_Metal -= (purchaseValue * 4);
+            GC.Player_Wood -= (purchaseValue * 4);
+            GC.Player_Tech -= (purchaseValue * 4);
+            GC.Workshop_Upg_Lvl2_L1 = 3;
+            workshop_Lvl2_L1_Up_2.SetActive(false);
+            workshop_Lvl2_L1_Up_3.SetActive(true);
+        }
+    }
+    private void Buy_Up_4_Workshop_1()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 8) && GC.Player_Wood >= (purchaseValue * 8) && GC.Player_Tech >= (purchaseValue * 8))
+        {
+            GC.Player_Metal -= (purchaseValue * 8);
+            GC.Player_Wood -= (purchaseValue * 8);
+            GC.Player_Tech -= (purchaseValue * 8);
+            GC.Workshop_Upg_Lvl2_L1 = 4;
+            workshop_Lvl2_L1_Up_3.SetActive(false);
+            workshop_Lvl2_L1_Up_4.SetActive(true);
+        }
+    }
+    private void Buy_Up_5_Workshop_1()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 16) && GC.Player_Wood >= (purchaseValue * 16) && GC.Player_Tech >= (purchaseValue * 16))
+        {
+            GC.Player_Metal -= (purchaseValue * 16);
+            GC.Player_Wood -= (purchaseValue * 16);
+            GC.Player_Tech -= (purchaseValue * 16);
+            GC.Workshop_Upg_Lvl2_L1 = 5;
+            workshop_Lvl2_L1_Up_4.SetActive(false);
+            workshop_Lvl2_L1_Up_5.SetActive(true);
+        }
+    }
+    #endregion
+    #region Unlock Workshop 2 & Upgrades
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Upgrade_Workshop_Building_2()
+    {
+        if (!GC.Workshop_Lvl2_L2) { Unlock_Workshop_2(); }
+        else
+        {
+            switch (GC.Workshop_Upg_Lvl2_L2)
+            {
+                case 0:
+                    Buy_Up_1_Workshop_2();
+                    break;
+                case 1:
+                    Buy_Up_2_Workshop_2();
+                    break;
+                case 2:
+                    Buy_Up_3_Workshop_2();
+                    break;
+                case 3:
+                    Buy_Up_4_Workshop_2();
+                    break;
+                case 4:
+                    Buy_Up_5_Workshop_2();
+                    break;
+            }
+        }
+    }
+    private void Unlock_Workshop_2()
+    {
+        if (GC.Workshop_Lvl2_L1 && GC.Player_Metal >= (purchaseValue * 4) && GC.Player_Wood >= (purchaseValue * 4) && GC.Player_Tech >= (purchaseValue * 4))
+        {
+            GC.Player_Metal -= (purchaseValue * 4);// purchaseValue is 250
+            GC.Player_Wood -= (purchaseValue * 4);
+            GC.Player_Tech -= (purchaseValue * 4);
+            GC.Workshop_Lvl2_L2 = true;
+            GC.Workshop_Upg_Lvl2_L2 = 0;
+            workshop_Lvl2_L2_Def.SetActive(true);
+        }
+    }
+    private void Buy_Up_1_Workshop_2()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 2) && GC.Player_Wood >= (purchaseValue * 2) && GC.Player_Tech >= (purchaseValue * 2))
+        {
+            GC.Player_Metal -= (purchaseValue * 2);
+            GC.Player_Wood -= (purchaseValue * 2);
+            GC.Player_Tech -= (purchaseValue * 2);
+            GC.Workshop_Upg_Lvl2_L2 = 1;
+            workshop_Lvl2_L2_Def.SetActive(false);
+            workshop_Lvl2_L2_Up_1.SetActive(true);
+        }
+    }
+    private void Buy_Up_2_Workshop_2()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 4) && GC.Player_Wood >= (purchaseValue * 4) && GC.Player_Tech >= (purchaseValue * 4))
+        {
+            GC.Player_Metal -= (purchaseValue * 4);
+            GC.Player_Wood -= (purchaseValue * 4);
+            GC.Player_Tech -= (purchaseValue * 4);
+            GC.Workshop_Upg_Lvl2_L2 = 2;
+            workshop_Lvl2_L2_Up_1.SetActive(false);
+            workshop_Lvl2_L2_Up_2.SetActive(true);
+        }
+    }
+    private void Buy_Up_3_Workshop_2()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 8) && GC.Player_Wood >= (purchaseValue * 8) && GC.Player_Tech >= (purchaseValue * 8))
+        {
+            GC.Player_Metal -= (purchaseValue * 8);
+            GC.Player_Wood -= (purchaseValue * 8);
+            GC.Player_Tech -= (purchaseValue * 8);
+            GC.Workshop_Upg_Lvl2_L2 = 3;
+            workshop_Lvl2_L2_Up_2.SetActive(false);
+            workshop_Lvl2_L2_Up_3.SetActive(true);
+        }
+    }
+    private void Buy_Up_4_Workshop_2()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 16) && GC.Player_Wood >= (purchaseValue * 16) && GC.Player_Tech >= (purchaseValue * 16))
+        {
+            GC.Player_Metal -= (purchaseValue * 16);
+            GC.Player_Wood -= (purchaseValue * 16);
+            GC.Player_Tech -= (purchaseValue * 16);
+            GC.Workshop_Upg_Lvl2_L2 = 4;
+            workshop_Lvl2_L2_Up_3.SetActive(false);
+            workshop_Lvl2_L2_Up_4.SetActive(true);
+        }
+    }
+    private void Buy_Up_5_Workshop_2()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 32) && GC.Player_Wood >= (purchaseValue * 32) && GC.Player_Tech >= (purchaseValue * 32))
+        {
+            GC.Player_Metal -= (purchaseValue * 32);
+            GC.Player_Wood -= (purchaseValue * 32);
+            GC.Player_Tech -= (purchaseValue * 32);
+            GC.Workshop_Upg_Lvl2_L2 = 5;
+            workshop_Lvl2_L2_Up_4.SetActive(false);
+            workshop_Lvl2_L2_Up_5.SetActive(true);
+        }
+    }
+    #endregion
+    // WORKSHOP IS LEVEL 2 LEFT SIDE
+    #region Unlock LivingSpace 1 & Upgrades
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Upgrade_LivingSpace_Building_1()
+    {
+        if (!GC.LivingSpace_Lvl3_R1) { Unlock_LivingSpace_1(); }
+        else
+        {
+            switch (GC.LivingSpace_Upg_Lvl3_R1)
+            {
+                case 0:
+                    Buy_Up_1_LivingSpace_1();
+                    break;
+                case 1:
+                    Buy_Up_2_LivingSpace_1();
+                    break;
+                case 2:
+                    Buy_Up_3_LivingSpace_1();
+                    break;
+                case 3:
+                    Buy_Up_4_LivingSpace_1();
+                    break;
+                case 4:
+                    Buy_Up_5_LivingSpace_1();
+                    break;
+            }
+        }
+    }
+    private void Unlock_LivingSpace_1()
+    {
+        if (GC.Stairs_3 && GC.Player_Metal >= (purchaseValue * 2) && GC.Player_Wood >= (purchaseValue * 2) && GC.Player_Tech >= (purchaseValue * 2))
+        {
+            GC.Player_Metal -= (purchaseValue * 2);// purchaseValue is 250
+            GC.Player_Wood -= (purchaseValue * 2);
+            GC.Player_Tech -= (purchaseValue * 2);
+            GC.LivingSpace_Lvl3_R1 = true;
+            GC.LivingSpace_Upg_Lvl3_R1 = 0;
+            livingSpace_Lvl3_R1_Def.SetActive(true);
+        }
+    }
+    private void Buy_Up_1_LivingSpace_1()
+    {
+        if (GC.Player_Metal >= purchaseValue && GC.Player_Wood >= purchaseValue && GC.Player_Tech >= purchaseValue)
+        {
+            GC.Player_Metal -= purchaseValue;
+            GC.Player_Wood -= purchaseValue;
+            GC.Player_Tech -= purchaseValue;
+            GC.LivingSpace_Upg_Lvl3_R1 = 1;
+            livingSpace_Lvl3_R1_Def.SetActive(false);
+            livingSpace_Lvl3_R1_Up_1.SetActive(true);
+        }
+    }
+    private void Buy_Up_2_LivingSpace_1()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 2) && GC.Player_Wood >= (purchaseValue * 2) && GC.Player_Tech >= (purchaseValue * 2))
+        {
+            GC.Player_Metal -= (purchaseValue * 2);
+            GC.Player_Wood -= (purchaseValue * 2);
+            GC.Player_Tech -= (purchaseValue * 2);
+            GC.LivingSpace_Upg_Lvl3_R1 = 2;
+            livingSpace_Lvl3_R1_Up_1.SetActive(false);
+            livingSpace_Lvl3_R1_Up_2.SetActive(true);
+        }
+    }
+    private void Buy_Up_3_LivingSpace_1()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 4) && GC.Player_Wood >= (purchaseValue * 4) && GC.Player_Tech >= (purchaseValue * 4))
+        {
+            GC.Player_Metal -= (purchaseValue * 4);
+            GC.Player_Wood -= (purchaseValue * 4);
+            GC.Player_Tech -= (purchaseValue * 4);
+            GC.LivingSpace_Upg_Lvl3_R1 = 3;
+            livingSpace_Lvl3_R1_Up_2.SetActive(false);
+            livingSpace_Lvl3_R1_Up_3.SetActive(true);
+        }
+    }
+    private void Buy_Up_4_LivingSpace_1()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 8) && GC.Player_Wood >= (purchaseValue * 8) && GC.Player_Tech >= (purchaseValue * 8))
+        {
+            GC.Player_Metal -= (purchaseValue * 8);
+            GC.Player_Wood -= (purchaseValue * 8);
+            GC.Player_Tech -= (purchaseValue * 8);
+            GC.LivingSpace_Upg_Lvl3_R1 = 4;
+            livingSpace_Lvl3_R1_Up_3.SetActive(false);
+            livingSpace_Lvl3_R1_Up_4.SetActive(true);
+        }
+    }
+    private void Buy_Up_5_LivingSpace_1()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 16) && GC.Player_Wood >= (purchaseValue * 16) && GC.Player_Tech >= (purchaseValue * 16))
+        {
+            GC.Player_Metal -= (purchaseValue * 16);
+            GC.Player_Wood -= (purchaseValue * 16);
+            GC.Player_Tech -= (purchaseValue * 16);
+            GC.LivingSpace_Upg_Lvl3_R1 = 5;
+            livingSpace_Lvl3_R1_Up_4.SetActive(false);
+            livingSpace_Lvl3_R1_Up_5.SetActive(true);
+        }
+    }
+    #endregion
+    #region Unlock LivingSpace 2 & Upgrades
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Upgrade_LivingSpace_Building_2()
+    {
+        if (!GC.LivingSpace_Lvl3_R2) { Unlock_LivingSpace_2(); }
+        else
+        {
+            switch (GC.LivingSpace_Upg_Lvl3_R2)
+            {
+                case 0:
+                    Buy_Up_1_LivingSpace_2();
+                    break;
+                case 1:
+                    Buy_Up_2_LivingSpace_2();
+                    break;
+                case 2:
+                    Buy_Up_3_LivingSpace_2();
+                    break;
+                case 3:
+                    Buy_Up_4_LivingSpace_2();
+                    break;
+                case 4:
+                    Buy_Up_5_LivingSpace_2();
+                    break;
+            }
+        }
+    }
+    private void Unlock_LivingSpace_2()
+    {
+        if (GC.LivingSpace_Lvl3_R1 && GC.Player_Metal >= (purchaseValue * 4) && GC.Player_Wood >= (purchaseValue * 4) && GC.Player_Tech >= (purchaseValue * 4))
+        {
+            GC.Player_Metal -= (purchaseValue * 4);// purchaseValue is 250
+            GC.Player_Wood -= (purchaseValue * 4);
+            GC.Player_Tech -= (purchaseValue * 4);
+            GC.LivingSpace_Lvl3_R2 = true;
+            GC.LivingSpace_Upg_Lvl3_R2 = 0;
+            livingSpace_Lvl3_R2_Def.SetActive(true);
+        }
+    }
+    private void Buy_Up_1_LivingSpace_2()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 2) && GC.Player_Wood >= (purchaseValue * 2) && GC.Player_Tech >= (purchaseValue * 2))
+        {
+            GC.Player_Metal -= (purchaseValue * 2);
+            GC.Player_Wood -= (purchaseValue * 2);
+            GC.Player_Tech -= (purchaseValue * 2);
+            GC.LivingSpace_Upg_Lvl3_R2 = 1;
+            livingSpace_Lvl3_R2_Def.SetActive(false);
+            livingSpace_Lvl3_R2_Up_1.SetActive(true);
+        }
+    }
+    private void Buy_Up_2_LivingSpace_2()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 4) && GC.Player_Wood >= (purchaseValue * 4) && GC.Player_Tech >= (purchaseValue * 4))
+        {
+            GC.Player_Metal -= (purchaseValue * 4);
+            GC.Player_Wood -= (purchaseValue * 4);
+            GC.Player_Tech -= (purchaseValue * 4);
+            GC.LivingSpace_Upg_Lvl3_R2 = 2;
+            livingSpace_Lvl3_R2_Up_1.SetActive(false);
+            livingSpace_Lvl3_R2_Up_2.SetActive(true);
+        }
+    }
+    private void Buy_Up_3_LivingSpace_2()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 8) && GC.Player_Wood >= (purchaseValue * 8) && GC.Player_Tech >= (purchaseValue * 8))
+        {
+            GC.Player_Metal -= (purchaseValue * 8);
+            GC.Player_Wood -= (purchaseValue * 8);
+            GC.Player_Tech -= (purchaseValue * 8);
+            GC.LivingSpace_Upg_Lvl3_R2 = 3;
+            livingSpace_Lvl3_R2_Up_2.SetActive(false);
+            livingSpace_Lvl3_R2_Up_3.SetActive(true);
+        }
+    }
+    private void Buy_Up_4_LivingSpace_2()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 16) && GC.Player_Wood >= (purchaseValue * 16) && GC.Player_Tech >= (purchaseValue * 16))
+        {
+            GC.Player_Metal -= (purchaseValue * 16);
+            GC.Player_Wood -= (purchaseValue * 16);
+            GC.Player_Tech -= (purchaseValue * 16);
+            GC.LivingSpace_Upg_Lvl3_R2 = 4;
+            livingSpace_Lvl3_R2_Up_3.SetActive(false);
+            livingSpace_Lvl3_R2_Up_4.SetActive(true);
+        }
+    }
+    private void Buy_Up_5_LivingSpace_2()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 32) && GC.Player_Wood >= (purchaseValue * 32) && GC.Player_Tech >= (purchaseValue * 32))
+        {
+            GC.Player_Metal -= (purchaseValue * 32);
+            GC.Player_Wood -= (purchaseValue * 32);
+            GC.Player_Tech -= (purchaseValue * 32);
+            GC.LivingSpace_Upg_Lvl3_R2 = 5;
+            livingSpace_Lvl3_R2_Up_4.SetActive(false);
+            livingSpace_Lvl3_R2_Up_5.SetActive(true);
+        }
+    }
+    #endregion
+    // LIVING IS LEVEL 3 RIGHT SIDE
+    #region Unlock Research 1 & Upgrades
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Upgrade_Research_Building_1()
+    {
+        if (!GC.Research_Lvl3_L1) { Unlock_Research_1(); }
+        else
+        {
+            switch (GC.Research_Upg_Lvl3_L1)
+            {
+                case 0:
+                    Buy_Up_1_Research_1();
+                    break;
+                case 1:
+                    Buy_Up_2_Research_1();
+                    break;
+                case 2:
+                    Buy_Up_3_Research_1();
+                    break;
+                case 3:
+                    Buy_Up_4_Research_1();
+                    break;
+                case 4:
+                    Buy_Up_5_Research_1();
+                    break;
+            }
+        }
+    }
+    private void Unlock_Research_1()
+    {
+        if (GC.Stairs_3 && GC.Player_Metal >= (purchaseValue*2) && GC.Player_Wood >= (purchaseValue * 2) && GC.Player_Tech >= (purchaseValue * 2))
+        {
+            GC.Player_Metal -= (purchaseValue * 2);// purchaseValue is 250
+            GC.Player_Wood -= (purchaseValue * 2);
+            GC.Player_Tech -= (purchaseValue * 2);
+            GC.Research_Lvl3_L1 = true;
+            GC.Research_Upg_Lvl3_L1 = 0;
+            research_Lvl3_L1_Def.SetActive(true);
+        }
+    }
+    private void Buy_Up_1_Research_1()
+    {
+        if (GC.Player_Metal >= purchaseValue && GC.Player_Wood >= purchaseValue && GC.Player_Tech >= purchaseValue)
+        {
+            GC.Player_Metal -= purchaseValue;
+            GC.Player_Wood -= purchaseValue;
+            GC.Player_Tech -= purchaseValue;
+            GC.Research_Upg_Lvl3_L1 = 1;
+            research_Lvl3_L1_Def.SetActive(false);
+            research_Lvl3_L1_Up_1.SetActive(true);
+        }
+    }
+    private void Buy_Up_2_Research_1()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 2) && GC.Player_Wood >= (purchaseValue * 2) && GC.Player_Tech >= (purchaseValue * 2))
+        {
+            GC.Player_Metal -= (purchaseValue * 2);
+            GC.Player_Wood -= (purchaseValue * 2);
+            GC.Player_Tech -= (purchaseValue * 2);
+            GC.Research_Upg_Lvl3_L1 = 2;
+            research_Lvl3_L1_Up_1.SetActive(false);
+            research_Lvl3_L1_Up_2.SetActive(true);
+        }
+    }
+    private void Buy_Up_3_Research_1()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 4) && GC.Player_Wood >= (purchaseValue * 4) && GC.Player_Tech >= (purchaseValue * 4))
+        {
+            GC.Player_Metal -= (purchaseValue * 4);
+            GC.Player_Wood -= (purchaseValue * 4);
+            GC.Player_Tech -= (purchaseValue * 4);
+            GC.Research_Upg_Lvl3_L1 = 3;
+            research_Lvl3_L1_Up_2.SetActive(false);
+            research_Lvl3_L1_Up_3.SetActive(true);
+        }
+    }
+    private void Buy_Up_4_Research_1()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 8) && GC.Player_Wood >= (purchaseValue * 8) && GC.Player_Tech >= (purchaseValue * 8))
+        {
+            GC.Player_Metal -= (purchaseValue * 8);
+            GC.Player_Wood -= (purchaseValue * 8);
+            GC.Player_Tech -= (purchaseValue * 8);
+            GC.Research_Upg_Lvl3_L1 = 4;
+            research_Lvl3_L1_Up_3.SetActive(false);
+            research_Lvl3_L1_Up_4.SetActive(true);
+        }
+    }
+    private void Buy_Up_5_Research_1()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 16) && GC.Player_Wood >= (purchaseValue * 16) && GC.Player_Tech >= (purchaseValue * 16))
+        {
+            GC.Player_Metal -= (purchaseValue * 16);
+            GC.Player_Wood -= (purchaseValue * 16);
+            GC.Player_Tech -= (purchaseValue * 16);
+            GC.Research_Upg_Lvl3_L1 = 5;
+            research_Lvl3_L1_Up_4.SetActive(false);
+            research_Lvl3_L1_Up_5.SetActive(true);
+        }
+    }
+    #endregion
+    #region Unlock Research 2 & Upgrades
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Upgrade_Research_Building_2()
+    {
+        if (!GC.Research_Lvl3_L2) { Unlock_Research_2(); }
+        else
+        {
+            switch (GC.Research_Upg_Lvl3_L2)
+            {
+                case 0:
+                    Buy_Up_1_Research_2();
+                    break;
+                case 1:
+                    Buy_Up_2_Research_2();
+                    break;
+                case 2:
+                    Buy_Up_3_Research_2();
+                    break;
+                case 3:
+                    Buy_Up_4_Research_2();
+                    break;
+                case 4:
+                    Buy_Up_5_Research_2();
+                    break;
+            }
+        }
+    }
+    private void Unlock_Research_2()
+    {
+        if (GC.Research_Lvl3_L1 && GC.Player_Metal >= (purchaseValue * 4) && GC.Player_Wood >= (purchaseValue * 4) && GC.Player_Tech >= (purchaseValue * 4))
+        {
+            GC.Player_Metal -= (purchaseValue * 4);// purchaseValue is 250
+            GC.Player_Wood -= (purchaseValue * 4);
+            GC.Player_Tech -= (purchaseValue * 4);
+            GC.Research_Lvl3_L2 = true;
+            GC.Research_Upg_Lvl3_L2 = 0;
+            research_Lvl3_L2_Def.SetActive(true);
+        }
+    }
+    private void Buy_Up_1_Research_2()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 2) && GC.Player_Wood >= (purchaseValue * 2) && GC.Player_Tech >= (purchaseValue * 2))
+        {
+            GC.Player_Metal -= (purchaseValue * 2);
+            GC.Player_Wood -= (purchaseValue * 2);
+            GC.Player_Tech -= (purchaseValue * 2);
+            GC.Research_Upg_Lvl3_L2 = 1;
+            research_Lvl3_L2_Def.SetActive(false);
+            research_Lvl3_L2_Up_1.SetActive(true);
+        }
+    }
+    private void Buy_Up_2_Research_2()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 4) && GC.Player_Wood >= (purchaseValue * 4) && GC.Player_Tech >= (purchaseValue * 4))
+        {
+            GC.Player_Metal -= (purchaseValue * 4);
+            GC.Player_Wood -= (purchaseValue * 4);
+            GC.Player_Tech -= (purchaseValue * 4);
+            GC.Research_Upg_Lvl3_L2 = 2;
+            research_Lvl3_L2_Up_1.SetActive(false);
+            research_Lvl3_L2_Up_2.SetActive(true);
+        }
+    }
+    private void Buy_Up_3_Research_2()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 8) && GC.Player_Wood >= (purchaseValue * 8) && GC.Player_Tech >= (purchaseValue * 8))
+        {
+            GC.Player_Metal -= (purchaseValue * 8);
+            GC.Player_Wood -= (purchaseValue * 8);
+            GC.Player_Tech -= (purchaseValue * 8);
+            GC.Research_Upg_Lvl3_L2 = 3;
+            research_Lvl3_L2_Up_2.SetActive(false);
+            research_Lvl3_L2_Up_3.SetActive(true);
+        }
+    }
+    private void Buy_Up_4_Research_2()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 16) && GC.Player_Wood >= (purchaseValue * 16) && GC.Player_Tech >= (purchaseValue * 16))
+        {
+            GC.Player_Metal -= (purchaseValue * 16);
+            GC.Player_Wood -= (purchaseValue * 16);
+            GC.Player_Tech -= (purchaseValue * 16);
+            GC.Research_Upg_Lvl3_L2 = 4;
+            research_Lvl3_L2_Up_3.SetActive(false);
+            research_Lvl3_L2_Up_4.SetActive(true);
+        }
+    }
+    private void Buy_Up_5_Research_2()
+    {
+        if (GC.Player_Metal >= (purchaseValue * 32) && GC.Player_Wood >= (purchaseValue * 32) && GC.Player_Tech >= (purchaseValue * 32))
+        {
+            GC.Player_Metal -= (purchaseValue * 32);
+            GC.Player_Wood -= (purchaseValue * 32);
+            GC.Player_Tech -= (purchaseValue * 32);
+            GC.Research_Upg_Lvl3_L2 = 5;
+            research_Lvl3_L2_Up_4.SetActive(false);
+            research_Lvl3_L2_Up_5.SetActive(true);
+        }
+    }
+    #endregion
+    // RESEARCH IS LEVEL 3 LEFT SIDE
+    #endregion
     #endregion
 }

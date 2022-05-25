@@ -18,9 +18,9 @@ public class CameraHandler : MonoBehaviour
     private int zoomLevel;
     private int currentOrthoZoom;
     private int zoomLevelOrthoSetting_1 = 630, zoomLevelOrthoSetting_2 = 845, zoomLevelOrthoSetting_3 = 1100;
-    private int camArea_1_MaxY = 1185, camArea_1_MinY = 100, camArea_1_MaxX = 5655, camArea_1_MinX = 148;//camArea_1_MinY = 145
-    private int camArea_2_MaxY = 970, camArea_2_MinY = 300, camArea_2_MaxX = 5215, camArea_2_MinX = 581;//camArea_2_MinY = 380
-    private int camArea_3_MaxY = 749, camArea_3_MinY = 523, camArea_3_MaxX = 4810, camArea_3_MinX = 1018;//camArea_3_MinY = 623<previous boundary
+    private int camArea_1_MaxY = 1185, camArea_1_MinY = 15, camArea_1_MaxX = 5655, camArea_1_MinX = 148;//camArea_1_MinY = 145
+    private int camArea_2_MaxY = 970, camArea_2_MinY = 150, camArea_2_MaxX = 5215, camArea_2_MinX = 581;//camArea_2_MinY = 380
+    private int camArea_3_MaxY = 749, camArea_3_MinY = 300, camArea_3_MaxX = 4810, camArea_3_MinX = 1018;//camArea_3_MinY = 623<previous boundary
 
     private void Start()
     {
