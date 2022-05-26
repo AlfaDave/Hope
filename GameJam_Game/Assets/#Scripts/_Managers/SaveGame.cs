@@ -167,6 +167,13 @@ public class SaveGame : MonoBehaviour
         data.stairs_3 = gCont.Stairs_3;
         data.stairs_2_Clicks_Unlock = gCont.Stairs_2_Clicks_Unlock;
         data.stairs_3_Clicks_Unlock = gCont.Stairs_3_Clicks_Unlock;
+        data.wall_L = gCont.Wall_L;
+        data.wall_R = gCont.Wall_R;
+        data.wall_L_Clicks_Unlock = gCont.Wall_L_Clik_Unlock;
+        data.wall_R_Clicks_Unlock = gCont.Wall_R_Clik_Unlock;
+        data.wall_L_Upg = gCont.Wall_L_Upg;
+        data.wall_R_Upg = gCont.Wall_R_Upg;
+
         /// <summary>
         /// Rooms are ordered in layers with left and right number 1 room is closest to the stairs
         /// </summary>
@@ -203,12 +210,12 @@ public class SaveGame : MonoBehaviour
         data.bedroom_4 = gCont.Bedroom_Lvl2_R;
         data.bedroom_5 = gCont.Bedroom_Lvl3_L;
         data.bedroom_6 = gCont.Bedroom_Lvl3_R;
-        data.bedroom_1_Occupants = gCont.Bedroom_1_Occupants;
-        data.bedroom_2_Occupants = gCont.Bedroom_2_Occupants;
-        data.bedroom_3_Occupants = gCont.Bedroom_3_Occupants;
-        data.bedroom_4_Occupants = gCont.Bedroom_4_Occupants;
-        data.bedroom_5_Occupants = gCont.Bedroom_5_Occupants;
-        data.bedroom_6_Occupants = gCont.Bedroom_6_Occupants;
+        data.bedroom_1_Occupants = gCont.Bedroom_Upg_Lvl1_L;
+        data.bedroom_2_Occupants = gCont.Bedroom_Upg_Lvl1_R;
+        data.bedroom_3_Occupants = gCont.Bedroom_Upg_Lvl2_L;
+        data.bedroom_4_Occupants = gCont.Bedroom_Upg_Lvl2_R;
+        data.bedroom_5_Occupants = gCont.Bedroom_Upg_Lvl3_L;
+        data.bedroom_6_Occupants = gCont.Bedroom_Upg_Lvl3_R;
         data.bedroom_1_Clicks_Unlock = gCont.Bedroom_Lvl1_L_Clik_Unlock;
         data.bedroom_2_Clicks_Unlock = gCont.Bedroom_Lvl1_R_Clik_Unlock;
         data.bedroom_3_Clicks_Unlock = gCont.Bedroom_Lvl2_L_Clik_Unlock;
@@ -219,7 +226,7 @@ public class SaveGame : MonoBehaviour
         #region Main Game Stats
         data.player_Turns = gCont.Player_Turns;
         data.player_Tasks = gCont.Player_Tasks;
-        data.player_Civilians = gCont.Player_Civilians;
+        data.player_Civilians = gCont.Player_People;
         data.player_Science = gCont.Player_Science;
         #endregion
         #region Main Game Resources
@@ -276,6 +283,13 @@ public class SaveGame : MonoBehaviour
             gCont.Stairs_3 = data.stairs_3;
             gCont.Stairs_2_Clicks_Unlock = data.stairs_2_Clicks_Unlock;
             gCont.Stairs_3_Clicks_Unlock = data.stairs_3_Clicks_Unlock;
+
+            gCont.Wall_L = data.wall_L;
+            gCont.Wall_R = data.wall_R;
+            gCont.Wall_L_Clik_Unlock = data.wall_L_Clicks_Unlock;
+            gCont.Wall_R_Clik_Unlock = data.wall_R_Clicks_Unlock;
+            gCont.Wall_L_Upg = data.wall_L_Upg;
+            gCont.Wall_R_Upg = data.wall_R_Upg;
             /// <summary>
             /// Rooms are ordered in layers with left and right number 1 room is closest to the stairs
             /// </summary>
@@ -312,12 +326,12 @@ public class SaveGame : MonoBehaviour
             gCont.Bedroom_Lvl2_R = data.bedroom_4;
             gCont.Bedroom_Lvl3_L = data.bedroom_5;
             gCont.Bedroom_Lvl3_R = data.bedroom_6;
-            gCont.Bedroom_1_Occupants = data.bedroom_1_Occupants;
-            gCont.Bedroom_2_Occupants = data.bedroom_2_Occupants;
-            gCont.Bedroom_3_Occupants = data.bedroom_3_Occupants;
-            gCont.Bedroom_4_Occupants = data.bedroom_4_Occupants;
-            gCont.Bedroom_5_Occupants = data.bedroom_5_Occupants;
-            gCont.Bedroom_6_Occupants = data.bedroom_6_Occupants;
+            gCont.Bedroom_Upg_Lvl1_L = data.bedroom_1_Occupants;
+            gCont.Bedroom_Upg_Lvl1_R = data.bedroom_2_Occupants;
+            gCont.Bedroom_Upg_Lvl2_L = data.bedroom_3_Occupants;
+            gCont.Bedroom_Upg_Lvl2_R = data.bedroom_4_Occupants;
+            gCont.Bedroom_Upg_Lvl3_L = data.bedroom_5_Occupants;
+            gCont.Bedroom_Upg_Lvl3_R = data.bedroom_6_Occupants;
             gCont.Bedroom_Lvl1_L_Clik_Unlock = data.bedroom_1_Clicks_Unlock;
             gCont.Bedroom_Lvl1_R_Clik_Unlock = data.bedroom_2_Clicks_Unlock;
             gCont.Bedroom_Lvl2_L_Clik_Unlock = data.bedroom_3_Clicks_Unlock;
@@ -328,7 +342,7 @@ public class SaveGame : MonoBehaviour
             #region Main Game Stats
             gCont.Player_Turns = data.player_Turns;
             gCont.Player_Tasks = data.player_Tasks;
-            gCont.Player_Civilians = data.player_Civilians;
+            gCont.Player_People = data.player_Civilians;
             gCont.Player_Science = data.player_Science;
             #endregion
             #region Main Game Resources
@@ -412,6 +426,12 @@ public class GameData
     public bool stairs_3;
     public int stairs_2_Clicks_Unlock;
     public int stairs_3_Clicks_Unlock;
+    public bool wall_L;
+    public bool wall_R;
+    public int wall_L_Clicks_Unlock;
+    public int wall_R_Clicks_Unlock;
+    public int wall_L_Upg;
+    public int wall_R_Upg;
 
     /// <summary>
     /// Rooms are ordered in layers with left and right number 1 room is closest to the stairs

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,13 @@ using UnityEngine.UI;
 public class Game_Logic : MonoBehaviour
 {
     private GameController GC;
+    [SerializeField] internal GameObject display_Res_Progress, display_Res_Items;
+    private GameObject display_Res_Turns, display_Res_Tasks, display_Res_People, display_Res_Science;
+    private GameObject display_Res_Food, display_Res_Metal, display_Res_Wood, display_Res_Tech, display_Res_Seeds;
+    private Text display_Text_Res_Turns_Shadow, display_Text_Res_Tasks_Shadow, display_Text_Res_People_Shadow, display_Text_Res_Science_Shadow;
+    private Text display_Text_Res_Food_Shadow, display_Text_Res_Metal_Shadow, display_Text_Res_Wood_Shadow, display_Text_Res_Tech_Shadow, display_Text_Res_Seeds_Shadow;
+    private Text display_Text_Res_Turns, display_Text_Res_Tasks, display_Text_Res_People, display_Text_Res_Science;
+    private Text display_Text_Res_Food, display_Text_Res_Metal, display_Text_Res_Wood, display_Text_Res_Tech, display_Text_Res_Seeds;
     [SerializeField] internal GameObject res_Metal, res_Wood, res_Food, res_Tech;
     [SerializeField] internal GameObject hatch, wall_Left, wall_Right, stairs_1, stairs_2, stairs_3;
     [SerializeField] internal GameObject underGarden_Lvl1_L1, radio_Lvl1_L2, expedition_Lvl1_R1, training_Lvl1_R2, workshop_Lvl2_L1, workshop_Lvl2_L2, generator_Lvl2_R1, generator_Lvl2_R2, research_Lvl3_L1, research_Lvl3_L2, livingSpace_Lvl3_R1, livingSpace_Lvl3_R2, bedroom_Lvl1_L, bedroom_Lvl1_R, bedroom_Lvl2_L, bedroom_Lvl2_R, bedroom_Lvl3_L, bedroom_Lvl3_R;
@@ -68,13 +76,84 @@ public class Game_Logic : MonoBehaviour
         GC = GameObject.Find("GameController").GetComponent<GameController>();
         LinkButtons();
         LinkArtGameObjects();
+        LinkUiItems();
         TurnAllItemsOff();
         SetDefaultBuildingsViews();
         CheckRoomUnlockProgress();
+        DiplayUiStats();
+        CheatMode();
+        DiplayUiStats();
     }
+
+    private void CheatMode()
+    {
+        GC.Bedroom_Lvl1_L_Clik_Unlock = 100000;
+        GC.Bedroom_Lvl2_L_Clik_Unlock = 100000;
+        GC.Bedroom_Lvl3_L_Clik_Unlock = 100000;
+        GC.Bedroom_Lvl1_R_Clik_Unlock = 100000;
+        GC.Bedroom_Lvl2_R_Clik_Unlock = 100000;
+        GC.Bedroom_Lvl3_R_Clik_Unlock = 100000;
+
+        GC.Stairs_2_Clicks_Unlock = 100000;
+        GC.Stairs_3_Clicks_Unlock = 100000;
+
+        GC.Wall_L_Clik_Unlock = 100000;
+        GC.Wall_R_Clik_Unlock = 100000;
+        GC.Player_Metal = 100000;
+        GC.Player_Wood = 100000;
+        GC.Player_Tech = 100000;
+    }
+    private void DiplayUiStats()
+    {
+        display_Text_Res_Turns.text = GC.Player_Turns.ToString();
+        display_Text_Res_Tasks.text = GC.Player_Tasks.ToString();
+        display_Text_Res_People.text = GC.Player_People.ToString();
+        display_Text_Res_Science.text = GC.Player_Science.ToString();
+        display_Text_Res_Food.text = GC.Player_Food.ToString();
+        display_Text_Res_Metal.text = GC.Player_Metal.ToString();
+        display_Text_Res_Wood.text = GC.Player_Wood.ToString();
+        display_Text_Res_Tech.text = GC.Player_Tech.ToString();
+        display_Text_Res_Seeds.text = GC.Player_Seeds.ToString();
+    }
+
     private void SetupPlayArea()
     {
 
+    }
+    private void LinkUiItems()
+    {
+        display_Res_Turns = display_Res_Progress.transform.GetChild(0).GetChild(0).gameObject;
+        display_Res_Tasks = display_Res_Progress.transform.GetChild(0).GetChild(1).gameObject;
+        display_Res_People = display_Res_Progress.transform.GetChild(0).GetChild(2).gameObject;
+        display_Res_Science = display_Res_Progress.transform.GetChild(0).GetChild(3).gameObject;
+        display_Res_Seeds = display_Res_Progress.transform.GetChild(0).GetChild(4).gameObject;
+
+        display_Res_Food = display_Res_Items.transform.GetChild(0).GetChild(0).gameObject;
+        display_Res_Metal = display_Res_Items.transform.GetChild(0).GetChild(1).gameObject;
+        display_Res_Wood = display_Res_Items.transform.GetChild(0).GetChild(2).gameObject;
+        display_Res_Tech = display_Res_Items.transform.GetChild(0).GetChild(3).gameObject;
+
+        display_Text_Res_Turns = display_Res_Turns.transform.GetChild(2).GetComponent<Text>();
+        display_Text_Res_Tasks = display_Res_Tasks.transform.GetChild(2).GetComponent<Text>();
+        display_Text_Res_People = display_Res_People.transform.GetChild(2).GetComponent<Text>();
+        display_Text_Res_Science = display_Res_Science.transform.GetChild(2).GetComponent<Text>();
+        display_Text_Res_Seeds = display_Res_Seeds.transform.GetChild(2).GetComponent<Text>();
+
+        display_Text_Res_Food = display_Res_Food.transform.GetChild(2).GetComponent<Text>();
+        display_Text_Res_Metal = display_Res_Metal.transform.GetChild(2).GetComponent<Text>();
+        display_Text_Res_Wood = display_Res_Wood.transform.GetChild(2).GetComponent<Text>();
+        display_Text_Res_Tech = display_Res_Tech.transform.GetChild(2).GetComponent<Text>();
+        // shadows 
+        display_Text_Res_Turns_Shadow = display_Res_Turns.transform.GetChild(2).GetChild(0).GetComponent<Text>();
+        display_Text_Res_Tasks_Shadow = display_Res_Tasks.transform.GetChild(2).GetChild(0).GetComponent<Text>();
+        display_Text_Res_People_Shadow = display_Res_People.transform.GetChild(2).GetChild(0).GetComponent<Text>();
+        display_Text_Res_Science_Shadow = display_Res_Science.transform.GetChild(2).GetChild(0).GetComponent<Text>();
+        display_Text_Res_Seeds_Shadow = display_Res_Seeds.transform.GetChild(2).GetChild(0).GetComponent<Text>();
+
+        display_Text_Res_Food_Shadow = display_Res_Food.transform.GetChild(2).GetChild(0).GetComponent<Text>();
+        display_Text_Res_Metal_Shadow = display_Res_Metal.transform.GetChild(2).GetChild(0).GetComponent<Text>();
+        display_Text_Res_Wood_Shadow = display_Res_Wood.transform.GetChild(2).GetChild(0).GetComponent<Text>();
+        display_Text_Res_Tech_Shadow = display_Res_Tech.transform.GetChild(2).GetChild(0).GetComponent<Text>();
     }
     private void LinkButtons()
     {
@@ -741,8 +820,8 @@ private void LivingSpacesBonus() { }
         CheckBedroomUnlockProgress();
         CheckStairsUnlockProgress();
         CheckGeneratorUnlockProgress();
-        BuyWorkshopUnlockProgress();
-        BuyLivingSpaceUnlockProgress();
+        //BuyWorkshopUnlockProgress();
+        //BuyLivingSpaceUnlockProgress();
         //BuyResearchUnlockProgress();
     }
     #region Need To add visual Unlock images to the check button items
@@ -802,6 +881,975 @@ private void LivingSpacesBonus() { }
         }
     }
     #region Purchase Buildings & Upgrades
+    // BEDROOM LVL1 LEFT UNLOCK
+    #region Unlock Bedroom Lvl1 L & Upgrades
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Upgrade_Bedroom_Lvl1_L()
+    {
+        if (!GC.Bedroom_Lvl1_L) { Unlock_Bedroom_Lvl1_L(); }
+        else
+        {
+            switch (GC.Bedroom_Upg_Lvl1_L)
+            {
+                case 0:
+                    Buy_Up_1_Bedroom_Lvl1_L();
+                    break;
+                case 1:
+                    Buy_Up_2_Bedroom_Lvl1_L();
+                    break;
+                case 2:
+                    Buy_Up_3_Bedroom_Lvl1_L();
+                    break;
+                case 3:
+                    Buy_Up_4_Bedroom_Lvl1_L();
+                    break;
+                case 4:
+                    Buy_Up_5_Bedroom_Lvl1_L();
+                    break;
+                case 5:
+                    Buy_Up_6_Bedroom_Lvl1_L();
+                    break;
+                case 6:
+                    Buy_Up_7_Bedroom_Lvl1_L();
+                    break;
+                case 7:
+                    Buy_Up_8_Bedroom_Lvl1_L();
+                    break;
+                case 8:
+                    Buy_Up_9_Bedroom_Lvl1_L();
+                    break;
+                case 9:
+                    Buy_Up_10_Bedroom_Lvl1_L();
+                    break;
+            }
+        }
+    }
+    private void Unlock_Bedroom_Lvl1_L()
+    {
+        if (GC.Bedroom_Lvl1_L_Clik_Unlock >= 50)
+        {
+            GC.Bedroom_Lvl1_L_Clik_Unlock -= 50;
+            GC.Bedroom_Lvl1_L = true;
+            GC.Bedroom_Upg_Lvl1_L = 0;
+            bedroom_Lvl1_L_Rock.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_1_Bedroom_Lvl1_L()
+    {
+        if (GC.Bedroom_Lvl1_L_Clik_Unlock >= 25)
+        {
+            GC.Bedroom_Lvl1_L_Clik_Unlock -=25;
+            GC.Bedroom_Upg_Lvl1_L = 1;
+            bedroom_Lvl1_L_Rock.SetActive(false);
+            bedroom_Lvl1_L_Up_1.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_2_Bedroom_Lvl1_L()
+    {
+        if (GC.Bedroom_Lvl1_L_Clik_Unlock >= 50)
+        {
+            GC.Bedroom_Lvl1_L_Clik_Unlock -=50;
+            GC.Bedroom_Upg_Lvl1_L = 2;
+            bedroom_Lvl1_L_Up_1.SetActive(false);
+            bedroom_Lvl1_L_Up_2.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_3_Bedroom_Lvl1_L()
+    {
+        if (GC.Bedroom_Lvl1_L_Clik_Unlock >= 75)
+        {
+            GC.Bedroom_Lvl1_L_Clik_Unlock -=75;
+            GC.Bedroom_Upg_Lvl1_L = 3;
+            bedroom_Lvl1_L_Up_2.SetActive(false);
+            bedroom_Lvl1_L_Up_3.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_4_Bedroom_Lvl1_L()
+    {
+        if (GC.Bedroom_Lvl1_L_Clik_Unlock >= 100)
+        {
+            GC.Bedroom_Lvl1_L_Clik_Unlock -=100;
+            GC.Bedroom_Upg_Lvl1_L = 4;
+            bedroom_Lvl1_L_Up_3.SetActive(false);
+            bedroom_Lvl1_L_Up_4.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_5_Bedroom_Lvl1_L()
+    {
+        if (GC.Bedroom_Lvl1_L_Clik_Unlock >= 125)
+        {
+            GC.Bedroom_Lvl1_L_Clik_Unlock -=125;
+            GC.Bedroom_Upg_Lvl1_L = 5;
+            bedroom_Lvl1_L_Up_4.SetActive(false);
+            bedroom_Lvl1_L_Up_5.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_6_Bedroom_Lvl1_L()
+    {
+        if (GC.Bedroom_Lvl1_L_Clik_Unlock >= 150)
+        {
+            GC.Bedroom_Lvl1_L_Clik_Unlock -=150;
+            GC.Bedroom_Upg_Lvl1_L = 6;
+            bedroom_Lvl1_L_Up_5.SetActive(false);
+            bedroom_Lvl1_L_Up_6.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_7_Bedroom_Lvl1_L()
+    {
+        if (GC.Bedroom_Lvl1_L_Clik_Unlock >= 175)
+        {
+            GC.Bedroom_Lvl1_L_Clik_Unlock -=175;
+            GC.Bedroom_Upg_Lvl1_L = 7;
+            bedroom_Lvl1_L_Up_6.SetActive(false);
+            bedroom_Lvl1_L_Up_7.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_8_Bedroom_Lvl1_L()
+    {
+        if (GC.Bedroom_Lvl1_L_Clik_Unlock >= 200)
+        {
+            GC.Bedroom_Lvl1_L_Clik_Unlock -=200;
+            GC.Bedroom_Upg_Lvl1_L = 8;
+            bedroom_Lvl1_L_Up_7.SetActive(false);
+            bedroom_Lvl1_L_Up_8.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_9_Bedroom_Lvl1_L()
+    {
+        if (GC.Bedroom_Lvl1_L_Clik_Unlock >= 225)
+        {
+            GC.Bedroom_Lvl1_L_Clik_Unlock -=225;
+            GC.Bedroom_Upg_Lvl1_L = 9;
+            bedroom_Lvl1_L_Up_8.SetActive(false);
+            bedroom_Lvl1_L_Up_9.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_10_Bedroom_Lvl1_L()
+    {
+        if (GC.Bedroom_Lvl1_L_Clik_Unlock >= 250)
+        {
+            GC.Bedroom_Lvl1_L_Clik_Unlock -=250;
+            GC.Bedroom_Upg_Lvl1_L = 10;
+            bedroom_Lvl1_L_Up_9.SetActive(false);
+            bedroom_Lvl1_L_Up_10.SetActive(true); DiplayUiStats();
+        }
+    }
+    #endregion
+    // BEDROOM LVL1 RIGHT UNLOCK
+    #region Unlock Bedroom Lvl1 R & Upgrades
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Upgrade_Bedroom_Lvl1_R()
+    {
+        if (!GC.Bedroom_Lvl1_R) { Unlock_Bedroom_Lvl1_R(); }
+        else
+        {
+            switch (GC.Bedroom_Upg_Lvl1_R)
+            {
+                case 0:
+                    Buy_Up_1_Bedroom_Lvl1_R();
+                    break;
+                case 1:
+                    Buy_Up_2_Bedroom_Lvl1_R();
+                    break;
+                case 2:
+                    Buy_Up_3_Bedroom_Lvl1_R();
+                    break;
+                case 3:
+                    Buy_Up_4_Bedroom_Lvl1_R();
+                    break;
+                case 4:
+                    Buy_Up_5_Bedroom_Lvl1_R();
+                    break;
+                case 5:
+                    Buy_Up_6_Bedroom_Lvl1_R();
+                    break;
+                case 6:
+                    Buy_Up_7_Bedroom_Lvl1_R();
+                    break;
+                case 7:
+                    Buy_Up_8_Bedroom_Lvl1_R();
+                    break;
+                case 8:
+                    Buy_Up_9_Bedroom_Lvl1_R();
+                    break;
+                case 9:
+                    Buy_Up_10_Bedroom_Lvl1_R();
+                    break;
+            }
+        }
+    }
+    private void Unlock_Bedroom_Lvl1_R()
+    {
+        if (GC.Bedroom_Lvl1_R_Clik_Unlock >= 50)
+        {
+            GC.Bedroom_Lvl1_R_Clik_Unlock -=50;
+            GC.Bedroom_Lvl1_R = true;
+            GC.Bedroom_Upg_Lvl1_R = 0;
+            bedroom_Lvl1_R_Rock.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_1_Bedroom_Lvl1_R()
+    {
+        if (GC.Bedroom_Lvl1_R_Clik_Unlock >= 25)
+        {
+            GC.Bedroom_Lvl1_R_Clik_Unlock -=25;
+            GC.Bedroom_Upg_Lvl1_R = 1;
+            bedroom_Lvl1_R_Rock.SetActive(false);
+            bedroom_Lvl1_R_Up_1.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_2_Bedroom_Lvl1_R()
+    {
+        if (GC.Bedroom_Lvl1_R_Clik_Unlock >= 50)
+        {
+            GC.Bedroom_Lvl1_R_Clik_Unlock -=50;
+            GC.Bedroom_Upg_Lvl1_R = 2;
+            bedroom_Lvl1_R_Up_1.SetActive(false);
+            bedroom_Lvl1_R_Up_2.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_3_Bedroom_Lvl1_R()
+    {
+        if (GC.Bedroom_Lvl1_R_Clik_Unlock >= 75)
+        {
+            GC.Bedroom_Lvl1_R_Clik_Unlock -=75;
+            GC.Bedroom_Upg_Lvl1_R = 3;
+            bedroom_Lvl1_R_Up_2.SetActive(false);
+            bedroom_Lvl1_R_Up_3.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_4_Bedroom_Lvl1_R()
+    {
+        if (GC.Bedroom_Lvl1_R_Clik_Unlock >= 100)
+        {
+            GC.Bedroom_Lvl1_R_Clik_Unlock -=100;
+            GC.Bedroom_Upg_Lvl1_R = 4;
+            bedroom_Lvl1_R_Up_3.SetActive(false);
+            bedroom_Lvl1_R_Up_4.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_5_Bedroom_Lvl1_R()
+    {
+        if (GC.Bedroom_Lvl1_R_Clik_Unlock >= 125)
+        {
+            GC.Bedroom_Lvl1_R_Clik_Unlock -=125;
+            GC.Bedroom_Upg_Lvl1_R = 5;
+            bedroom_Lvl1_R_Up_4.SetActive(false);
+            bedroom_Lvl1_R_Up_5.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_6_Bedroom_Lvl1_R()
+    {
+        if (GC.Bedroom_Lvl1_R_Clik_Unlock >= 150)
+        {
+            GC.Bedroom_Lvl1_R_Clik_Unlock -=150;
+            GC.Bedroom_Upg_Lvl1_R = 6;
+            bedroom_Lvl1_R_Up_5.SetActive(false);
+            bedroom_Lvl1_R_Up_6.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_7_Bedroom_Lvl1_R()
+    {
+        if (GC.Bedroom_Lvl1_R_Clik_Unlock >= 175)
+        {
+            GC.Bedroom_Lvl1_R_Clik_Unlock -=175;
+            GC.Bedroom_Upg_Lvl1_R = 7;
+            bedroom_Lvl1_R_Up_6.SetActive(false);
+            bedroom_Lvl1_R_Up_7.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_8_Bedroom_Lvl1_R()
+    {
+        if (GC.Bedroom_Lvl1_R_Clik_Unlock >= 200)
+        {
+            GC.Bedroom_Lvl1_R_Clik_Unlock -=200;
+            GC.Bedroom_Upg_Lvl1_R = 8;
+            bedroom_Lvl1_R_Up_7.SetActive(false);
+            bedroom_Lvl1_R_Up_8.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_9_Bedroom_Lvl1_R()
+    {
+        if (GC.Bedroom_Lvl1_R_Clik_Unlock >= 225)
+        {
+            GC.Bedroom_Lvl1_R_Clik_Unlock -=225;
+            GC.Bedroom_Upg_Lvl1_R = 9;
+            bedroom_Lvl1_R_Up_8.SetActive(false);
+            bedroom_Lvl1_R_Up_9.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_10_Bedroom_Lvl1_R()
+    {
+        if (GC.Bedroom_Lvl1_R_Clik_Unlock >= 250)
+        {
+            GC.Bedroom_Lvl1_R_Clik_Unlock -=250;
+            GC.Bedroom_Upg_Lvl1_R = 10;
+            bedroom_Lvl1_R_Up_9.SetActive(false);
+            bedroom_Lvl1_R_Up_10.SetActive(true); DiplayUiStats();
+        }
+    }
+    #endregion
+    // BEDROOM LVL2 LEFT UNLOCK
+    #region Unlock Bedroom Lvl2 L & Upgrades
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Upgrade_Bedroom_Lvl2_L()
+    {
+        if (!GC.Bedroom_Lvl2_L) { Unlock_Bedroom_Lvl2_L(); }
+        else
+        {
+            switch (GC.Bedroom_Upg_Lvl2_L)
+            {
+                case 0:
+                    Buy_Up_1_Bedroom_Lvl2_L();
+                    break;
+                case 1:
+                    Buy_Up_2_Bedroom_Lvl2_L();
+                    break;
+                case 2:
+                    Buy_Up_3_Bedroom_Lvl2_L();
+                    break;
+                case 3:
+                    Buy_Up_4_Bedroom_Lvl2_L();
+                    break;
+                case 4:
+                    Buy_Up_5_Bedroom_Lvl2_L();
+                    break;
+                case 5:
+                    Buy_Up_6_Bedroom_Lvl2_L();
+                    break;
+                case 6:
+                    Buy_Up_7_Bedroom_Lvl2_L();
+                    break;
+                case 7:
+                    Buy_Up_8_Bedroom_Lvl2_L();
+                    break;
+                case 8:
+                    Buy_Up_9_Bedroom_Lvl2_L();
+                    break;
+                case 9:
+                    Buy_Up_10_Bedroom_Lvl2_L();
+                    break;
+            }
+        }
+    }
+    private void Unlock_Bedroom_Lvl2_L()
+    {
+        if (GC.Workshop_Lvl2_L2 && GC.Bedroom_Lvl2_L_Clik_Unlock >= 125)
+        {
+            GC.Bedroom_Lvl2_L_Clik_Unlock -=125;
+            GC.Bedroom_Lvl2_L = true;
+            GC.Bedroom_Upg_Lvl2_L = 0;
+            bedroom_Lvl2_L_Rock.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_1_Bedroom_Lvl2_L()
+    {
+        if (GC.Bedroom_Lvl2_L_Clik_Unlock >= 150)
+        {
+            GC.Bedroom_Lvl2_L_Clik_Unlock -=150;
+            GC.Bedroom_Upg_Lvl2_L = 1;
+            bedroom_Lvl2_L_Rock.SetActive(false);
+            bedroom_Lvl2_L_Up_1.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_2_Bedroom_Lvl2_L()
+    {
+        if (GC.Bedroom_Lvl2_L_Clik_Unlock >= 175)
+        {
+            GC.Bedroom_Lvl2_L_Clik_Unlock -=175;
+            GC.Bedroom_Upg_Lvl2_L = 2;
+            bedroom_Lvl2_L_Up_1.SetActive(false);
+            bedroom_Lvl2_L_Up_2.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_3_Bedroom_Lvl2_L()
+    {
+        if (GC.Bedroom_Lvl2_L_Clik_Unlock >= 200)
+        {
+            GC.Bedroom_Lvl2_L_Clik_Unlock -=200;
+            GC.Bedroom_Upg_Lvl2_L = 3;
+            bedroom_Lvl2_L_Up_2.SetActive(false);
+            bedroom_Lvl2_L_Up_3.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_4_Bedroom_Lvl2_L()
+    {
+        if (GC.Bedroom_Lvl2_L_Clik_Unlock >= 225)
+        {
+            GC.Bedroom_Lvl2_L_Clik_Unlock -=225;
+            GC.Bedroom_Upg_Lvl2_L = 4;
+            bedroom_Lvl2_L_Up_3.SetActive(false);
+            bedroom_Lvl2_L_Up_4.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_5_Bedroom_Lvl2_L()
+    {
+        if (GC.Bedroom_Lvl2_L_Clik_Unlock >= 250)
+        {
+            GC.Bedroom_Lvl2_L_Clik_Unlock -=250;
+            GC.Bedroom_Upg_Lvl2_L = 5;
+            bedroom_Lvl2_L_Up_4.SetActive(false);
+            bedroom_Lvl2_L_Up_5.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_6_Bedroom_Lvl2_L()
+    {
+        if (GC.Bedroom_Lvl2_L_Clik_Unlock >= 275)
+        {
+            GC.Bedroom_Lvl2_L_Clik_Unlock -=275;
+            GC.Bedroom_Upg_Lvl2_L = 6;
+            bedroom_Lvl2_L_Up_5.SetActive(false);
+            bedroom_Lvl2_L_Up_6.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_7_Bedroom_Lvl2_L()
+    {
+        if (GC.Bedroom_Lvl2_L_Clik_Unlock >= 300)
+        {
+            GC.Bedroom_Lvl2_L_Clik_Unlock -=300;
+            GC.Bedroom_Upg_Lvl2_L = 7;
+            bedroom_Lvl2_L_Up_6.SetActive(false);
+            bedroom_Lvl2_L_Up_7.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_8_Bedroom_Lvl2_L()
+    {
+        if (GC.Bedroom_Lvl2_L_Clik_Unlock >= 325)
+        {
+            GC.Bedroom_Lvl2_L_Clik_Unlock -=325;
+            GC.Bedroom_Upg_Lvl2_L = 8;
+            bedroom_Lvl2_L_Up_7.SetActive(false);
+            bedroom_Lvl2_L_Up_8.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_9_Bedroom_Lvl2_L()
+    {
+        if (GC.Bedroom_Lvl2_L_Clik_Unlock >= 350)
+        {
+            GC.Bedroom_Lvl2_L_Clik_Unlock -=350;
+            GC.Bedroom_Upg_Lvl2_L = 9;
+            bedroom_Lvl2_L_Up_8.SetActive(false);
+            bedroom_Lvl2_L_Up_9.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_10_Bedroom_Lvl2_L()
+    {
+        if (GC.Bedroom_Lvl2_L_Clik_Unlock >= 375)
+        {
+            GC.Bedroom_Lvl2_L_Clik_Unlock -=375;
+            GC.Bedroom_Upg_Lvl2_L = 10;
+            bedroom_Lvl2_L_Up_9.SetActive(false);
+            bedroom_Lvl2_L_Up_10.SetActive(true); DiplayUiStats();
+        }
+    }
+    #endregion
+    // BEDROOM LVL2 RIGHT UNLOCK
+    #region Unlock Bedroom Lvl2 R & Upgrades
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Upgrade_Bedroom_Lvl2_R()
+    {
+        if (!GC.Bedroom_Lvl2_R) { Unlock_Bedroom_Lvl2_R(); }
+        else
+        {
+            switch (GC.Bedroom_Upg_Lvl2_R)
+            {
+                case 0:
+                    Buy_Up_1_Bedroom_Lvl2_R();
+                    break;
+                case 1:
+                    Buy_Up_2_Bedroom_Lvl2_R();
+                    break;
+                case 2:
+                    Buy_Up_3_Bedroom_Lvl2_R();
+                    break;
+                case 3:
+                    Buy_Up_4_Bedroom_Lvl2_R();
+                    break;
+                case 4:
+                    Buy_Up_5_Bedroom_Lvl2_R();
+                    break;
+                case 5:
+                    Buy_Up_6_Bedroom_Lvl2_R();
+                    break;
+                case 6:
+                    Buy_Up_7_Bedroom_Lvl2_R();
+                    break;
+                case 7:
+                    Buy_Up_8_Bedroom_Lvl2_R();
+                    break;
+                case 8:
+                    Buy_Up_9_Bedroom_Lvl2_R();
+                    break;
+                case 9:
+                    Buy_Up_10_Bedroom_Lvl2_R();
+                    break;
+            }
+        }
+    }
+    private void Unlock_Bedroom_Lvl2_R()
+    {
+        if (GC.Generator_Lvl2_R2 && GC.Bedroom_Lvl2_R_Clik_Unlock >= 125)
+        {
+            GC.Bedroom_Lvl2_R_Clik_Unlock -=125;
+            GC.Bedroom_Lvl2_R = true;
+            GC.Bedroom_Upg_Lvl2_R = 0;
+            bedroom_Lvl2_R_Rock.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_1_Bedroom_Lvl2_R()
+    {
+        if (GC.Bedroom_Lvl2_R_Clik_Unlock >= 150)
+        {
+            GC.Bedroom_Lvl2_R_Clik_Unlock -=150;
+            GC.Bedroom_Upg_Lvl2_R = 1;
+            bedroom_Lvl2_R_Rock.SetActive(false);
+            bedroom_Lvl2_R_Up_1.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_2_Bedroom_Lvl2_R()
+    {
+        if (GC.Bedroom_Lvl2_R_Clik_Unlock >= 175)
+        {
+            GC.Bedroom_Lvl2_R_Clik_Unlock -=175;
+            GC.Bedroom_Upg_Lvl2_R = 2;
+            bedroom_Lvl2_R_Up_1.SetActive(false);
+            bedroom_Lvl2_R_Up_2.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_3_Bedroom_Lvl2_R()
+    {
+        if (GC.Bedroom_Lvl2_R_Clik_Unlock >= 200)
+        {
+            GC.Bedroom_Lvl2_R_Clik_Unlock -=200;
+            GC.Bedroom_Upg_Lvl2_R = 3;
+            bedroom_Lvl2_R_Up_2.SetActive(false);
+            bedroom_Lvl2_R_Up_3.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_4_Bedroom_Lvl2_R()
+    {
+        if (GC.Bedroom_Lvl2_R_Clik_Unlock >= 225)
+        {
+            GC.Bedroom_Lvl2_R_Clik_Unlock -=225;
+            GC.Bedroom_Upg_Lvl2_R = 4;
+            bedroom_Lvl2_R_Up_3.SetActive(false);
+            bedroom_Lvl2_R_Up_4.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_5_Bedroom_Lvl2_R()
+    {
+        if (GC.Bedroom_Lvl2_R_Clik_Unlock >= 250)
+        {
+            GC.Bedroom_Lvl2_R_Clik_Unlock -=250;
+            GC.Bedroom_Upg_Lvl2_R = 5;
+            bedroom_Lvl2_R_Up_4.SetActive(false);
+            bedroom_Lvl2_R_Up_5.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_6_Bedroom_Lvl2_R()
+    {
+        if (GC.Bedroom_Lvl2_R_Clik_Unlock >= 275)
+        {
+            GC.Bedroom_Lvl2_R_Clik_Unlock -=275;
+            GC.Bedroom_Upg_Lvl2_R = 6;
+            bedroom_Lvl2_R_Up_5.SetActive(false);
+            bedroom_Lvl2_R_Up_6.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_7_Bedroom_Lvl2_R()
+    {
+        if (GC.Bedroom_Lvl2_R_Clik_Unlock >= 300)
+        {
+            GC.Bedroom_Lvl2_R_Clik_Unlock -=300;
+            GC.Bedroom_Upg_Lvl2_R = 7;
+            bedroom_Lvl2_R_Up_6.SetActive(false);
+            bedroom_Lvl2_R_Up_7.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_8_Bedroom_Lvl2_R()
+    {
+        if (GC.Bedroom_Lvl2_R_Clik_Unlock >= 325)
+        {
+            GC.Bedroom_Lvl2_R_Clik_Unlock -=325;
+            GC.Bedroom_Upg_Lvl2_R = 8;
+            bedroom_Lvl2_R_Up_7.SetActive(false);
+            bedroom_Lvl2_R_Up_8.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_9_Bedroom_Lvl2_R()
+    {
+        if (GC.Bedroom_Lvl2_R_Clik_Unlock >= 350)
+        {
+            GC.Bedroom_Lvl2_R_Clik_Unlock -=350;
+            GC.Bedroom_Upg_Lvl2_R = 9;
+            bedroom_Lvl2_R_Up_8.SetActive(false);
+            bedroom_Lvl2_R_Up_9.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_10_Bedroom_Lvl2_R()
+    {
+        if (GC.Bedroom_Lvl2_R_Clik_Unlock >= 375)
+        {
+            GC.Bedroom_Lvl2_R_Clik_Unlock -=375;
+            GC.Bedroom_Upg_Lvl2_R = 10;
+            bedroom_Lvl2_R_Up_9.SetActive(false);
+            bedroom_Lvl2_R_Up_10.SetActive(true); DiplayUiStats();
+        }
+    }
+    #endregion
+    // BEDROOM LVL3 LEFT UNLOCK
+    #region Unlock Bedroom Lvl3 L & Upgrades
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Upgrade_Bedroom_Lvl3_L()
+    {
+        if (!GC.Bedroom_Lvl3_L) { Unlock_Bedroom_Lvl3_L(); }
+        else
+        {
+            switch (GC.Bedroom_Upg_Lvl3_L)
+            {
+                case 0:
+                    Buy_Up_1_Bedroom_Lvl3_L();
+                    break;
+                case 1:
+                    Buy_Up_2_Bedroom_Lvl3_L();
+                    break;
+                case 2:
+                    Buy_Up_3_Bedroom_Lvl3_L();
+                    break;
+                case 3:
+                    Buy_Up_4_Bedroom_Lvl3_L();
+                    break;
+                case 4:
+                    Buy_Up_5_Bedroom_Lvl3_L();
+                    break;
+                case 5:
+                    Buy_Up_6_Bedroom_Lvl3_L();
+                    break;
+                case 6:
+                    Buy_Up_7_Bedroom_Lvl3_L();
+                    break;
+                case 7:
+                    Buy_Up_8_Bedroom_Lvl3_L();
+                    break;
+                case 8:
+                    Buy_Up_9_Bedroom_Lvl3_L();
+                    break;
+                case 9:
+                    Buy_Up_10_Bedroom_Lvl3_L();
+                    break;
+            }
+        }
+    }
+    private void Unlock_Bedroom_Lvl3_L()
+    {
+        if (GC.Research_Lvl3_L2 && GC.Bedroom_Lvl3_L_Clik_Unlock >= 250)
+        {
+            GC.Bedroom_Lvl3_L_Clik_Unlock -=250;
+            GC.Bedroom_Lvl3_L = true;
+            GC.Bedroom_Upg_Lvl3_L = 0;
+            bedroom_Lvl3_L_Rock.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_1_Bedroom_Lvl3_L()
+    {
+        if (GC.Bedroom_Lvl3_L_Clik_Unlock >= 275)
+        {
+            GC.Bedroom_Lvl3_L_Clik_Unlock -=275;
+            GC.Bedroom_Upg_Lvl3_L = 1;
+            bedroom_Lvl3_L_Rock.SetActive(false);
+            bedroom_Lvl3_L_Up_1.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_2_Bedroom_Lvl3_L()
+    {
+        if (GC.Bedroom_Lvl3_L_Clik_Unlock >= 300)
+        {
+            GC.Bedroom_Lvl3_L_Clik_Unlock -=300;
+            GC.Bedroom_Upg_Lvl3_L = 2;
+            bedroom_Lvl3_L_Up_1.SetActive(false);
+            bedroom_Lvl3_L_Up_2.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_3_Bedroom_Lvl3_L()
+    {
+        if (GC.Bedroom_Lvl3_L_Clik_Unlock >= 325)
+        {
+            GC.Bedroom_Lvl3_L_Clik_Unlock -=325;
+            GC.Bedroom_Upg_Lvl3_L = 3;
+            bedroom_Lvl3_L_Up_2.SetActive(false);
+            bedroom_Lvl3_L_Up_3.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_4_Bedroom_Lvl3_L()
+    {
+        if (GC.Bedroom_Lvl3_L_Clik_Unlock >= 350)
+        {
+            GC.Bedroom_Lvl3_L_Clik_Unlock -=350;
+            GC.Bedroom_Upg_Lvl3_L = 4;
+            bedroom_Lvl3_L_Up_3.SetActive(false);
+            bedroom_Lvl3_L_Up_4.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_5_Bedroom_Lvl3_L()
+    {
+        if (GC.Bedroom_Lvl3_L_Clik_Unlock >= 375)
+        {
+            GC.Bedroom_Lvl3_L_Clik_Unlock -=375;
+            GC.Bedroom_Upg_Lvl3_L = 5;
+            bedroom_Lvl3_L_Up_4.SetActive(false);
+            bedroom_Lvl3_L_Up_5.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_6_Bedroom_Lvl3_L()
+    {
+        if (GC.Bedroom_Lvl3_L_Clik_Unlock >= 400)
+        {
+            GC.Bedroom_Lvl3_L_Clik_Unlock -=400;
+            GC.Bedroom_Upg_Lvl3_L = 6;
+            bedroom_Lvl3_L_Up_5.SetActive(false);
+            bedroom_Lvl3_L_Up_6.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_7_Bedroom_Lvl3_L()
+    {
+        if (GC.Bedroom_Lvl3_L_Clik_Unlock >= 425)
+        {
+            GC.Bedroom_Lvl3_L_Clik_Unlock -=425;
+            GC.Bedroom_Upg_Lvl3_L = 7;
+            bedroom_Lvl3_L_Up_6.SetActive(false);
+            bedroom_Lvl3_L_Up_7.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_8_Bedroom_Lvl3_L()
+    {
+        if (GC.Bedroom_Lvl3_L_Clik_Unlock >= 450)
+        {
+            GC.Bedroom_Lvl3_L_Clik_Unlock -=450;
+            GC.Bedroom_Upg_Lvl3_L = 8;
+            bedroom_Lvl3_L_Up_7.SetActive(false);
+            bedroom_Lvl3_L_Up_8.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_9_Bedroom_Lvl3_L()
+    {
+        if (GC.Bedroom_Lvl3_L_Clik_Unlock >= 475)
+        {
+            GC.Bedroom_Lvl3_L_Clik_Unlock -=475;
+            GC.Bedroom_Upg_Lvl3_L = 9;
+            bedroom_Lvl3_L_Up_8.SetActive(false);
+            bedroom_Lvl3_L_Up_9.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_10_Bedroom_Lvl3_L()
+    {
+        if (GC.Bedroom_Lvl3_L_Clik_Unlock >= 500)
+        {
+            GC.Bedroom_Lvl3_L_Clik_Unlock -=500;
+            GC.Bedroom_Upg_Lvl3_L = 10;
+            bedroom_Lvl3_L_Up_9.SetActive(false);
+            bedroom_Lvl3_L_Up_10.SetActive(true); DiplayUiStats();
+        }
+    }
+    #endregion
+    // BEDROOM LVL3 RIGHT UNLOCK
+    #region Unlock Bedroom Lvl3 R & Upgrades
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Upgrade_Bedroom_Lvl3_R()
+    {
+        if (!GC.Bedroom_Lvl3_R) { Unlock_Bedroom_Lvl3_R(); }
+        else
+        {
+            switch (GC.Bedroom_Upg_Lvl3_R)
+            {
+                case 0:
+                    Buy_Up_1_Bedroom_Lvl3_R();
+                    break;
+                case 1:
+                    Buy_Up_2_Bedroom_Lvl3_R();
+                    break;
+                case 2:
+                    Buy_Up_3_Bedroom_Lvl3_R();
+                    break;
+                case 3:
+                    Buy_Up_4_Bedroom_Lvl3_R();
+                    break;
+                case 4:
+                    Buy_Up_5_Bedroom_Lvl3_R();
+                    break;
+                case 5:
+                    Buy_Up_6_Bedroom_Lvl3_R();
+                    break;
+                case 6:
+                    Buy_Up_7_Bedroom_Lvl3_R();
+                    break;
+                case 7:
+                    Buy_Up_8_Bedroom_Lvl3_R();
+                    break;
+                case 8:
+                    Buy_Up_9_Bedroom_Lvl3_R();
+                    break;
+                case 9:
+                    Buy_Up_10_Bedroom_Lvl3_R();
+                    break;
+            }
+        }
+    }
+    private void Unlock_Bedroom_Lvl3_R()
+    {
+        if (GC.LivingSpace_Lvl3_R2 && GC.Bedroom_Lvl3_R_Clik_Unlock >= 250)
+        {
+            GC.Bedroom_Lvl3_R_Clik_Unlock -=250;
+            GC.Bedroom_Lvl3_R = true;
+            GC.Bedroom_Upg_Lvl3_R = 0;
+            bedroom_Lvl3_R_Rock.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_1_Bedroom_Lvl3_R()
+    {
+        if (GC.Bedroom_Lvl3_R_Clik_Unlock >= 275)
+        {
+            GC.Bedroom_Lvl3_R_Clik_Unlock -=275;
+            GC.Bedroom_Upg_Lvl3_R = 1;
+            bedroom_Lvl3_R_Rock.SetActive(false);
+            bedroom_Lvl3_R_Up_1.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_2_Bedroom_Lvl3_R()
+    {
+        if (GC.Bedroom_Lvl3_R_Clik_Unlock >= 300)
+        {
+            GC.Bedroom_Lvl3_R_Clik_Unlock -=300;
+            GC.Bedroom_Upg_Lvl3_R = 2;
+            bedroom_Lvl3_R_Up_1.SetActive(false);
+            bedroom_Lvl3_R_Up_2.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_3_Bedroom_Lvl3_R()
+    {
+        if (GC.Bedroom_Lvl3_R_Clik_Unlock >= 325)
+        {
+            GC.Bedroom_Lvl3_R_Clik_Unlock -=325;
+            GC.Bedroom_Upg_Lvl3_R = 3;
+            bedroom_Lvl3_R_Up_2.SetActive(false);
+            bedroom_Lvl3_R_Up_3.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_4_Bedroom_Lvl3_R()
+    {
+        if (GC.Bedroom_Lvl3_R_Clik_Unlock >= 350)
+        {
+            GC.Bedroom_Lvl3_R_Clik_Unlock -=350;
+            GC.Bedroom_Upg_Lvl3_R = 4;
+            bedroom_Lvl3_R_Up_3.SetActive(false);
+            bedroom_Lvl3_R_Up_4.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_5_Bedroom_Lvl3_R()
+    {
+        if (GC.Bedroom_Lvl3_R_Clik_Unlock >= 375)
+        {
+            GC.Bedroom_Lvl3_R_Clik_Unlock -=375;
+            GC.Bedroom_Upg_Lvl3_R = 5;
+            bedroom_Lvl3_R_Up_4.SetActive(false);
+            bedroom_Lvl3_R_Up_5.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_6_Bedroom_Lvl3_R()
+    {
+        if (GC.Bedroom_Lvl3_R_Clik_Unlock >= 400)
+        {
+            GC.Bedroom_Lvl3_R_Clik_Unlock -=400;
+            GC.Bedroom_Upg_Lvl3_R = 6;
+            bedroom_Lvl3_R_Up_5.SetActive(false);
+            bedroom_Lvl3_R_Up_6.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_7_Bedroom_Lvl3_R()
+    {
+        if (GC.Bedroom_Lvl3_R_Clik_Unlock >= 425)
+        {
+            GC.Bedroom_Lvl3_R_Clik_Unlock -=425;
+            GC.Bedroom_Upg_Lvl3_R = 7;
+            bedroom_Lvl3_R_Up_6.SetActive(false);
+            bedroom_Lvl3_R_Up_7.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_8_Bedroom_Lvl3_R()
+    {
+        if (GC.Bedroom_Lvl3_R_Clik_Unlock >= 450)
+        {
+            GC.Bedroom_Lvl3_R_Clik_Unlock -=450;
+            GC.Bedroom_Upg_Lvl3_R = 8;
+            bedroom_Lvl3_R_Up_7.SetActive(false);
+            bedroom_Lvl3_R_Up_8.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_9_Bedroom_Lvl3_R()
+    {
+        if (GC.Bedroom_Lvl3_R_Clik_Unlock >= 475)
+        {
+            GC.Bedroom_Lvl3_R_Clik_Unlock -=475;
+            GC.Bedroom_Upg_Lvl3_R = 9;
+            bedroom_Lvl3_R_Up_8.SetActive(false);
+            bedroom_Lvl3_R_Up_9.SetActive(true); DiplayUiStats();
+        }
+    }
+    private void Buy_Up_10_Bedroom_Lvl3_R()
+    {
+        if (GC.Bedroom_Lvl3_R_Clik_Unlock >= 500)
+        {
+            GC.Bedroom_Lvl3_R_Clik_Unlock -=500;
+            GC.Bedroom_Upg_Lvl3_R = 10;
+            bedroom_Lvl3_R_Up_9.SetActive(false);
+            bedroom_Lvl3_R_Up_10.SetActive(true); DiplayUiStats();
+        }
+    }
+    #endregion 
+    // STAIRS 2 UNLOCK
+    #region Stairs 2 Unlock
+    public void Upgrade_Stairs_2()
+    {
+        Unlock_Stairs_2();
+    }
+    private void Unlock_Stairs_2()
+    {
+        if (GC.Stairs_1 && GC.Stairs_2_Clicks_Unlock >= 25)
+        {
+            GC.Stairs_2_Clicks_Unlock -=25;
+            GC.Stairs_2 = true;
+            stairs_2_Unlocked.SetActive(true); DiplayUiStats();
+        }
+    }
+    #endregion
+    // STAIRS 3 UNLOCK
+    #region Stairs 3 Unlock
+    public void Upgrade_Stairs_3()
+    {
+        Unlock_Stairs_3();
+    }
+    private void Unlock_Stairs_3()
+    {
+        if (GC.Stairs_2 && GC.Stairs_2_Clicks_Unlock >= 125)
+        {
+            GC.Stairs_3_Clicks_Unlock -=125;
+            GC.Stairs_3 = true;
+            stairs_3_Unlocked.SetActive(true); DiplayUiStats();
+        }
+    }
+    #endregion
+    // Expedition(1) & Training(2) IS LEVEL 2 RIGHT SIDE
     #region Expedition & Upgrades // not figured out the values to spend on unlocks
     /// <summary>
     /// 
@@ -836,7 +1884,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= purchaseValue;
             GC.Expedition_Upg_Lvl1_R1 = 1;
             expedition_Lvl1_R1_Def.SetActive(false);
-            expedition_Lvl1_R1_Up_1.SetActive(true);
+            expedition_Lvl1_R1_Up_1.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_2_Expedition()
@@ -848,7 +1896,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 2);
             GC.Expedition_Upg_Lvl1_R1 = 2;
             expedition_Lvl1_R1_Up_1.SetActive(false);
-            expedition_Lvl1_R1_Up_2.SetActive(true);
+            expedition_Lvl1_R1_Up_2.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_3_Expedition()
@@ -860,7 +1908,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 4);
             GC.Expedition_Upg_Lvl1_R1 = 3;
             expedition_Lvl1_R1_Up_2.SetActive(false);
-            expedition_Lvl1_R1_Up_3.SetActive(true);
+            expedition_Lvl1_R1_Up_3.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_4_Expedition()
@@ -872,7 +1920,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 8);
             GC.Expedition_Upg_Lvl1_R1 = 4;
             expedition_Lvl1_R1_Up_3.SetActive(false);
-            expedition_Lvl1_R1_Up_4.SetActive(true);
+            expedition_Lvl1_R1_Up_4.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_5_Expedition()
@@ -884,7 +1932,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 16);
             GC.Expedition_Upg_Lvl1_R1 = 5;
             expedition_Lvl1_R1_Up_4.SetActive(false);
-            expedition_Lvl1_R1_Up_5.SetActive(true);
+            expedition_Lvl1_R1_Up_5.SetActive(true); DiplayUiStats();
         }
     }
     #endregion
@@ -922,7 +1970,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 2);
             GC.Training_Upg_Lvl1_R2 = 1;
             training_Lvl1_R2_Def.SetActive(false);
-            training_Lvl1_R2_Up_1.SetActive(true);
+            training_Lvl1_R2_Up_1.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_2_Training()
@@ -934,7 +1982,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 4);
             GC.Training_Upg_Lvl1_R2 = 2;
             training_Lvl1_R2_Up_1.SetActive(false);
-            training_Lvl1_R2_Up_2.SetActive(true);
+            training_Lvl1_R2_Up_2.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_3_Training()
@@ -946,7 +1994,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 8);
             GC.Training_Upg_Lvl1_R2 = 3;
             training_Lvl1_R2_Up_2.SetActive(false);
-            training_Lvl1_R2_Up_3.SetActive(true);
+            training_Lvl1_R2_Up_3.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_4_Training()
@@ -958,7 +2006,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 16);
             GC.Training_Upg_Lvl1_R2 = 4;
             training_Lvl1_R2_Up_3.SetActive(false);
-            training_Lvl1_R2_Up_4.SetActive(true);
+            training_Lvl1_R2_Up_4.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_5_Training()
@@ -970,11 +2018,11 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 32);
             GC.Training_Upg_Lvl1_R2 = 5;
             training_Lvl1_R2_Up_4.SetActive(false);
-            training_Lvl1_R2_Up_5.SetActive(true);
+            training_Lvl1_R2_Up_5.SetActive(true); DiplayUiStats();
         }
     }
     #endregion
-    // Expedition(1) & Training(2) IS LEVEL 2 RIGHT SIDE
+    // UnderGarden(1) & Radio(2) IS LEVEL 1 LEFT SIDE
     #region UnderGarden & Upgrades // not figured out the values to spend on unlocks
     /// <summary>
     /// 
@@ -1009,7 +2057,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= purchaseValue;
             GC.UnderGarden_Upg_Lvl1_L1 = 1;
             underGarden_Lvl1_L1_Def.SetActive(false);
-            underGarden_Lvl1_L1_Up_1.SetActive(true);
+            underGarden_Lvl1_L1_Up_1.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_2_UnderGarden()
@@ -1021,7 +2069,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 2);
             GC.UnderGarden_Upg_Lvl1_L1 = 2;
             underGarden_Lvl1_L1_Up_1.SetActive(false);
-            underGarden_Lvl1_L1_Up_2.SetActive(true);
+            underGarden_Lvl1_L1_Up_2.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_3_UnderGarden()
@@ -1033,7 +2081,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 4);
             GC.UnderGarden_Upg_Lvl1_L1 = 3;
             underGarden_Lvl1_L1_Up_2.SetActive(false);
-            underGarden_Lvl1_L1_Up_3.SetActive(true);
+            underGarden_Lvl1_L1_Up_3.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_4_UnderGarden()
@@ -1045,7 +2093,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 8);
             GC.UnderGarden_Upg_Lvl1_L1 = 4;
             underGarden_Lvl1_L1_Up_3.SetActive(false);
-            underGarden_Lvl1_L1_Up_4.SetActive(true);
+            underGarden_Lvl1_L1_Up_4.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_5_UnderGarden()
@@ -1057,7 +2105,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 16);
             GC.UnderGarden_Upg_Lvl1_L1 = 5;
             underGarden_Lvl1_L1_Up_4.SetActive(false);
-            underGarden_Lvl1_L1_Up_5.SetActive(true);
+            underGarden_Lvl1_L1_Up_5.SetActive(true); DiplayUiStats();
         }
     }
     #endregion
@@ -1095,7 +2143,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 2);
             GC.Radio_Upg_Lvl1_L2 = 1;
             radio_Lvl1_L2_Def.SetActive(false);
-            radio_Lvl1_L2_Up_1.SetActive(true);
+            radio_Lvl1_L2_Up_1.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_2_Radio()
@@ -1107,7 +2155,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 4);
             GC.Radio_Upg_Lvl1_L2 = 2;
             radio_Lvl1_L2_Up_1.SetActive(false);
-            radio_Lvl1_L2_Up_2.SetActive(true);
+            radio_Lvl1_L2_Up_2.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_3_Radio()
@@ -1119,7 +2167,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 8);
             GC.Radio_Upg_Lvl1_L2 = 3;
             radio_Lvl1_L2_Up_2.SetActive(false);
-            radio_Lvl1_L2_Up_3.SetActive(true);
+            radio_Lvl1_L2_Up_3.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_4_Radio()
@@ -1131,7 +2179,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 16);
             GC.Radio_Upg_Lvl1_L2 = 4;
             radio_Lvl1_L2_Up_3.SetActive(false);
-            radio_Lvl1_L2_Up_4.SetActive(true);
+            radio_Lvl1_L2_Up_4.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_5_Radio()
@@ -1143,11 +2191,11 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 32);
             GC.Radio_Upg_Lvl1_L2 = 5;
             radio_Lvl1_L2_Up_4.SetActive(false);
-            radio_Lvl1_L2_Up_5.SetActive(true);
+            radio_Lvl1_L2_Up_5.SetActive(true); DiplayUiStats();
         }
     }
     #endregion
-    // UnderGarden(1) & Radio(2) IS LEVEL 1 LEFT SIDE
+    // GENERATOR IS LEVEL 2 RIGHT SIDE
     #region Unlock Generator 1 & Upgrades
     /// <summary>
     /// 
@@ -1186,7 +2234,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 2);
             GC.Generator_Lvl2_R1 = true;
             GC.Generator_Upg_Lvl2_R1 = 0;
-            generator_Lvl2_R1_Def.SetActive(true);
+            generator_Lvl2_R1_Def.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_1_Generator_1()
@@ -1198,7 +2246,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= purchaseValue;
             GC.Generator_Upg_Lvl2_R1 = 1;
             generator_Lvl2_R1_Def.SetActive(false);
-            generator_Lvl2_R1_Up_1.SetActive(true);
+            generator_Lvl2_R1_Up_1.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_2_Generator_1()
@@ -1210,7 +2258,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 2);
             GC.Generator_Upg_Lvl2_R1 = 2;
             generator_Lvl2_R1_Up_1.SetActive(false);
-            generator_Lvl2_R1_Up_2.SetActive(true);
+            generator_Lvl2_R1_Up_2.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_3_Generator_1()
@@ -1222,7 +2270,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 4);
             GC.Generator_Upg_Lvl2_R1 = 3;
             generator_Lvl2_R1_Up_2.SetActive(false);
-            generator_Lvl2_R1_Up_3.SetActive(true);
+            generator_Lvl2_R1_Up_3.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_4_Generator_1()
@@ -1234,7 +2282,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 8);
             GC.Generator_Upg_Lvl2_R1 = 4;
             generator_Lvl2_R1_Up_3.SetActive(false);
-            generator_Lvl2_R1_Up_4.SetActive(true);
+            generator_Lvl2_R1_Up_4.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_5_Generator_1()
@@ -1246,7 +2294,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 16);
             GC.Generator_Upg_Lvl2_R1 = 5;
             generator_Lvl2_R1_Up_4.SetActive(false);
-            generator_Lvl2_R1_Up_5.SetActive(true);
+            generator_Lvl2_R1_Up_5.SetActive(true); DiplayUiStats();
         }
     }
     #endregion
@@ -1288,7 +2336,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 4);
             GC.Generator_Lvl2_R2 = true;
             GC.Generator_Upg_Lvl2_R2 = 0;
-            generator_Lvl2_R2_Def.SetActive(true);
+            generator_Lvl2_R2_Def.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_1_Generator_2()
@@ -1300,7 +2348,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 2);
             GC.Generator_Upg_Lvl2_R2 = 1;
             generator_Lvl2_R2_Def.SetActive(false);
-            generator_Lvl2_R2_Up_1.SetActive(true);
+            generator_Lvl2_R2_Up_1.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_2_Generator_2()
@@ -1312,7 +2360,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 4);
             GC.Generator_Upg_Lvl2_R2 = 2;
             generator_Lvl2_R2_Up_1.SetActive(false);
-            generator_Lvl2_R2_Up_2.SetActive(true);
+            generator_Lvl2_R2_Up_2.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_3_Generator_2()
@@ -1324,7 +2372,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 8);
             GC.Generator_Upg_Lvl2_R2 = 3;
             generator_Lvl2_R2_Up_2.SetActive(false);
-            generator_Lvl2_R2_Up_3.SetActive(true);
+            generator_Lvl2_R2_Up_3.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_4_Generator_2()
@@ -1336,7 +2384,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 16);
             GC.Generator_Upg_Lvl2_R2 = 4;
             generator_Lvl2_R2_Up_3.SetActive(false);
-            generator_Lvl2_R2_Up_4.SetActive(true);
+            generator_Lvl2_R2_Up_4.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_5_Generator_2()
@@ -1348,11 +2396,11 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 32);
             GC.Generator_Upg_Lvl2_R2 = 5;
             generator_Lvl2_R2_Up_4.SetActive(false);
-            generator_Lvl2_R2_Up_5.SetActive(true);
+            generator_Lvl2_R2_Up_5.SetActive(true); DiplayUiStats();
         }
     }
     #endregion
-    // GENERATOR IS LEVEL 2 RIGHT SIDE
+    // WORKSHOP IS LEVEL 2 LEFT SIDE
     #region Unlock Workshop 1 & Upgrades
     /// <summary>
     /// 
@@ -1391,7 +2439,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 2);
             GC.Workshop_Lvl2_L1 = true;
             GC.Workshop_Upg_Lvl2_L1 = 0;
-            workshop_Lvl2_L1_Def.SetActive(true);
+            workshop_Lvl2_L1_Def.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_1_Workshop_1()
@@ -1403,7 +2451,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= purchaseValue;
             GC.Workshop_Upg_Lvl2_L1 = 1;
             workshop_Lvl2_L1_Def.SetActive(false);
-            workshop_Lvl2_L1_Up_1.SetActive(true);
+            workshop_Lvl2_L1_Up_1.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_2_Workshop_1()
@@ -1415,7 +2463,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 2);
             GC.Workshop_Upg_Lvl2_L1 = 2;
             workshop_Lvl2_L1_Up_1.SetActive(false);
-            workshop_Lvl2_L1_Up_2.SetActive(true);
+            workshop_Lvl2_L1_Up_2.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_3_Workshop_1()
@@ -1427,7 +2475,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 4);
             GC.Workshop_Upg_Lvl2_L1 = 3;
             workshop_Lvl2_L1_Up_2.SetActive(false);
-            workshop_Lvl2_L1_Up_3.SetActive(true);
+            workshop_Lvl2_L1_Up_3.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_4_Workshop_1()
@@ -1439,7 +2487,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 8);
             GC.Workshop_Upg_Lvl2_L1 = 4;
             workshop_Lvl2_L1_Up_3.SetActive(false);
-            workshop_Lvl2_L1_Up_4.SetActive(true);
+            workshop_Lvl2_L1_Up_4.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_5_Workshop_1()
@@ -1451,7 +2499,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 16);
             GC.Workshop_Upg_Lvl2_L1 = 5;
             workshop_Lvl2_L1_Up_4.SetActive(false);
-            workshop_Lvl2_L1_Up_5.SetActive(true);
+            workshop_Lvl2_L1_Up_5.SetActive(true); DiplayUiStats();
         }
     }
     #endregion
@@ -1493,7 +2541,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 4);
             GC.Workshop_Lvl2_L2 = true;
             GC.Workshop_Upg_Lvl2_L2 = 0;
-            workshop_Lvl2_L2_Def.SetActive(true);
+            workshop_Lvl2_L2_Def.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_1_Workshop_2()
@@ -1505,7 +2553,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 2);
             GC.Workshop_Upg_Lvl2_L2 = 1;
             workshop_Lvl2_L2_Def.SetActive(false);
-            workshop_Lvl2_L2_Up_1.SetActive(true);
+            workshop_Lvl2_L2_Up_1.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_2_Workshop_2()
@@ -1517,7 +2565,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 4);
             GC.Workshop_Upg_Lvl2_L2 = 2;
             workshop_Lvl2_L2_Up_1.SetActive(false);
-            workshop_Lvl2_L2_Up_2.SetActive(true);
+            workshop_Lvl2_L2_Up_2.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_3_Workshop_2()
@@ -1529,7 +2577,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 8);
             GC.Workshop_Upg_Lvl2_L2 = 3;
             workshop_Lvl2_L2_Up_2.SetActive(false);
-            workshop_Lvl2_L2_Up_3.SetActive(true);
+            workshop_Lvl2_L2_Up_3.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_4_Workshop_2()
@@ -1541,7 +2589,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 16);
             GC.Workshop_Upg_Lvl2_L2 = 4;
             workshop_Lvl2_L2_Up_3.SetActive(false);
-            workshop_Lvl2_L2_Up_4.SetActive(true);
+            workshop_Lvl2_L2_Up_4.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_5_Workshop_2()
@@ -1553,11 +2601,11 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 32);
             GC.Workshop_Upg_Lvl2_L2 = 5;
             workshop_Lvl2_L2_Up_4.SetActive(false);
-            workshop_Lvl2_L2_Up_5.SetActive(true);
+            workshop_Lvl2_L2_Up_5.SetActive(true); DiplayUiStats();
         }
     }
     #endregion
-    // WORKSHOP IS LEVEL 2 LEFT SIDE
+    // LIVING IS LEVEL 3 RIGHT SIDE
     #region Unlock LivingSpace 1 & Upgrades
     /// <summary>
     /// 
@@ -1596,7 +2644,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 2);
             GC.LivingSpace_Lvl3_R1 = true;
             GC.LivingSpace_Upg_Lvl3_R1 = 0;
-            livingSpace_Lvl3_R1_Def.SetActive(true);
+            livingSpace_Lvl3_R1_Def.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_1_LivingSpace_1()
@@ -1608,7 +2656,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= purchaseValue;
             GC.LivingSpace_Upg_Lvl3_R1 = 1;
             livingSpace_Lvl3_R1_Def.SetActive(false);
-            livingSpace_Lvl3_R1_Up_1.SetActive(true);
+            livingSpace_Lvl3_R1_Up_1.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_2_LivingSpace_1()
@@ -1620,7 +2668,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 2);
             GC.LivingSpace_Upg_Lvl3_R1 = 2;
             livingSpace_Lvl3_R1_Up_1.SetActive(false);
-            livingSpace_Lvl3_R1_Up_2.SetActive(true);
+            livingSpace_Lvl3_R1_Up_2.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_3_LivingSpace_1()
@@ -1632,7 +2680,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 4);
             GC.LivingSpace_Upg_Lvl3_R1 = 3;
             livingSpace_Lvl3_R1_Up_2.SetActive(false);
-            livingSpace_Lvl3_R1_Up_3.SetActive(true);
+            livingSpace_Lvl3_R1_Up_3.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_4_LivingSpace_1()
@@ -1644,7 +2692,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 8);
             GC.LivingSpace_Upg_Lvl3_R1 = 4;
             livingSpace_Lvl3_R1_Up_3.SetActive(false);
-            livingSpace_Lvl3_R1_Up_4.SetActive(true);
+            livingSpace_Lvl3_R1_Up_4.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_5_LivingSpace_1()
@@ -1656,7 +2704,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 16);
             GC.LivingSpace_Upg_Lvl3_R1 = 5;
             livingSpace_Lvl3_R1_Up_4.SetActive(false);
-            livingSpace_Lvl3_R1_Up_5.SetActive(true);
+            livingSpace_Lvl3_R1_Up_5.SetActive(true); DiplayUiStats();
         }
     }
     #endregion
@@ -1698,7 +2746,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 4);
             GC.LivingSpace_Lvl3_R2 = true;
             GC.LivingSpace_Upg_Lvl3_R2 = 0;
-            livingSpace_Lvl3_R2_Def.SetActive(true);
+            livingSpace_Lvl3_R2_Def.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_1_LivingSpace_2()
@@ -1710,7 +2758,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 2);
             GC.LivingSpace_Upg_Lvl3_R2 = 1;
             livingSpace_Lvl3_R2_Def.SetActive(false);
-            livingSpace_Lvl3_R2_Up_1.SetActive(true);
+            livingSpace_Lvl3_R2_Up_1.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_2_LivingSpace_2()
@@ -1722,7 +2770,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 4);
             GC.LivingSpace_Upg_Lvl3_R2 = 2;
             livingSpace_Lvl3_R2_Up_1.SetActive(false);
-            livingSpace_Lvl3_R2_Up_2.SetActive(true);
+            livingSpace_Lvl3_R2_Up_2.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_3_LivingSpace_2()
@@ -1734,7 +2782,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 8);
             GC.LivingSpace_Upg_Lvl3_R2 = 3;
             livingSpace_Lvl3_R2_Up_2.SetActive(false);
-            livingSpace_Lvl3_R2_Up_3.SetActive(true);
+            livingSpace_Lvl3_R2_Up_3.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_4_LivingSpace_2()
@@ -1746,7 +2794,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 16);
             GC.LivingSpace_Upg_Lvl3_R2 = 4;
             livingSpace_Lvl3_R2_Up_3.SetActive(false);
-            livingSpace_Lvl3_R2_Up_4.SetActive(true);
+            livingSpace_Lvl3_R2_Up_4.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_5_LivingSpace_2()
@@ -1758,11 +2806,11 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 32);
             GC.LivingSpace_Upg_Lvl3_R2 = 5;
             livingSpace_Lvl3_R2_Up_4.SetActive(false);
-            livingSpace_Lvl3_R2_Up_5.SetActive(true);
+            livingSpace_Lvl3_R2_Up_5.SetActive(true); DiplayUiStats();
         }
     }
     #endregion
-    // LIVING IS LEVEL 3 RIGHT SIDE
+    // RESEARCH IS LEVEL 3 LEFT SIDE
     #region Unlock Research 1 & Upgrades
     /// <summary>
     /// 
@@ -1801,7 +2849,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 2);
             GC.Research_Lvl3_L1 = true;
             GC.Research_Upg_Lvl3_L1 = 0;
-            research_Lvl3_L1_Def.SetActive(true);
+            research_Lvl3_L1_Def.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_1_Research_1()
@@ -1813,7 +2861,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= purchaseValue;
             GC.Research_Upg_Lvl3_L1 = 1;
             research_Lvl3_L1_Def.SetActive(false);
-            research_Lvl3_L1_Up_1.SetActive(true);
+            research_Lvl3_L1_Up_1.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_2_Research_1()
@@ -1825,7 +2873,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 2);
             GC.Research_Upg_Lvl3_L1 = 2;
             research_Lvl3_L1_Up_1.SetActive(false);
-            research_Lvl3_L1_Up_2.SetActive(true);
+            research_Lvl3_L1_Up_2.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_3_Research_1()
@@ -1837,7 +2885,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 4);
             GC.Research_Upg_Lvl3_L1 = 3;
             research_Lvl3_L1_Up_2.SetActive(false);
-            research_Lvl3_L1_Up_3.SetActive(true);
+            research_Lvl3_L1_Up_3.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_4_Research_1()
@@ -1849,7 +2897,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 8);
             GC.Research_Upg_Lvl3_L1 = 4;
             research_Lvl3_L1_Up_3.SetActive(false);
-            research_Lvl3_L1_Up_4.SetActive(true);
+            research_Lvl3_L1_Up_4.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_5_Research_1()
@@ -1861,7 +2909,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 16);
             GC.Research_Upg_Lvl3_L1 = 5;
             research_Lvl3_L1_Up_4.SetActive(false);
-            research_Lvl3_L1_Up_5.SetActive(true);
+            research_Lvl3_L1_Up_5.SetActive(true); DiplayUiStats();
         }
     }
     #endregion
@@ -1903,7 +2951,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 4);
             GC.Research_Lvl3_L2 = true;
             GC.Research_Upg_Lvl3_L2 = 0;
-            research_Lvl3_L2_Def.SetActive(true);
+            research_Lvl3_L2_Def.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_1_Research_2()
@@ -1915,7 +2963,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 2);
             GC.Research_Upg_Lvl3_L2 = 1;
             research_Lvl3_L2_Def.SetActive(false);
-            research_Lvl3_L2_Up_1.SetActive(true);
+            research_Lvl3_L2_Up_1.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_2_Research_2()
@@ -1927,7 +2975,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 4);
             GC.Research_Upg_Lvl3_L2 = 2;
             research_Lvl3_L2_Up_1.SetActive(false);
-            research_Lvl3_L2_Up_2.SetActive(true);
+            research_Lvl3_L2_Up_2.SetActive(true); DiplayUiStats(); 
         }
     }
     private void Buy_Up_3_Research_2()
@@ -1939,7 +2987,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 8);
             GC.Research_Upg_Lvl3_L2 = 3;
             research_Lvl3_L2_Up_2.SetActive(false);
-            research_Lvl3_L2_Up_3.SetActive(true);
+            research_Lvl3_L2_Up_3.SetActive(true); DiplayUiStats(); 
         }
     }
     private void Buy_Up_4_Research_2()
@@ -1951,7 +2999,7 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 16);
             GC.Research_Upg_Lvl3_L2 = 4;
             research_Lvl3_L2_Up_3.SetActive(false);
-            research_Lvl3_L2_Up_4.SetActive(true);
+            research_Lvl3_L2_Up_4.SetActive(true); DiplayUiStats(); 
         }
     }
     private void Buy_Up_5_Research_2()
@@ -1963,11 +3011,334 @@ private void LivingSpacesBonus() { }
             GC.Player_Tech -= (purchaseValue * 32);
             GC.Research_Upg_Lvl3_L2 = 5;
             research_Lvl3_L2_Up_4.SetActive(false);
-            research_Lvl3_L2_Up_5.SetActive(true);
+            research_Lvl3_L2_Up_5.SetActive(true); DiplayUiStats(); 
         }
     }
     #endregion
-    // RESEARCH IS LEVEL 3 LEFT SIDE
+    // WALL LEFT UNLOCK
+    #region Unlock Wall L & Upgrades
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Upgrade_Wall_L()
+    {
+        if (!GC.Wall_L) { Unlock_Wall_L(); }
+        else
+        {
+            switch (GC.Wall_L_Upg)
+            {
+                case 0:
+                    Buy_Up_1_Wall_L();
+                    break;
+                case 1:
+                    Buy_Up_2_Wall_L();
+                    break;
+                case 2:
+                    Buy_Up_3_Wall_L();
+                    break;
+                case 3:
+                    Buy_Up_4_Wall_L();
+                    break;
+                case 4:
+                    Buy_Up_5_Wall_L();
+                    break;
+                case 5:
+                    Buy_Up_6_Wall_L();
+                    break;
+                case 6:
+                    Buy_Up_7_Wall_L();
+                    break;
+                case 7:
+                    Buy_Up_8_Wall_L();
+                    break;
+                case 8:
+                    Buy_Up_9_Wall_L();
+                    break;
+                case 9:
+                    //Buy_Up_10_Wall_R();
+                    break;
+            }
+        }
+    }
+    private void Unlock_Wall_L()
+    {
+        if (GC.Wall_L_Clik_Unlock >= 50)
+        {
+            GC.Wall_L_Clik_Unlock = 0;
+            GC.Wall_L = true;
+            GC.Wall_L_Upg = 0;
+            wall_Left_None.SetActive(false);
+            wall_Left_Up_1.SetActive(true); DiplayUiStats(); 
+        }
+    }
+    private void Buy_Up_1_Wall_L()
+    {
+        if (GC.Wall_L_Clik_Unlock >= 25)
+        {
+            GC.Wall_L_Clik_Unlock = 0;
+            GC.Wall_L_Upg = 1;
+            wall_Left_Up_1.SetActive(false);
+            wall_Left_Up_2.SetActive(true); DiplayUiStats(); 
+        }
+    }
+    private void Buy_Up_2_Wall_L()
+    {
+        if (GC.Wall_L_Clik_Unlock >= 50)
+        {
+            GC.Wall_L_Clik_Unlock = 0;
+            GC.Wall_L_Upg = 2;
+            wall_Left_Up_2.SetActive(false);
+            wall_Left_Up_3.SetActive(true); DiplayUiStats(); 
+        }
+    }
+    private void Buy_Up_3_Wall_L()
+    {
+        if (GC.Wall_L_Clik_Unlock >= 75)
+        {
+            GC.Wall_L_Clik_Unlock = 0;
+            GC.Wall_L_Upg = 3;
+            wall_Left_Up_3.SetActive(false);
+            wall_Left_Up_4.SetActive(true); DiplayUiStats(); 
+        }
+    }
+    private void Buy_Up_4_Wall_L()
+    {
+        if (GC.Wall_L_Clik_Unlock >= 100)
+        {
+            GC.Wall_L_Clik_Unlock = 0;
+            GC.Wall_L_Upg = 4;
+            wall_Left_Up_4.SetActive(false);
+            wall_Left_Up_5.SetActive(true); DiplayUiStats(); 
+        }
+    }
+    private void Buy_Up_5_Wall_L()
+    {
+        if (GC.Wall_L_Clik_Unlock >= 125)
+        {
+            GC.Wall_L_Clik_Unlock = 0;
+            GC.Wall_L_Upg = 5;
+            wall_Left_Up_5.SetActive(false);
+            wall_Left_Up_6.SetActive(true); DiplayUiStats(); 
+        }
+    }
+    private void Buy_Up_6_Wall_L()
+    {
+        if (GC.Wall_L_Clik_Unlock >= 150)
+        {
+            GC.Wall_L_Clik_Unlock = 0;
+            GC.Wall_L_Upg = 6;
+            wall_Left_Up_6.SetActive(false);
+            wall_Left_Up_7.SetActive(true); DiplayUiStats(); 
+        }
+    }
+    private void Buy_Up_7_Wall_L()
+    {
+        if (GC.Wall_L_Clik_Unlock >= 175)
+        {
+            GC.Wall_L_Clik_Unlock = 0;
+            GC.Wall_L_Upg = 7;
+            wall_Left_Up_7.SetActive(false);
+            wall_Left_Up_8.SetActive(true); DiplayUiStats(); 
+        }
+    }
+    private void Buy_Up_8_Wall_L()
+    {
+        if (GC.Wall_L_Clik_Unlock >= 200)
+        {
+            GC.Wall_L_Clik_Unlock = 0;
+            GC.Wall_L_Upg = 8;
+            wall_Left_Up_8.SetActive(false);
+            wall_Left_Up_9.SetActive(true); DiplayUiStats(); 
+        }
+    }
+    private void Buy_Up_9_Wall_L()
+    {
+        if (GC.Wall_L_Clik_Unlock >= 225)
+        {
+            GC.Wall_L_Clik_Unlock = 0;
+            GC.Wall_L_Upg = 9;
+            wall_Left_Up_9.SetActive(false);
+            wall_Left_Up_10.SetActive(true); DiplayUiStats(); 
+        }
+    }
+    /*private void Buy_Up_10_Bedroom_Lvl1_R()
+    {
+        if (GC.Wall_R_Clik_Unlock >= 250)
+        {
+            GC.Wall_R_Clik_Unlock = 0;
+            GC.Wall_R_Upg = 10;
+            wall_Left_Up_10.SetActive(false);
+            wall_Left_Up_11.SetActive(true); DiplayUiStats(); 
+        }
+    }*/
+    #endregion
+    // WALL RIGHT UNLOCK
+    #region Unlock Wall R & Upgrades
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Upgrade_Wall_R()
+    {
+        if (!GC.Wall_R) { Unlock_Wall_R(); }
+        else
+        {
+            switch (GC.Wall_R_Upg)
+            {
+                case 0:
+                    Buy_Up_1_Wall_R();
+                    break;
+                case 1:
+                    Buy_Up_2_Wall_R();
+                    break;
+                case 2:
+                    Buy_Up_3_Wall_R();
+                    break;
+                case 3:
+                    Buy_Up_4_Wall_R();
+                    break;
+                case 4:
+                    Buy_Up_5_Wall_R();
+                    break;
+                case 5:
+                    Buy_Up_6_Wall_R();
+                    break;
+                case 6:
+                    Buy_Up_7_Wall_R();
+                    break;
+                case 7:
+                    Buy_Up_8_Wall_R();
+                    break;
+                case 8:
+                    Buy_Up_9_Wall_R();
+                    break;
+                case 9:
+                    //Buy_Up_10_Wall_R();
+                    break;
+            }
+        }
+    }
+    private void Unlock_Wall_R()
+    {
+        if (GC.Wall_R_Clik_Unlock >= 50)
+        {
+            GC.Wall_R_Clik_Unlock = 0;
+            GC.Wall_R = true;
+            GC.Wall_R_Upg = 0;
+            wall_Right_None.SetActive(false);
+            wall_Right_Up_1.SetActive(true); DiplayUiStats(); 
+            DiplayUiStats();
+        }
+    }
+    private void Buy_Up_1_Wall_R()
+    {
+        if (GC.Wall_R_Clik_Unlock >= 25)
+        {
+            GC.Wall_R_Clik_Unlock = 0;
+            GC.Wall_R_Upg = 1;
+            wall_Right_Up_1.SetActive(false);
+            wall_Right_Up_2.SetActive(true); DiplayUiStats(); 
+            DiplayUiStats();
+        }
+    }
+    private void Buy_Up_2_Wall_R()
+    {
+        if (GC.Wall_R_Clik_Unlock >= 50)
+        {
+            GC.Wall_R_Clik_Unlock = 0;
+            GC.Wall_R_Upg = 2;
+            wall_Right_Up_2.SetActive(false);
+            wall_Right_Up_3.SetActive(true); DiplayUiStats(); 
+            DiplayUiStats();
+        }
+    }
+    private void Buy_Up_3_Wall_R()
+    {
+        if (GC.Wall_R_Clik_Unlock >= 75)
+        {
+            GC.Wall_R_Clik_Unlock = 0;
+            GC.Wall_R_Upg = 3;
+            wall_Right_Up_3.SetActive(false);
+            wall_Right_Up_4.SetActive(true); DiplayUiStats(); 
+            DiplayUiStats();
+        }
+    }
+    private void Buy_Up_4_Wall_R()
+    {
+        if (GC.Wall_R_Clik_Unlock >= 100)
+        {
+            GC.Wall_R_Clik_Unlock = 0;
+            GC.Wall_R_Upg = 4;
+            wall_Right_Up_4.SetActive(false);
+            wall_Right_Up_5.SetActive(true); DiplayUiStats(); 
+            DiplayUiStats();
+        }
+    }
+    private void Buy_Up_5_Wall_R()
+    {
+        if (GC.Wall_R_Clik_Unlock >= 125)
+        {
+            GC.Wall_R_Clik_Unlock = 0;
+            GC.Wall_R_Upg = 5;
+            wall_Right_Up_5.SetActive(false);
+            wall_Right_Up_6.SetActive(true); DiplayUiStats(); 
+            DiplayUiStats();
+        }
+    }
+    private void Buy_Up_6_Wall_R()
+    {
+        if (GC.Wall_R_Clik_Unlock >= 150)
+        {
+            GC.Wall_R_Clik_Unlock = 0;
+            GC.Wall_R_Upg = 6;
+            wall_Right_Up_6.SetActive(false);
+            wall_Right_Up_7.SetActive(true); DiplayUiStats(); 
+            DiplayUiStats();
+        }
+    }
+    private void Buy_Up_7_Wall_R()
+    {
+        if (GC.Wall_R_Clik_Unlock >= 175)
+        {
+            GC.Wall_R_Clik_Unlock = 0;
+            GC.Wall_R_Upg = 7;
+            wall_Right_Up_7.SetActive(false);
+            wall_Right_Up_8.SetActive(true); DiplayUiStats(); 
+            DiplayUiStats();
+        }
+    }
+    private void Buy_Up_8_Wall_R()
+    {
+        if (GC.Wall_R_Clik_Unlock >= 200)
+        {
+            GC.Wall_R_Clik_Unlock = 0;
+            GC.Wall_R_Upg = 8;
+            wall_Right_Up_8.SetActive(false);
+            wall_Right_Up_9.SetActive(true); DiplayUiStats(); 
+            DiplayUiStats();
+        }
+    }
+    private void Buy_Up_9_Wall_R()
+    {
+        if (GC.Wall_R_Clik_Unlock >= 225)
+        {
+            GC.Wall_R_Clik_Unlock = 0;
+            GC.Wall_R_Upg = 9;
+            wall_Right_Up_9.SetActive(false);
+            wall_Right_Up_10.SetActive(true); DiplayUiStats(); 
+            DiplayUiStats(); 
+        }
+    }
+    /*private void Buy_Up_10_Bedroom_Lvl1_R()
+    {
+        if (GC.Wall_R_Clik_Unlock >= 250)
+        {
+            GC.Wall_R_Clik_Unlock = 0;
+            GC.Wall_R_Upg = 10;
+            wall_Left_Up_10.SetActive(false);
+            wall_Left_Up_11.SetActive(true); DiplayUiStats(); 
+        }
+    }*/
+    #endregion
     #endregion
     #endregion
 }

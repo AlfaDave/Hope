@@ -6,11 +6,13 @@ public class CameraHandler : MonoBehaviour
 {
     private Vector3 camFollowPosition;
     public CameraFollower camFollow;
+    [SerializeField] internal GameObject display_Zoom_Amount;
+    private GameObject zoom_1X, zoom_2X, zoom_3X;
     //private float zoom = 1100f;
     //private float zoomChangeAmount =160;
     private bool centered = true;
     private float moveAmount = 2;//moveAmount = 600f;
-    private float edgeSize = 25f;
+    private float edgeSize = 20f;
     private bool edgeScrolling = true;
     private Vector3 homeLocation = new Vector3(2875, 537, -10);
     private bool zoomBlocked = false;
@@ -46,6 +48,12 @@ public class CameraHandler : MonoBehaviour
         CentreView();
         MouseEdgeScrolling();
         ControlZoom();
+    }
+    private void LinkZoomItems()
+    {
+        zoom_1X = display_Zoom_Amount.transform.GetChild(0).gameObject;
+        zoom_2X = display_Zoom_Amount.transform.GetChild(1).gameObject;
+        zoom_3X = display_Zoom_Amount.transform.GetChild(2).gameObject;
     }
     private void ZoomTimer() { if (zoomBlocked) { zoomTimer -= Time.deltaTime; if (zoomTimer <= 0) { zoomBlocked = false; } } }
     private void ManualMovement()
@@ -120,15 +128,15 @@ public class CameraHandler : MonoBehaviour
     private void CameraZoomStep(bool positive)
     {
         if (!positive) {
-            if (zoomLevel == 1) { zoomTimer = 0.75f; zoomLevel = 2; currentOrthoZoom = zoomLevelOrthoSetting_2; camFollow.SetCamZoom(currentOrthoZoom); }//SetCameraPosition(1, true, 0); }
-            else if (zoomLevel == 2) { zoomTimer = 0.75f; zoomLevel = 3; currentOrthoZoom = zoomLevelOrthoSetting_3; camFollow.SetCamZoom(currentOrthoZoom); }//SetCameraPosition(1, true, 0); }
-            else if (zoomLevel == 3) { zoomTimer = 0.75f; zoomLevel = 1; currentOrthoZoom = zoomLevelOrthoSetting_1; camFollow.SetCamZoom(currentOrthoZoom); }//SetCameraPosition(1, true, 0); }
+            if (zoomLevel == 1) { zoom_1X.SetActive(false); zoom_2X.SetActive(true); zoom_3X.SetActive(false); zoomTimer = 0.75f; zoomLevel = 2; currentOrthoZoom = zoomLevelOrthoSetting_2; camFollow.SetCamZoom(currentOrthoZoom); }//SetCameraPosition(1, true, 0); }
+            else if (zoomLevel == 2) { zoom_1X.SetActive(false); zoom_2X.SetActive(false); zoom_3X.SetActive(true); zoomTimer = 0.75f; zoomLevel = 3; currentOrthoZoom = zoomLevelOrthoSetting_3; camFollow.SetCamZoom(currentOrthoZoom); }//SetCameraPosition(1, true, 0); }
+            else if (zoomLevel == 3) { zoom_1X.SetActive(true); zoom_2X.SetActive(false); zoom_3X.SetActive(false); zoomTimer = 0.75f; zoomLevel = 1; currentOrthoZoom = zoomLevelOrthoSetting_1; camFollow.SetCamZoom(currentOrthoZoom); }//SetCameraPosition(1, true, 0); }
         }
         else
         {
-            if (zoomLevel == 1) { zoomTimer = 0.75f; zoomLevel = 3; currentOrthoZoom = zoomLevelOrthoSetting_3; camFollow.SetCamZoom(currentOrthoZoom); }// SetCameraPosition(1, true, 0); }
-            else if (zoomLevel == 2) { zoomTimer = 0.75f; zoomLevel = 1; currentOrthoZoom = zoomLevelOrthoSetting_1; camFollow.SetCamZoom(currentOrthoZoom); }// SetCameraPosition(1, true, 0); }
-            else if (zoomLevel == 3) { zoomTimer = 0.75f; zoomLevel = 2; currentOrthoZoom = zoomLevelOrthoSetting_2; camFollow.SetCamZoom(currentOrthoZoom); }// SetCameraPosition(1, true, 0); }
+            if (zoomLevel == 1) { zoom_1X.SetActive(false); zoom_2X.SetActive(false); zoom_3X.SetActive(true); zoomTimer = 0.75f; zoomLevel = 3; currentOrthoZoom = zoomLevelOrthoSetting_3; camFollow.SetCamZoom(currentOrthoZoom); }// SetCameraPosition(1, true, 0); }
+            else if (zoomLevel == 2) { zoom_1X.SetActive(true); zoom_2X.SetActive(false); zoom_3X.SetActive(false); zoomTimer = 0.75f; zoomLevel = 1; currentOrthoZoom = zoomLevelOrthoSetting_1; camFollow.SetCamZoom(currentOrthoZoom); }// SetCameraPosition(1, true, 0); }
+            else if (zoomLevel == 3) { zoom_1X.SetActive(false); zoom_2X.SetActive(true); zoom_3X.SetActive(false); zoomTimer = 0.75f; zoomLevel = 2; currentOrthoZoom = zoomLevelOrthoSetting_2; camFollow.SetCamZoom(currentOrthoZoom); }// SetCameraPosition(1, true, 0); }
         }
     }
     private void SetCameraPosition(int axis, bool polarity, float moveAmount)

@@ -23,7 +23,7 @@ public class SoundManager : MonoBehaviour
     private void Start()
     {
         //BackgroundMusic();
-        OneSound_MenuButton();
+        //OneSound_MenuButton();
         SetBGMusicVolume();// setting bg music volume to 0.3f
     }
     public void BackgroundMusic()

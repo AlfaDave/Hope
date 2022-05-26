@@ -77,12 +77,12 @@ public class SetDefs : MonoBehaviour
         gCont.Bedroom_Lvl3_R = false;
         #endregion
         #region vault bedroom occupants
-        gCont.Bedroom_1_Occupants = 0;
-        gCont.Bedroom_2_Occupants = 0;
-        gCont.Bedroom_3_Occupants = 0;
-        gCont.Bedroom_4_Occupants = 0;
-        gCont.Bedroom_5_Occupants = 0;
-        gCont.Bedroom_6_Occupants = 0;
+        gCont.Bedroom_Upg_Lvl1_L = 0;
+        gCont.Bedroom_Upg_Lvl1_R = 0;
+        gCont.Bedroom_Upg_Lvl2_L = 0;
+        gCont.Bedroom_Upg_Lvl2_R = 0;
+        gCont.Bedroom_Upg_Lvl3_L = 0;
+        gCont.Bedroom_Upg_Lvl3_R = 0;
         #endregion
         #region vault bedroom Clicks to unlock
         gCont.Bedroom_Lvl1_L_Clik_Unlock = 0;
@@ -95,7 +95,7 @@ public class SetDefs : MonoBehaviour
         #region Player Main Stats
         gCont.Player_Turns = 0;
         gCont.Player_Tasks = 0;
-        gCont.Player_Civilians = 0;
+        gCont.Player_People = 0;
         gCont.Player_Science = 0;
         #endregion
         #region Player Game Resources

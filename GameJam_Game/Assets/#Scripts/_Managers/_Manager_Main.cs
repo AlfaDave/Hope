@@ -26,5 +26,5 @@ public class _Manager_Main : MonoBehaviour
     public void ToggleCredits() { if (creditsToggle) { creditsToggle = false; credits.transform.GetChild(0).gameObject.SetActive(false); }
         else if (!creditsToggle) { creditsToggle = true; credits.transform.GetChild(0).gameObject.SetActive(true); } }
 
-    public void LoadGameplay() { SaveGame.gameSave.LoadLevel("Game"); }
+    public void LoadGameplay() { SaveGame.gameSave.LoadLevel("Async_Load_MainGame"); }
 }
