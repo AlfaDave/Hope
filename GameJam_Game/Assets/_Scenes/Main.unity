@@ -152,6 +152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d086f7f4f008584eafc9eaa6427ac63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gCont: {fileID: 0}
+  gSave: {fileID: 0}
 --- !u!4 &108408256
 Transform:
   m_ObjectHideFlags: 0
@@ -221,6 +223,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2715892288946792315, guid: 77327dce60de65147b3860fe3f870710, type: 3}
+      propertyPath: backingMusic
+      value: 
+      objectReference: {fileID: 8300000, guid: a99443af162e4454a982ac0ea5c1d8b7, type: 3}
+    - target: {fileID: 2715892288947071300, guid: 77327dce60de65147b3860fe3f870710, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: a99443af162e4454a982ac0ea5c1d8b7, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 77327dce60de65147b3860fe3f870710, type: 3}
 --- !u!1 &188686737

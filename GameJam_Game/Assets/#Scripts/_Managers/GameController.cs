@@ -61,23 +61,29 @@ public class GameController : MonoBehaviour
     public bool Bedroom_Lvl2_R { get; set; }
     public bool Bedroom_Lvl3_L { get; set; }
     public bool Bedroom_Lvl3_R { get; set; }
-    public int Bedroom_1_Occupants { get; set; }
-    public int Bedroom_2_Occupants { get; set; }
-    public int Bedroom_3_Occupants { get; set; }
-    public int Bedroom_4_Occupants { get; set; }
-    public int Bedroom_5_Occupants { get; set; }
-    public int Bedroom_6_Occupants { get; set; }
+    public int Bedroom_Upg_Lvl1_L { get; set; }
+    public int Bedroom_Upg_Lvl1_R { get; set; }
+    public int Bedroom_Upg_Lvl2_L { get; set; }
+    public int Bedroom_Upg_Lvl2_R { get; set; }
+    public int Bedroom_Upg_Lvl3_L { get; set; }
+    public int Bedroom_Upg_Lvl3_R { get; set; }
     public int Bedroom_Lvl1_L_Clik_Unlock { get; set; }
     public int Bedroom_Lvl1_R_Clik_Unlock { get; set; }
     public int Bedroom_Lvl2_L_Clik_Unlock { get; set; }
     public int Bedroom_Lvl2_R_Clik_Unlock { get; set; }
     public int Bedroom_Lvl3_L_Clik_Unlock { get; set; }
     public int Bedroom_Lvl3_R_Clik_Unlock { get; set; }
+    public bool Wall_L { get; set; }
+    public bool Wall_R { get; set; }
+    public int Wall_L_Clik_Unlock { get; set; }
+    public int Wall_R_Clik_Unlock { get; set; }
+    public int Wall_L_Upg { get; set; }
+    public int Wall_R_Upg { get; set; }
     #endregion
     #region Main Game Stats
     public int Player_Turns { get; set; }
     public int Player_Tasks { get; set; }
-    public int Player_Civilians { get; set; }
+    public int Player_People { get; set; }
     public int Player_Science { get; set; }
     #endregion
     #region Main Game Resources
@@ -88,8 +94,9 @@ public class GameController : MonoBehaviour
     public int Player_Seeds { get; set; }
     #endregion
     #region Game Mechanics
-    
+
     #endregion
+    public string levelToLoad;
     private int setToZero = 0;
     public static GameController gameC;
 
