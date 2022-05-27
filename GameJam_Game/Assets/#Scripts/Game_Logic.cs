@@ -7,12 +7,13 @@ using UnityEngine.UI;
 public class Game_Logic : MonoBehaviour
 {
     private GameController GC;
+    private SaveGame gSave;
     [SerializeField] internal GameObject display_Res_Progress, display_Res_Items;
     private GameObject display_Res_Turns, display_Res_Tasks, display_Res_People, display_Res_Science;
     private GameObject display_Res_Food, display_Res_Metal, display_Res_Wood, display_Res_Tech, display_Res_Seeds;
-    private Text display_Text_Res_Turns_Shadow, display_Text_Res_Tasks_Shadow, display_Text_Res_People_Shadow, display_Text_Res_Science_Shadow;
+    private Text display_Text_Res_Turns_Shadow, display_Text_Res_Tasks_Shadow, display_Text_Res_People_Shadow, display_Text_Res_Capacity_Shadow, display_Text_Res_Science_Shadow;
     private Text display_Text_Res_Food_Shadow, display_Text_Res_Metal_Shadow, display_Text_Res_Wood_Shadow, display_Text_Res_Tech_Shadow, display_Text_Res_Seeds_Shadow;
-    private Text display_Text_Res_Turns, display_Text_Res_Tasks, display_Text_Res_People, display_Text_Res_Science;
+    private Text display_Text_Res_Turns, display_Text_Res_Tasks, display_Text_Res_People, display_Text_Res_Capacity, display_Text_Res_Science;
     private Text display_Text_Res_Food, display_Text_Res_Metal, display_Text_Res_Wood, display_Text_Res_Tech, display_Text_Res_Seeds;
     [SerializeField] internal GameObject res_Metal, res_Wood, res_Food, res_Tech;
     [SerializeField] internal GameObject hatch, wall_Left, wall_Right, stairs_1, stairs_2, stairs_3;
@@ -61,59 +62,135 @@ public class Game_Logic : MonoBehaviour
     #endregion
     #endregion
 
-    private float WaitClickTime = 5;
-    private float WaitResearchBonus = 0;
-    private float WaitWorkshopBonus = 0;
-    private float WaitPowerGenBonus = 0;
-    private float WaitLivingSpace = 0;
+    private bool wait_Metal;
+    private bool wait_Wood;
+    private bool wait_Food;
+    private bool wait_Tech;
+    private float wait_Button_Defaults = 30;
+    private float wait_Button_Metal;
+    private float wait_Button_Wood;
+    private float wait_Button_Food;
+    private float wait_Button_Tech;
+    private float tempMetal, tempWood, tempFood, tempTech;
+    //private float WaitResearchBonus = 0;
+    //private float WaitWorkshopBonus = 0;
+    //private float WaitPowerGenBonus = 0;
+    //private float WaitLivingSpace = 0;
     private int purchaseValue = 250;
-    private void CheckClickWaitingTime()
+    private void Waiting_Metal()
+    {
+
+    }
+    private void Waiting_Wood()
+    {
+
+    }
+    private void Waiting_Food()
+    {
+
+    }
+    private void Waiting_Tech()
     {
 
     }
     private void Start()
     {
-        GC = GameObject.Find("GameController").GetComponent<GameController>();
-        LinkButtons();
-        LinkArtGameObjects();
-        LinkUiItems();
-        TurnAllItemsOff();
-        SetDefaultBuildingsViews();
+        
+        FindAllStatics();
+        gSave.LoadingGame();
+        SetDefaults();
+        LinkAllItemsInGame(); // these extra functions are just used to logically track the game logic steps
+        //
+        TurnOffUnwantedItems(); // these extra functions are just used to logically track the game logic steps
+        //
+        TurnOnAllVitalInitialItems();
+        //
         CheckRoomUnlockProgress();
         DiplayUiStats();
         CheatMode();
         DiplayUiStats();
     }
-
+    private void Update()
+    {
+        if (wait_Metal) { wait_Button_Metal -= Time.deltaTime; Debug.Log("wait button metal "+wait_Button_Metal); if(wait_Button_Metal <= 0) { Unlock_Metal_Button(); } }
+        if (wait_Wood) { wait_Button_Wood -= Time.deltaTime; Debug.Log("wait button wood " + wait_Button_Wood); if (wait_Button_Wood <= 0) { Unlock_Wood_Button(); } }
+        if (wait_Food) { wait_Button_Food -= Time.deltaTime; Debug.Log("wait button food " + wait_Button_Food); if (wait_Button_Food <= 0) { Unlock_Food_Button(); } }
+        if (wait_Tech) { wait_Button_Tech -= Time.deltaTime; Debug.Log("wait button tech " + wait_Button_Tech); if (wait_Button_Tech <= 0) { Unlock_Tech_Button(); } }
+    }
+    private void FindAllStatics()
+    {
+        gSave = GameObject.Find("GameSave").GetComponent<SaveGame>();
+        GC = GameObject.Find("GameController").GetComponent<GameController>();
+    }
+    private void SetDefaults()
+    {
+        if (GC.Player_Capacity < 3) { GC.Player_Capacity = 3; }
+        if(GC.Player_People >= GC.Player_Capacity) { GC.Player_People = GC.Player_Capacity; }
+    }
+    private void LinkAllItemsInGame()/// must be step 1 in game sequence
+    {
+        
+        LinkButtons();
+        LinkArtGameObjects();
+        LinkUiItems();
+    }
+    private void TurnOffUnwantedItems()
+    {
+        TurnAllItemsOff();
+    }
+    private void TurnOnAllVitalInitialItems()
+    {
+        SetDefaultBuildingsViewsAndSetThemInCode();
+    }
     private void CheatMode()
     {
-        GC.Bedroom_Lvl1_L_Clik_Unlock = 100000;
-        GC.Bedroom_Lvl2_L_Clik_Unlock = 100000;
-        GC.Bedroom_Lvl3_L_Clik_Unlock = 100000;
-        GC.Bedroom_Lvl1_R_Clik_Unlock = 100000;
-        GC.Bedroom_Lvl2_R_Clik_Unlock = 100000;
-        GC.Bedroom_Lvl3_R_Clik_Unlock = 100000;
+        GC.Bedroom_Lvl1_L_Clik_Unlock = 9999999;
+        GC.Bedroom_Lvl2_L_Clik_Unlock = 9999999;
+        GC.Bedroom_Lvl3_L_Clik_Unlock = 9999999;
+        GC.Bedroom_Lvl1_R_Clik_Unlock = 9999999;
+        GC.Bedroom_Lvl2_R_Clik_Unlock = 9999999;
+        GC.Bedroom_Lvl3_R_Clik_Unlock = 9999999;
 
-        GC.Stairs_2_Clicks_Unlock = 100000;
-        GC.Stairs_3_Clicks_Unlock = 100000;
+        GC.Stairs_2_Clicks_Unlock = 9999999;
+        GC.Stairs_3_Clicks_Unlock = 9999999;
 
-        GC.Wall_L_Clik_Unlock = 100000;
-        GC.Wall_R_Clik_Unlock = 100000;
-        GC.Player_Metal = 100000;
-        GC.Player_Wood = 100000;
-        GC.Player_Tech = 100000;
+        GC.Wall_L_Clik_Unlock = 9999999;
+        GC.Wall_R_Clik_Unlock = 9999999;
+
+        GC.Player_Metal = 9999999;
+        GC.Player_Wood = 9999999;
+        GC.Player_Tech = 9999999;
+        GC.Player_Food = 9999999;
+
+        GC.Player_People = 9999999;
+        GC.Player_Science = 9999999;
+        GC.Player_Seeds = 9999999;
+        GC.Player_Tasks = 9999999;
+        GC.Player_Turns = 9999999;
     }
     private void DiplayUiStats()
     {
         display_Text_Res_Turns.text = GC.Player_Turns.ToString();
         display_Text_Res_Tasks.text = GC.Player_Tasks.ToString();
         display_Text_Res_People.text = GC.Player_People.ToString();
+        display_Text_Res_Capacity.text = GC.Player_Capacity.ToString();
         display_Text_Res_Science.text = GC.Player_Science.ToString();
         display_Text_Res_Food.text = GC.Player_Food.ToString();
         display_Text_Res_Metal.text = GC.Player_Metal.ToString();
         display_Text_Res_Wood.text = GC.Player_Wood.ToString();
         display_Text_Res_Tech.text = GC.Player_Tech.ToString();
         display_Text_Res_Seeds.text = GC.Player_Seeds.ToString();
+
+        display_Text_Res_Turns_Shadow.text = GC.Player_Turns.ToString();
+        display_Text_Res_Tasks_Shadow.text = GC.Player_Tasks.ToString();
+        display_Text_Res_People_Shadow.text = GC.Player_People.ToString();
+        display_Text_Res_Capacity_Shadow.text = GC.Player_Capacity.ToString();
+        display_Text_Res_Science_Shadow.text = GC.Player_Science.ToString();
+        display_Text_Res_Food_Shadow.text = GC.Player_Food.ToString();
+        display_Text_Res_Metal_Shadow.text = GC.Player_Metal.ToString();
+        display_Text_Res_Wood_Shadow.text = GC.Player_Wood.ToString();
+        display_Text_Res_Tech_Shadow.text = GC.Player_Tech.ToString();
+        display_Text_Res_Seeds_Shadow.text = GC.Player_Seeds.ToString();
     }
 
     private void SetupPlayArea()
@@ -136,6 +213,7 @@ public class Game_Logic : MonoBehaviour
         display_Text_Res_Turns = display_Res_Turns.transform.GetChild(2).GetComponent<Text>();
         display_Text_Res_Tasks = display_Res_Tasks.transform.GetChild(2).GetComponent<Text>();
         display_Text_Res_People = display_Res_People.transform.GetChild(2).GetComponent<Text>();
+        display_Text_Res_Capacity = display_Res_People.transform.GetChild(3).GetComponent<Text>();
         display_Text_Res_Science = display_Res_Science.transform.GetChild(2).GetComponent<Text>();
         display_Text_Res_Seeds = display_Res_Seeds.transform.GetChild(2).GetComponent<Text>();
 
@@ -147,6 +225,7 @@ public class Game_Logic : MonoBehaviour
         display_Text_Res_Turns_Shadow = display_Res_Turns.transform.GetChild(2).GetChild(0).GetComponent<Text>();
         display_Text_Res_Tasks_Shadow = display_Res_Tasks.transform.GetChild(2).GetChild(0).GetComponent<Text>();
         display_Text_Res_People_Shadow = display_Res_People.transform.GetChild(2).GetChild(0).GetComponent<Text>();
+        display_Text_Res_Capacity_Shadow = display_Res_People.transform.GetChild(3).GetChild(0).GetComponent<Text>();
         display_Text_Res_Science_Shadow = display_Res_Science.transform.GetChild(2).GetChild(0).GetComponent<Text>();
         display_Text_Res_Seeds_Shadow = display_Res_Seeds.transform.GetChild(2).GetChild(0).GetComponent<Text>();
 
@@ -453,6 +532,308 @@ public class Game_Logic : MonoBehaviour
         bedroom_Lvl3_L_Button.interactable = false;
         bedroom_Lvl3_R_Button.interactable = false;
     }
+    private void SetDefaultBuildingsViewsAndSetThemInCode()
+    {
+        #region Upgrade GameObjects
+        #region Bedrooms
+        #region Bedroom Level 1 Left
+        GC.Bedroom_Lvl1_L = false;
+        GC.Bedroom_Upg_Lvl1_L = 0;
+        GC.Bedroom_Lvl1_L_Clik_Unlock = 0;
+        bedroom_Lvl1_L_Rock.SetActive(true);
+        bedroom_Lvl1_L_Up_1.SetActive(false);
+        bedroom_Lvl1_L_Up_2.SetActive(false);
+        bedroom_Lvl1_L_Up_3.SetActive(false);
+        bedroom_Lvl1_L_Up_4.SetActive(false);
+        bedroom_Lvl1_L_Up_5.SetActive(false);
+        bedroom_Lvl1_L_Up_6.SetActive(false);
+        bedroom_Lvl1_L_Up_7.SetActive(false);
+        bedroom_Lvl1_L_Up_8.SetActive(false);
+        bedroom_Lvl1_L_Up_9.SetActive(false);
+        bedroom_Lvl1_L_Up_10.SetActive(false);
+        #endregion
+        //
+        #region Bedroom Level 2 Left
+        GC.Bedroom_Lvl2_L = false;
+        GC.Bedroom_Upg_Lvl2_L = 0;
+        GC.Bedroom_Lvl2_L_Clik_Unlock = 0;
+        bedroom_Lvl2_L_Rock.SetActive(true);
+        bedroom_Lvl2_L_Up_1.SetActive(false);
+        bedroom_Lvl2_L_Up_2.SetActive(false);
+        bedroom_Lvl2_L_Up_3.SetActive(false);
+        bedroom_Lvl2_L_Up_4.SetActive(false);
+        bedroom_Lvl2_L_Up_5.SetActive(false);
+        bedroom_Lvl2_L_Up_6.SetActive(false);
+        bedroom_Lvl2_L_Up_7.SetActive(false);
+        bedroom_Lvl2_L_Up_8.SetActive(false);
+        bedroom_Lvl2_L_Up_9.SetActive(false);
+        bedroom_Lvl2_L_Up_10.SetActive(false);
+        #endregion
+        //
+        #region Bedroom Level 3 Left
+        GC.Bedroom_Lvl3_L = false;
+        GC.Bedroom_Upg_Lvl3_L = 0;
+        GC.Bedroom_Lvl3_L_Clik_Unlock = 0;
+        bedroom_Lvl3_L_Rock.SetActive(true);
+        bedroom_Lvl3_L_Up_1.SetActive(false);
+        bedroom_Lvl3_L_Up_2.SetActive(false);
+        bedroom_Lvl3_L_Up_3.SetActive(false);
+        bedroom_Lvl3_L_Up_4.SetActive(false);
+        bedroom_Lvl3_L_Up_5.SetActive(false);
+        bedroom_Lvl3_L_Up_6.SetActive(false);
+        bedroom_Lvl3_L_Up_7.SetActive(false);
+        bedroom_Lvl3_L_Up_8.SetActive(false);
+        bedroom_Lvl3_L_Up_9.SetActive(false);
+        bedroom_Lvl3_L_Up_10.SetActive(false);
+        #endregion
+        //
+        #region Bedroom Level 1 Right
+        GC.Bedroom_Lvl1_R = false;
+        GC.Bedroom_Upg_Lvl1_R = 0;
+        GC.Bedroom_Lvl1_R_Clik_Unlock = 0;
+        bedroom_Lvl1_R_Rock.SetActive(true);
+        bedroom_Lvl1_R_Up_1.SetActive(false);
+        bedroom_Lvl1_R_Up_2.SetActive(false);
+        bedroom_Lvl1_R_Up_3.SetActive(false);
+        bedroom_Lvl1_R_Up_4.SetActive(false);
+        bedroom_Lvl1_R_Up_5.SetActive(false);
+        bedroom_Lvl1_R_Up_6.SetActive(false);
+        bedroom_Lvl1_R_Up_7.SetActive(false);
+        bedroom_Lvl1_R_Up_8.SetActive(false);
+        bedroom_Lvl1_R_Up_9.SetActive(false);
+        bedroom_Lvl1_R_Up_10.SetActive(false);
+        #endregion
+        //
+        #region Bedroom Level 2 Right
+        GC.Bedroom_Lvl2_R = false;
+        GC.Bedroom_Upg_Lvl2_R = 0;
+        GC.Bedroom_Lvl2_R_Clik_Unlock = 0;
+        bedroom_Lvl2_R_Rock.SetActive(true);
+        bedroom_Lvl2_R_Up_1.SetActive(false);
+        bedroom_Lvl2_R_Up_2.SetActive(false);
+        bedroom_Lvl2_R_Up_3.SetActive(false);
+        bedroom_Lvl2_R_Up_4.SetActive(false);
+        bedroom_Lvl2_R_Up_5.SetActive(false);
+        bedroom_Lvl2_R_Up_6.SetActive(false);
+        bedroom_Lvl2_R_Up_7.SetActive(false);
+        bedroom_Lvl2_R_Up_8.SetActive(false);
+        bedroom_Lvl2_R_Up_9.SetActive(false);
+        bedroom_Lvl2_R_Up_10.SetActive(false);
+        #endregion
+        //
+        #region Bedroom Level 3 Right
+        GC.Bedroom_Lvl3_R = false;
+        GC.Bedroom_Upg_Lvl3_R = 0;
+        GC.Bedroom_Lvl3_R_Clik_Unlock = 0;
+        bedroom_Lvl3_R_Rock.SetActive(true);
+        bedroom_Lvl3_R_Up_1.SetActive(false);
+        bedroom_Lvl3_R_Up_2.SetActive(false);
+        bedroom_Lvl3_R_Up_3.SetActive(false);
+        bedroom_Lvl3_R_Up_4.SetActive(false);
+        bedroom_Lvl3_R_Up_5.SetActive(false);
+        bedroom_Lvl3_R_Up_6.SetActive(false);
+        bedroom_Lvl3_R_Up_7.SetActive(false);
+        bedroom_Lvl3_R_Up_8.SetActive(false);
+        bedroom_Lvl3_R_Up_9.SetActive(false);
+        bedroom_Lvl3_R_Up_10.SetActive(false);
+        #endregion
+        #endregion
+        #region Stairs
+        //
+        #region Stairs 1
+        GC.Stairs_1 = true;
+        stairs_1_Locked.SetActive(false);
+        stairs_1_Unlocked.SetActive(true);
+        #endregion
+        //
+        #region Stairs 2
+        GC.Stairs_2 = false;
+        GC.Stairs_2_Clicks_Unlock = 0;
+        stairs_2_Locked.SetActive(true);
+        stairs_2_Unlocked.SetActive(false);
+        #endregion
+        //
+        #region Stairs 3
+        GC.Stairs_3 = false;
+        GC.Stairs_3_Clicks_Unlock = 0;
+        stairs_3_Locked.SetActive(true);
+        stairs_3_Unlocked.SetActive(false);
+        #endregion
+        #endregion
+        #region Walls
+        //
+        #region Walls Left
+        GC.Wall_L = false;
+        GC.Wall_L_Upg = 0;
+        GC.Wall_L_Clik_Unlock = 0;
+        GC.Wall_L_Health = 0;
+        wall_Left_None.SetActive(true);
+        wall_Left_Up_1.SetActive(false);
+        wall_Left_Up_2.SetActive(false);
+        wall_Left_Up_3.SetActive(false);
+        wall_Left_Up_4.SetActive(false);
+        wall_Left_Up_5.SetActive(false);
+        wall_Left_Up_6.SetActive(false);
+        wall_Left_Up_7.SetActive(false);
+        wall_Left_Up_8.SetActive(false);
+        wall_Left_Up_9.SetActive(false);
+        wall_Left_Up_10.SetActive(false);
+        #endregion
+        //
+        #region Walls Left
+        GC.Wall_R = false;
+        GC.Wall_R_Upg = 0;
+        GC.Wall_R_Clik_Unlock = 0;
+        GC.Wall_R_Health = 0;
+        wall_Right_None.SetActive(true);
+        wall_Right_Up_1.SetActive(false);
+        wall_Right_Up_2.SetActive(false);
+        wall_Right_Up_3.SetActive(false);
+        wall_Right_Up_4.SetActive(false);
+        wall_Right_Up_5.SetActive(false);
+        wall_Right_Up_6.SetActive(false);
+        wall_Right_Up_7.SetActive(false);
+        wall_Right_Up_8.SetActive(false);
+        wall_Right_Up_9.SetActive(false);
+        wall_Right_Up_10.SetActive(false);
+        #endregion
+        #endregion
+        #region Main Rooms
+        //
+        #region UnderGarden
+        GC.UnderGarden_Lvl1_L1 = true;
+        GC.UnderGarden_Upg_Lvl1_L1 = 0;
+        underGarden_Lvl1_L1_Def.SetActive(true);
+        underGarden_Lvl1_L1_Up_1.SetActive(false);
+        underGarden_Lvl1_L1_Up_2.SetActive(false);
+        underGarden_Lvl1_L1_Up_3.SetActive(false);
+        underGarden_Lvl1_L1_Up_4.SetActive(false);
+        underGarden_Lvl1_L1_Up_5.SetActive(false);
+        #endregion
+        //
+        #region Radio
+        GC.Radio_Lvl1_L2 = true;
+        GC.Radio_Upg_Lvl1_L2 = 0;
+        radio_Lvl1_L2_Def.SetActive(true);
+        radio_Lvl1_L2_Up_1.SetActive(false);
+        radio_Lvl1_L2_Up_2.SetActive(false);
+        radio_Lvl1_L2_Up_3.SetActive(false);
+        radio_Lvl1_L2_Up_4.SetActive(false);
+        radio_Lvl1_L2_Up_5.SetActive(false);
+        #endregion
+        //
+        #region Expedition
+        GC.Expedition_Lvl1_R1 = true;
+        GC.Expedition_Upg_Lvl1_R1 = 0;
+        expedition_Lvl1_R1_Def.SetActive(true);
+        expedition_Lvl1_R1_Up_1.SetActive(false);
+        expedition_Lvl1_R1_Up_2.SetActive(false);
+        expedition_Lvl1_R1_Up_3.SetActive(false);
+        expedition_Lvl1_R1_Up_4.SetActive(false);
+        expedition_Lvl1_R1_Up_5.SetActive(false);
+        #endregion
+        //
+        #region Training
+        GC.Training_Lvl1_R2 = true;
+        GC.Training_Upg_Lvl1_R2 = 0;
+        training_Lvl1_R2_Def.SetActive(true);
+        training_Lvl1_R2_Up_1.SetActive(false);
+        training_Lvl1_R2_Up_2.SetActive(false);
+        training_Lvl1_R2_Up_3.SetActive(false);
+        training_Lvl1_R2_Up_4.SetActive(false);
+        training_Lvl1_R2_Up_5.SetActive(false);
+        #endregion
+        //
+        #region Workshop 1
+        GC.Workshop_Lvl2_L1 = false;
+        GC.Workshop_Upg_Lvl2_L1 = 0;
+        workshop_Lvl2_L1_Def.SetActive(true);
+        workshop_Lvl2_L1_Up_1.SetActive(false);
+        workshop_Lvl2_L1_Up_2.SetActive(false);
+        workshop_Lvl2_L1_Up_3.SetActive(false);
+        workshop_Lvl2_L1_Up_4.SetActive(false);
+        workshop_Lvl2_L1_Up_5.SetActive(false);
+        #endregion
+        //
+        #region Workshop 2
+        GC.Workshop_Lvl2_L2 = false;
+        GC.Workshop_Upg_Lvl2_L2 = 0;
+        workshop_Lvl2_L2_Def.SetActive(true);
+        workshop_Lvl2_L2_Up_1.SetActive(false);
+        workshop_Lvl2_L2_Up_2.SetActive(false);
+        workshop_Lvl2_L2_Up_3.SetActive(false);
+        workshop_Lvl2_L2_Up_4.SetActive(false);
+        workshop_Lvl2_L2_Up_5.SetActive(false);
+        #endregion
+        //
+        #region Generator 1
+        GC.Generator_Lvl2_R1 = false;
+        GC.Generator_Upg_Lvl2_R1 = 0;
+        generator_Lvl2_R1_Def.SetActive(true);
+        generator_Lvl2_R1_Up_1.SetActive(false);
+        generator_Lvl2_R1_Up_2.SetActive(false);
+        generator_Lvl2_R1_Up_3.SetActive(false);
+        generator_Lvl2_R1_Up_4.SetActive(false);
+        generator_Lvl2_R1_Up_5.SetActive(false);
+        #endregion
+        //
+        #region Generator 2
+        GC.Generator_Lvl2_R2 = false;
+        GC.Generator_Upg_Lvl2_R2 = 0;
+        generator_Lvl2_R2_Def.SetActive(true);
+        generator_Lvl2_R2_Up_1.SetActive(false);
+        generator_Lvl2_R2_Up_2.SetActive(false);
+        generator_Lvl2_R2_Up_3.SetActive(false);
+        generator_Lvl2_R2_Up_4.SetActive(false);
+        generator_Lvl2_R2_Up_5.SetActive(false);
+        #endregion
+        //
+        #region Research 1
+        GC.Research_Lvl3_L1 = false;
+        GC.Research_Upg_Lvl3_L1 = 0;
+        research_Lvl3_L1_Def.SetActive(true);
+        research_Lvl3_L1_Up_1.SetActive(false);
+        research_Lvl3_L1_Up_2.SetActive(false);
+        research_Lvl3_L1_Up_3.SetActive(false);
+        research_Lvl3_L1_Up_4.SetActive(false);
+        research_Lvl3_L1_Up_5.SetActive(false);
+        #endregion
+        //
+        #region Research 2
+        GC.Research_Lvl3_L2 = false;
+        GC.Research_Upg_Lvl3_L2 = 0;
+        research_Lvl3_L2_Def.SetActive(true);
+        research_Lvl3_L2_Up_1.SetActive(false);
+        research_Lvl3_L2_Up_2.SetActive(false);
+        research_Lvl3_L2_Up_3.SetActive(false);
+        research_Lvl3_L2_Up_4.SetActive(false);
+        research_Lvl3_L2_Up_5.SetActive(false);
+        #endregion
+        //
+        #region LivingSpace 1
+        GC.LivingSpace_Lvl3_R1 = false;
+        GC.LivingSpace_Upg_Lvl3_R1 = 0;
+        livingSpace_Lvl3_R1_Def.SetActive(true);
+        livingSpace_Lvl3_R1_Up_1.SetActive(false);
+        livingSpace_Lvl3_R1_Up_2.SetActive(false);
+        livingSpace_Lvl3_R1_Up_3.SetActive(false);
+        livingSpace_Lvl3_R1_Up_4.SetActive(false);
+        livingSpace_Lvl3_R1_Up_5.SetActive(false);
+        #endregion
+        //
+        #region LivingSpace 2
+        GC.LivingSpace_Lvl3_R2 = false;
+        GC.LivingSpace_Upg_Lvl3_R2 = 0;
+        livingSpace_Lvl3_R2_Def.SetActive(true);
+        livingSpace_Lvl3_R2_Up_1.SetActive(false);
+        livingSpace_Lvl3_R2_Up_2.SetActive(false);
+        livingSpace_Lvl3_R2_Up_3.SetActive(false);
+        livingSpace_Lvl3_R2_Up_4.SetActive(false);
+        livingSpace_Lvl3_R2_Up_5.SetActive(false);
+        #endregion
+        #endregion
+        #endregion
+    }
     private void TurnAllItemsOff()
     {
         #region Upgrade GameObjects
@@ -632,197 +1013,274 @@ public class Game_Logic : MonoBehaviour
         #endregion
         #endregion
     }
-private void LivingSpacesBonus() { }
+    // Calculations for the wait time after pressing a gathering resource
+    #region Gathering resources
+    public void Gather_Metal()
+    {
+        GC.Player_Metal += 10;
+        Calculate_Wait_Metal();
+    }
+    public void Gather_Wood()
+    {
+        GC.Player_Wood += 10;
+        Calculate_Wait_Wood();
+    }
+    public void Gather_Food()
+    {
+        GC.Player_Food += 10;
+        Calculate_Wait_Food();
+    }
+    public void Gather_Tech()
+    {
+        GC.Player_Tech += 10;
+        Calculate_Wait_Tech();
+    }
+    private void Get_Layer_1_Building_Bonus(int building)
+    {
+        if (building == 1)// Generator
+        {
+            tempMetal = 0;
+            switch (GC.Generator_Upg_Lvl2_R1)
+            {
+                case 0: tempMetal = 1.0f; break;
+                case 1: tempMetal = 1.2f; break;
+                case 2: tempMetal = 1.4f; break;
+                case 3: tempMetal = 1.6f; break;
+                case 4: tempMetal = 1.8f; break;
+                case 5: tempMetal = 2.0f; break;
+            }
+        }
+        else if (building == 2) // Workshop
+        {
+            tempWood = 0;
+            switch (GC.Workshop_Upg_Lvl2_L1)
+            {
+                case 0: tempWood = 1.0f; break;
+                case 1: tempWood = 1.2f; break;
+                case 2: tempWood = 1.4f; break;
+                case 3: tempWood = 1.6f; break;
+                case 4: tempWood = 1.8f; break;
+                case 5: tempWood = 2.0f; break;
+            }
+
+        }
+        else if (building == 3) // LivingSpace
+        {
+            tempFood = 0;
+            switch (GC.LivingSpace_Upg_Lvl3_R1)
+            {
+                case 0: tempFood = 1.0f; break;
+                case 1: tempFood = 1.2f; break;
+                case 2: tempFood = 1.4f; break;
+                case 3: tempFood = 1.6f; break;
+                case 4: tempFood = 1.8f; break;
+                case 5: tempFood = 2.0f; break;
+            }
+
+        }
+        else if (building == 4) // Research
+        {
+            tempTech = 0;
+            switch (GC.Research_Upg_Lvl3_L1)
+            {
+                case 0: tempTech = 1.0f; break;
+                case 1: tempTech = 1.2f; break;
+                case 2: tempTech = 1.4f; break;
+                case 3: tempTech = 1.6f; break;
+                case 4: tempTech = 1.8f; break;
+                case 5: tempTech = 2.0f; break;
+            }
+        }
+    }
+    private void Get_Layer_2_Building_Bonus(int building)
+    {
+        if (building == 1)// Generator
+        {
+            switch (GC.Generator_Upg_Lvl2_R2)
+            {
+                case 0: tempMetal = 1.0f; break;
+                case 1: tempMetal = 1.2f; break;
+                case 2: tempMetal = 1.4f; break;
+                case 3: tempMetal = 1.6f; break;
+                case 4: tempMetal = 1.8f; break;
+                case 5: tempMetal = 2.0f; break;
+            }
+        }
+        else if (building == 2) // Workshop
+        {
+            switch (GC.Workshop_Upg_Lvl2_L2)
+            {
+                case 0: tempWood = 1.0f; break;
+                case 1: tempWood = 1.2f; break;
+                case 2: tempWood = 1.4f; break;
+                case 3: tempWood = 1.6f; break;
+                case 4: tempWood = 1.8f; break;
+                case 5: tempWood = 2.0f; break;
+            }
+
+        }
+        else if (building == 3) // LivingSpace
+        {
+            switch (GC.LivingSpace_Upg_Lvl3_R2)
+            {
+                case 0: tempFood = 1.0f; break;
+                case 1: tempFood = 1.2f; break;
+                case 2: tempFood = 1.4f; break;
+                case 3: tempFood = 1.6f; break;
+                case 4: tempFood = 1.8f; break;
+                case 5: tempFood = 2.0f; break;
+            }
+
+        }
+        else if (building == 4) // Research
+        {
+            switch (GC.Research_Upg_Lvl3_L2)
+            {
+                case 0: tempTech = 1.0f; break;
+                case 1: tempTech = 1.2f; break;
+                case 2: tempTech = 1.4f; break;
+                case 3: tempTech = 1.6f; break;
+                case 4: tempTech = 1.8f; break;
+                case 5: tempTech = 2.0f; break;
+            }
+        }
+    } 
+    private void Calculate_Wait_Metal()
+    {
+        float i = wait_Button_Defaults;
+        Get_Layer_1_Building_Bonus(1);
+        i += tempMetal;
+        Debug.Log(i);
+        Get_Layer_2_Building_Bonus(1);
+        i += tempMetal;
+        Debug.Log(i);
+        wait_Button_Metal = (wait_Button_Metal -= i);
+        Debug.Log(wait_Button_Metal);
+        Lock_Metal_Button();
+    }
+    private void Calculate_Wait_Wood()
+    {
+        float i = wait_Button_Defaults;
+        Get_Layer_1_Building_Bonus(2);
+        i += tempWood;
+        Debug.Log(i);
+        Get_Layer_2_Building_Bonus(2);
+        i += tempWood;
+        Debug.Log(i);
+        wait_Button_Wood = (wait_Button_Wood -= i);
+        Debug.Log(wait_Button_Wood);
+        Lock_Wood_Button();
+    }
+    private void Calculate_Wait_Food()
+    {
+        float i = wait_Button_Defaults;
+        Get_Layer_1_Building_Bonus(3);
+        i += tempFood;
+        Debug.Log(i);
+        Get_Layer_2_Building_Bonus(3);
+        i += tempFood;
+        Debug.Log(i);
+        wait_Button_Food = (wait_Button_Food -= i);
+        Debug.Log(wait_Button_Food);
+        Lock_Food_Button();
+    }
+    private void Calculate_Wait_Tech()
+    {
+        float i = wait_Button_Defaults;
+        Get_Layer_1_Building_Bonus(4);
+        i += tempTech;
+        Debug.Log(i);
+        Get_Layer_2_Building_Bonus(4);
+        i += tempTech;
+        Debug.Log(i);
+        wait_Button_Tech = (wait_Button_Tech -= i);
+        Debug.Log(wait_Button_Tech);
+        Lock_Tech_Button();
+    }
+
+    private void Unlock_Metal_Button()
+    {
+        wait_Metal = false;
+        Debug.Log("unlock metal button");
+        res_Metal_Button.enabled = true;
+    }
+    private void Lock_Metal_Button()
+    {
+        wait_Metal = true;
+        Debug.Log("lock metal button");
+        res_Metal_Button.enabled = false;
+    }
+    private void Unlock_Wood_Button()
+    {
+        wait_Wood = false;
+        Debug.Log("unlock wood button");
+        res_Wood_Button.enabled = true;
+    }
+    private void Lock_Wood_Button()
+    {
+        wait_Wood = true;
+        Debug.Log("lock wood button");
+        res_Wood_Button.enabled = false;
+    }
+    private void Unlock_Food_Button()
+    {
+        wait_Food = false;
+        Debug.Log("unlock food button");
+        res_Food_Button.enabled = true;
+    }
+    private void Lock_Food_Button()
+    {
+        wait_Food = true;
+        Debug.Log("lock food button");
+        res_Food_Button.enabled = false;
+    }
+    private void Unlock_Tech_Button()
+    {
+        wait_Tech = false;
+        Debug.Log("unlock tech button");
+        res_Tech_Button.enabled = true;
+    }
+    private void Lock_Tech_Button()
+    {
+        wait_Tech = true;
+        Debug.Log("lock tech button");
+        res_Tech_Button.enabled = false;
+    }
+    
+    #endregion
+    private void LivingSpacesBonus() { }
     private void ResearchBonus() { }
     private void WorkshopBonus() { }
     private void PowerGeneratorBonus() { }
-    private void SetDefaultBuildingsViews()
-    {
-        #region Upgrade GameObjects
-        #region Bedrooms
-        bedroom_Lvl1_L_Rock.SetActive(true);
-        bedroom_Lvl1_L_Up_1.SetActive(false);
-        bedroom_Lvl1_L_Up_2.SetActive(false);
-        bedroom_Lvl1_L_Up_3.SetActive(false);
-        bedroom_Lvl1_L_Up_4.SetActive(false);
-        bedroom_Lvl1_L_Up_5.SetActive(false);
-        bedroom_Lvl1_L_Up_6.SetActive(false);
-        bedroom_Lvl1_L_Up_7.SetActive(false);
-        bedroom_Lvl1_L_Up_8.SetActive(false);
-        bedroom_Lvl1_L_Up_9.SetActive(false);
-        bedroom_Lvl1_L_Up_10.SetActive(false);
-        bedroom_Lvl2_L_Rock.SetActive(true);
-        bedroom_Lvl2_L_Up_1.SetActive(false);
-        bedroom_Lvl2_L_Up_2.SetActive(false);
-        bedroom_Lvl2_L_Up_3.SetActive(false);
-        bedroom_Lvl2_L_Up_4.SetActive(false);
-        bedroom_Lvl2_L_Up_5.SetActive(false);
-        bedroom_Lvl2_L_Up_6.SetActive(false);
-        bedroom_Lvl2_L_Up_7.SetActive(false);
-        bedroom_Lvl2_L_Up_8.SetActive(false);
-        bedroom_Lvl2_L_Up_9.SetActive(false);
-        bedroom_Lvl2_L_Up_10.SetActive(false);
-        bedroom_Lvl3_L_Rock.SetActive(true);
-        bedroom_Lvl3_L_Up_1.SetActive(false);
-        bedroom_Lvl3_L_Up_2.SetActive(false);
-        bedroom_Lvl3_L_Up_3.SetActive(false);
-        bedroom_Lvl3_L_Up_4.SetActive(false);
-        bedroom_Lvl3_L_Up_5.SetActive(false);
-        bedroom_Lvl3_L_Up_6.SetActive(false);
-        bedroom_Lvl3_L_Up_7.SetActive(false);
-        bedroom_Lvl3_L_Up_8.SetActive(false);
-        bedroom_Lvl3_L_Up_9.SetActive(false);
-        bedroom_Lvl3_L_Up_10.SetActive(false);
-        bedroom_Lvl1_R_Rock.SetActive(true);
-        bedroom_Lvl1_R_Up_1.SetActive(false);
-        bedroom_Lvl1_R_Up_2.SetActive(false);
-        bedroom_Lvl1_R_Up_3.SetActive(false);
-        bedroom_Lvl1_R_Up_4.SetActive(false);
-        bedroom_Lvl1_R_Up_5.SetActive(false);
-        bedroom_Lvl1_R_Up_6.SetActive(false);
-        bedroom_Lvl1_R_Up_7.SetActive(false);
-        bedroom_Lvl1_R_Up_8.SetActive(false);
-        bedroom_Lvl1_R_Up_9.SetActive(false);
-        bedroom_Lvl1_R_Up_10.SetActive(false);
-        bedroom_Lvl2_R_Rock.SetActive(true);
-        bedroom_Lvl2_R_Up_1.SetActive(false);
-        bedroom_Lvl2_R_Up_2.SetActive(false);
-        bedroom_Lvl2_R_Up_3.SetActive(false);
-        bedroom_Lvl2_R_Up_4.SetActive(false);
-        bedroom_Lvl2_R_Up_5.SetActive(false);
-        bedroom_Lvl2_R_Up_6.SetActive(false);
-        bedroom_Lvl2_R_Up_7.SetActive(false);
-        bedroom_Lvl2_R_Up_8.SetActive(false);
-        bedroom_Lvl2_R_Up_9.SetActive(false);
-        bedroom_Lvl2_R_Up_10.SetActive(false);
-        bedroom_Lvl3_R_Rock.SetActive(true);
-        bedroom_Lvl3_R_Up_1.SetActive(false);
-        bedroom_Lvl3_R_Up_2.SetActive(false);
-        bedroom_Lvl3_R_Up_3.SetActive(false);
-        bedroom_Lvl3_R_Up_4.SetActive(false);
-        bedroom_Lvl3_R_Up_5.SetActive(false);
-        bedroom_Lvl3_R_Up_6.SetActive(false);
-        bedroom_Lvl3_R_Up_7.SetActive(false);
-        bedroom_Lvl3_R_Up_8.SetActive(false);
-        bedroom_Lvl3_R_Up_9.SetActive(false);
-        bedroom_Lvl3_R_Up_10.SetActive(false);
-        #endregion
-        #region Stairs
-        stairs_1_Locked.SetActive(false);
-        stairs_1_Unlocked.SetActive(true);
-        stairs_2_Locked.SetActive(true);
-        stairs_2_Unlocked.SetActive(false);
-        stairs_3_Locked.SetActive(true);
-        stairs_3_Unlocked.SetActive(false);
-        #endregion
-        #region Walls
-        wall_Left_None.SetActive(true);
-        wall_Left_Up_1.SetActive(false);
-        wall_Left_Up_2.SetActive(false);
-        wall_Left_Up_3.SetActive(false);
-        wall_Left_Up_4.SetActive(false);
-        wall_Left_Up_5.SetActive(false);
-        wall_Left_Up_6.SetActive(false);
-        wall_Left_Up_7.SetActive(false);
-        wall_Left_Up_8.SetActive(false);
-        wall_Left_Up_9.SetActive(false);
-        wall_Left_Up_10.SetActive(false);
-        wall_Right_None.SetActive(true);
-        wall_Right_Up_1.SetActive(false);
-        wall_Right_Up_2.SetActive(false);
-        wall_Right_Up_3.SetActive(false);
-        wall_Right_Up_4.SetActive(false);
-        wall_Right_Up_5.SetActive(false);
-        wall_Right_Up_6.SetActive(false);
-        wall_Right_Up_7.SetActive(false);
-        wall_Right_Up_8.SetActive(false);
-        wall_Right_Up_9.SetActive(false);
-        wall_Right_Up_10.SetActive(false);
-        #endregion
-        #region Main Rooms
-        underGarden_Lvl1_L1_Def.SetActive(true);
-        underGarden_Lvl1_L1_Up_1.SetActive(false);
-        underGarden_Lvl1_L1_Up_2.SetActive(false);
-        underGarden_Lvl1_L1_Up_3.SetActive(false);
-        underGarden_Lvl1_L1_Up_4.SetActive(false);
-        underGarden_Lvl1_L1_Up_5.SetActive(false);
-        radio_Lvl1_L2_Def.SetActive(true);
-        radio_Lvl1_L2_Up_1.SetActive(false);
-        radio_Lvl1_L2_Up_2.SetActive(false);
-        radio_Lvl1_L2_Up_3.SetActive(false);
-        radio_Lvl1_L2_Up_4.SetActive(false);
-        radio_Lvl1_L2_Up_5.SetActive(false);
-        expedition_Lvl1_R1_Def.SetActive(true);
-        expedition_Lvl1_R1_Up_1.SetActive(false);
-        expedition_Lvl1_R1_Up_2.SetActive(false);
-        expedition_Lvl1_R1_Up_3.SetActive(false);
-        expedition_Lvl1_R1_Up_4.SetActive(false);
-        expedition_Lvl1_R1_Up_5.SetActive(false);
-        training_Lvl1_R2_Def.SetActive(true);
-        training_Lvl1_R2_Up_1.SetActive(false);
-        training_Lvl1_R2_Up_2.SetActive(false);
-        training_Lvl1_R2_Up_3.SetActive(false);
-        training_Lvl1_R2_Up_4.SetActive(false);
-        training_Lvl1_R2_Up_5.SetActive(false);
-        workshop_Lvl2_L1_Def.SetActive(true);
-        workshop_Lvl2_L1_Up_1.SetActive(false);
-        workshop_Lvl2_L1_Up_2.SetActive(false);
-        workshop_Lvl2_L1_Up_3.SetActive(false);
-        workshop_Lvl2_L1_Up_4.SetActive(false);
-        workshop_Lvl2_L1_Up_5.SetActive(false);
-        workshop_Lvl2_L2_Def.SetActive(true);
-        workshop_Lvl2_L2_Up_1.SetActive(false);
-        workshop_Lvl2_L2_Up_2.SetActive(false);
-        workshop_Lvl2_L2_Up_3.SetActive(false);
-        workshop_Lvl2_L2_Up_4.SetActive(false);
-        workshop_Lvl2_L2_Up_5.SetActive(false);
-        generator_Lvl2_R1_Def.SetActive(true);
-        generator_Lvl2_R1_Up_1.SetActive(false);
-        generator_Lvl2_R1_Up_2.SetActive(false);
-        generator_Lvl2_R1_Up_3.SetActive(false);
-        generator_Lvl2_R1_Up_4.SetActive(false);
-        generator_Lvl2_R1_Up_5.SetActive(false);
-        generator_Lvl2_R2_Def.SetActive(true);
-        generator_Lvl2_R2_Up_1.SetActive(false);
-        generator_Lvl2_R2_Up_2.SetActive(false);
-        generator_Lvl2_R2_Up_3.SetActive(false);
-        generator_Lvl2_R2_Up_4.SetActive(false);
-        generator_Lvl2_R2_Up_5.SetActive(false);
-        research_Lvl3_L1_Def.SetActive(true);
-        research_Lvl3_L1_Up_1.SetActive(false);
-        research_Lvl3_L1_Up_2.SetActive(false);
-        research_Lvl3_L1_Up_3.SetActive(false);
-        research_Lvl3_L1_Up_4.SetActive(false);
-        research_Lvl3_L1_Up_5.SetActive(false);
-        research_Lvl3_L2_Def.SetActive(true);
-        research_Lvl3_L2_Up_1.SetActive(false);
-        research_Lvl3_L2_Up_2.SetActive(false);
-        research_Lvl3_L2_Up_3.SetActive(false);
-        research_Lvl3_L2_Up_4.SetActive(false);
-        research_Lvl3_L2_Up_5.SetActive(false);
-        livingSpace_Lvl3_R1_Def.SetActive(true);
-        livingSpace_Lvl3_R1_Up_1.SetActive(false);
-        livingSpace_Lvl3_R1_Up_2.SetActive(false);
-        livingSpace_Lvl3_R1_Up_3.SetActive(false);
-        livingSpace_Lvl3_R1_Up_4.SetActive(false);
-        livingSpace_Lvl3_R1_Up_5.SetActive(false);
-        livingSpace_Lvl3_R2_Def.SetActive(true);
-        livingSpace_Lvl3_R2_Up_1.SetActive(false);
-        livingSpace_Lvl3_R2_Up_2.SetActive(false);
-        livingSpace_Lvl3_R2_Up_3.SetActive(false);
-        livingSpace_Lvl3_R2_Up_4.SetActive(false);
-        livingSpace_Lvl3_R2_Up_5.SetActive(false);
-        #endregion
-        #endregion
-    }
+    
     private void CheckRoomUnlockProgress()
     {
-        CheckBedroomUnlockProgress();
-        CheckStairsUnlockProgress();
-        CheckGeneratorUnlockProgress();
-        //BuyWorkshopUnlockProgress();
-        //BuyLivingSpaceUnlockProgress();
-        //BuyResearchUnlockProgress();
+        Check_Upgrade_Bedroom_Lvl1_L();
+        Check_Upgrade_Bedroom_Lvl2_L();
+        Check_Upgrade_Bedroom_Lvl3_L();
+        Check_Upgrade_Bedroom_Lvl1_R();
+        Check_Upgrade_Bedroom_Lvl2_R();
+        Check_Upgrade_Bedroom_Lvl3_R();
+        //
+        Check_Upgrade_Stairs_2();
+        Check_Upgrade_Stairs_3();
+        //
+        Check_Upgrade_Expedition_Building();
+        Check_Upgrade_Training_Building();
+        Check_Upgrade_Radio_Building();
+        Check_Upgrade_UnderGarden_Building();
+        //
+        Check_Upgrade_Generator_Building_1();
+        Check_Upgrade_Generator_Building_2();
+        Check_Upgrade_Workshop_Building_1();
+        Check_Upgrade_Workshop_Building_2();
+        Check_Upgrade_LivingSpace_Building_1();
+        Check_Upgrade_LivingSpace_Building_2();
+        Check_Upgrade_Research_Building_1();
+        Check_Upgrade_Reserach_Building_2();
+        // 
+        Check_Save_Wall_L();
+        Check_Save_Wall_R();
     }
     #region Need To add visual Unlock images to the check button items
     private void CheckBedroomUnlockProgress()// Need to add visual presentation of unlocks
@@ -880,6 +1338,7 @@ private void LivingSpacesBonus() { }
             if (GC.LivingSpace_Lvl3_R1 && GC.Player_Metal >= 1000 && GC.Player_Wood >= 1000 && GC.Player_Tech >= 1000) { GC.Player_Metal -= 1000; GC.Player_Wood -= 1000; GC.Player_Tech -= 1000; GC.LivingSpace_Lvl3_R2 = true; livingSpace_Lvl3_R2_Def.SetActive(false); livingSpace_Lvl3_R2_Up_1.SetActive(false); }
         }
     }
+    #endregion
     #region Purchase Buildings & Upgrades
     // BEDROOM LVL1 LEFT UNLOCK
     #region Unlock Bedroom Lvl1 L & Upgrades
@@ -931,6 +1390,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl1_L_Clik_Unlock >= 50)
         {
             GC.Bedroom_Lvl1_L_Clik_Unlock -= 50;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Lvl1_L = true;
             GC.Bedroom_Upg_Lvl1_L = 0;
             bedroom_Lvl1_L_Rock.SetActive(true); DiplayUiStats();
@@ -941,6 +1401,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl1_L_Clik_Unlock >= 25)
         {
             GC.Bedroom_Lvl1_L_Clik_Unlock -=25;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl1_L = 1;
             bedroom_Lvl1_L_Rock.SetActive(false);
             bedroom_Lvl1_L_Up_1.SetActive(true); DiplayUiStats();
@@ -951,6 +1412,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl1_L_Clik_Unlock >= 50)
         {
             GC.Bedroom_Lvl1_L_Clik_Unlock -=50;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl1_L = 2;
             bedroom_Lvl1_L_Up_1.SetActive(false);
             bedroom_Lvl1_L_Up_2.SetActive(true); DiplayUiStats();
@@ -961,6 +1423,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl1_L_Clik_Unlock >= 75)
         {
             GC.Bedroom_Lvl1_L_Clik_Unlock -=75;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl1_L = 3;
             bedroom_Lvl1_L_Up_2.SetActive(false);
             bedroom_Lvl1_L_Up_3.SetActive(true); DiplayUiStats();
@@ -971,6 +1434,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl1_L_Clik_Unlock >= 100)
         {
             GC.Bedroom_Lvl1_L_Clik_Unlock -=100;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl1_L = 4;
             bedroom_Lvl1_L_Up_3.SetActive(false);
             bedroom_Lvl1_L_Up_4.SetActive(true); DiplayUiStats();
@@ -981,6 +1445,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl1_L_Clik_Unlock >= 125)
         {
             GC.Bedroom_Lvl1_L_Clik_Unlock -=125;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl1_L = 5;
             bedroom_Lvl1_L_Up_4.SetActive(false);
             bedroom_Lvl1_L_Up_5.SetActive(true); DiplayUiStats();
@@ -991,6 +1456,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl1_L_Clik_Unlock >= 150)
         {
             GC.Bedroom_Lvl1_L_Clik_Unlock -=150;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl1_L = 6;
             bedroom_Lvl1_L_Up_5.SetActive(false);
             bedroom_Lvl1_L_Up_6.SetActive(true); DiplayUiStats();
@@ -1001,6 +1467,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl1_L_Clik_Unlock >= 175)
         {
             GC.Bedroom_Lvl1_L_Clik_Unlock -=175;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl1_L = 7;
             bedroom_Lvl1_L_Up_6.SetActive(false);
             bedroom_Lvl1_L_Up_7.SetActive(true); DiplayUiStats();
@@ -1011,6 +1478,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl1_L_Clik_Unlock >= 200)
         {
             GC.Bedroom_Lvl1_L_Clik_Unlock -=200;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl1_L = 8;
             bedroom_Lvl1_L_Up_7.SetActive(false);
             bedroom_Lvl1_L_Up_8.SetActive(true); DiplayUiStats();
@@ -1021,6 +1489,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl1_L_Clik_Unlock >= 225)
         {
             GC.Bedroom_Lvl1_L_Clik_Unlock -=225;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl1_L = 9;
             bedroom_Lvl1_L_Up_8.SetActive(false);
             bedroom_Lvl1_L_Up_9.SetActive(true); DiplayUiStats();
@@ -1031,6 +1500,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl1_L_Clik_Unlock >= 250)
         {
             GC.Bedroom_Lvl1_L_Clik_Unlock -=250;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl1_L = 10;
             bedroom_Lvl1_L_Up_9.SetActive(false);
             bedroom_Lvl1_L_Up_10.SetActive(true); DiplayUiStats();
@@ -1087,6 +1557,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl1_R_Clik_Unlock >= 50)
         {
             GC.Bedroom_Lvl1_R_Clik_Unlock -=50;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Lvl1_R = true;
             GC.Bedroom_Upg_Lvl1_R = 0;
             bedroom_Lvl1_R_Rock.SetActive(true); DiplayUiStats();
@@ -1097,6 +1568,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl1_R_Clik_Unlock >= 25)
         {
             GC.Bedroom_Lvl1_R_Clik_Unlock -=25;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl1_R = 1;
             bedroom_Lvl1_R_Rock.SetActive(false);
             bedroom_Lvl1_R_Up_1.SetActive(true); DiplayUiStats();
@@ -1107,6 +1579,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl1_R_Clik_Unlock >= 50)
         {
             GC.Bedroom_Lvl1_R_Clik_Unlock -=50;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl1_R = 2;
             bedroom_Lvl1_R_Up_1.SetActive(false);
             bedroom_Lvl1_R_Up_2.SetActive(true); DiplayUiStats();
@@ -1117,6 +1590,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl1_R_Clik_Unlock >= 75)
         {
             GC.Bedroom_Lvl1_R_Clik_Unlock -=75;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl1_R = 3;
             bedroom_Lvl1_R_Up_2.SetActive(false);
             bedroom_Lvl1_R_Up_3.SetActive(true); DiplayUiStats();
@@ -1127,6 +1601,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl1_R_Clik_Unlock >= 100)
         {
             GC.Bedroom_Lvl1_R_Clik_Unlock -=100;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl1_R = 4;
             bedroom_Lvl1_R_Up_3.SetActive(false);
             bedroom_Lvl1_R_Up_4.SetActive(true); DiplayUiStats();
@@ -1137,6 +1612,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl1_R_Clik_Unlock >= 125)
         {
             GC.Bedroom_Lvl1_R_Clik_Unlock -=125;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl1_R = 5;
             bedroom_Lvl1_R_Up_4.SetActive(false);
             bedroom_Lvl1_R_Up_5.SetActive(true); DiplayUiStats();
@@ -1147,6 +1623,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl1_R_Clik_Unlock >= 150)
         {
             GC.Bedroom_Lvl1_R_Clik_Unlock -=150;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl1_R = 6;
             bedroom_Lvl1_R_Up_5.SetActive(false);
             bedroom_Lvl1_R_Up_6.SetActive(true); DiplayUiStats();
@@ -1157,6 +1634,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl1_R_Clik_Unlock >= 175)
         {
             GC.Bedroom_Lvl1_R_Clik_Unlock -=175;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl1_R = 7;
             bedroom_Lvl1_R_Up_6.SetActive(false);
             bedroom_Lvl1_R_Up_7.SetActive(true); DiplayUiStats();
@@ -1167,6 +1645,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl1_R_Clik_Unlock >= 200)
         {
             GC.Bedroom_Lvl1_R_Clik_Unlock -=200;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl1_R = 8;
             bedroom_Lvl1_R_Up_7.SetActive(false);
             bedroom_Lvl1_R_Up_8.SetActive(true); DiplayUiStats();
@@ -1177,6 +1656,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl1_R_Clik_Unlock >= 225)
         {
             GC.Bedroom_Lvl1_R_Clik_Unlock -=225;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl1_R = 9;
             bedroom_Lvl1_R_Up_8.SetActive(false);
             bedroom_Lvl1_R_Up_9.SetActive(true); DiplayUiStats();
@@ -1187,6 +1667,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl1_R_Clik_Unlock >= 250)
         {
             GC.Bedroom_Lvl1_R_Clik_Unlock -=250;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl1_R = 10;
             bedroom_Lvl1_R_Up_9.SetActive(false);
             bedroom_Lvl1_R_Up_10.SetActive(true); DiplayUiStats();
@@ -1243,6 +1724,7 @@ private void LivingSpacesBonus() { }
         if (GC.Workshop_Lvl2_L2 && GC.Bedroom_Lvl2_L_Clik_Unlock >= 125)
         {
             GC.Bedroom_Lvl2_L_Clik_Unlock -=125;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Lvl2_L = true;
             GC.Bedroom_Upg_Lvl2_L = 0;
             bedroom_Lvl2_L_Rock.SetActive(true); DiplayUiStats();
@@ -1253,6 +1735,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl2_L_Clik_Unlock >= 150)
         {
             GC.Bedroom_Lvl2_L_Clik_Unlock -=150;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl2_L = 1;
             bedroom_Lvl2_L_Rock.SetActive(false);
             bedroom_Lvl2_L_Up_1.SetActive(true); DiplayUiStats();
@@ -1263,6 +1746,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl2_L_Clik_Unlock >= 175)
         {
             GC.Bedroom_Lvl2_L_Clik_Unlock -=175;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl2_L = 2;
             bedroom_Lvl2_L_Up_1.SetActive(false);
             bedroom_Lvl2_L_Up_2.SetActive(true); DiplayUiStats();
@@ -1273,6 +1757,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl2_L_Clik_Unlock >= 200)
         {
             GC.Bedroom_Lvl2_L_Clik_Unlock -=200;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl2_L = 3;
             bedroom_Lvl2_L_Up_2.SetActive(false);
             bedroom_Lvl2_L_Up_3.SetActive(true); DiplayUiStats();
@@ -1283,6 +1768,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl2_L_Clik_Unlock >= 225)
         {
             GC.Bedroom_Lvl2_L_Clik_Unlock -=225;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl2_L = 4;
             bedroom_Lvl2_L_Up_3.SetActive(false);
             bedroom_Lvl2_L_Up_4.SetActive(true); DiplayUiStats();
@@ -1293,6 +1779,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl2_L_Clik_Unlock >= 250)
         {
             GC.Bedroom_Lvl2_L_Clik_Unlock -=250;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl2_L = 5;
             bedroom_Lvl2_L_Up_4.SetActive(false);
             bedroom_Lvl2_L_Up_5.SetActive(true); DiplayUiStats();
@@ -1303,6 +1790,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl2_L_Clik_Unlock >= 275)
         {
             GC.Bedroom_Lvl2_L_Clik_Unlock -=275;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl2_L = 6;
             bedroom_Lvl2_L_Up_5.SetActive(false);
             bedroom_Lvl2_L_Up_6.SetActive(true); DiplayUiStats();
@@ -1313,6 +1801,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl2_L_Clik_Unlock >= 300)
         {
             GC.Bedroom_Lvl2_L_Clik_Unlock -=300;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl2_L = 7;
             bedroom_Lvl2_L_Up_6.SetActive(false);
             bedroom_Lvl2_L_Up_7.SetActive(true); DiplayUiStats();
@@ -1323,6 +1812,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl2_L_Clik_Unlock >= 325)
         {
             GC.Bedroom_Lvl2_L_Clik_Unlock -=325;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl2_L = 8;
             bedroom_Lvl2_L_Up_7.SetActive(false);
             bedroom_Lvl2_L_Up_8.SetActive(true); DiplayUiStats();
@@ -1333,6 +1823,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl2_L_Clik_Unlock >= 350)
         {
             GC.Bedroom_Lvl2_L_Clik_Unlock -=350;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl2_L = 9;
             bedroom_Lvl2_L_Up_8.SetActive(false);
             bedroom_Lvl2_L_Up_9.SetActive(true); DiplayUiStats();
@@ -1343,6 +1834,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl2_L_Clik_Unlock >= 375)
         {
             GC.Bedroom_Lvl2_L_Clik_Unlock -=375;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl2_L = 10;
             bedroom_Lvl2_L_Up_9.SetActive(false);
             bedroom_Lvl2_L_Up_10.SetActive(true); DiplayUiStats();
@@ -1399,6 +1891,7 @@ private void LivingSpacesBonus() { }
         if (GC.Generator_Lvl2_R2 && GC.Bedroom_Lvl2_R_Clik_Unlock >= 125)
         {
             GC.Bedroom_Lvl2_R_Clik_Unlock -=125;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Lvl2_R = true;
             GC.Bedroom_Upg_Lvl2_R = 0;
             bedroom_Lvl2_R_Rock.SetActive(true); DiplayUiStats();
@@ -1409,6 +1902,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl2_R_Clik_Unlock >= 150)
         {
             GC.Bedroom_Lvl2_R_Clik_Unlock -=150;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl2_R = 1;
             bedroom_Lvl2_R_Rock.SetActive(false);
             bedroom_Lvl2_R_Up_1.SetActive(true); DiplayUiStats();
@@ -1419,6 +1913,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl2_R_Clik_Unlock >= 175)
         {
             GC.Bedroom_Lvl2_R_Clik_Unlock -=175;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl2_R = 2;
             bedroom_Lvl2_R_Up_1.SetActive(false);
             bedroom_Lvl2_R_Up_2.SetActive(true); DiplayUiStats();
@@ -1429,6 +1924,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl2_R_Clik_Unlock >= 200)
         {
             GC.Bedroom_Lvl2_R_Clik_Unlock -=200;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl2_R = 3;
             bedroom_Lvl2_R_Up_2.SetActive(false);
             bedroom_Lvl2_R_Up_3.SetActive(true); DiplayUiStats();
@@ -1439,6 +1935,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl2_R_Clik_Unlock >= 225)
         {
             GC.Bedroom_Lvl2_R_Clik_Unlock -=225;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl2_R = 4;
             bedroom_Lvl2_R_Up_3.SetActive(false);
             bedroom_Lvl2_R_Up_4.SetActive(true); DiplayUiStats();
@@ -1449,6 +1946,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl2_R_Clik_Unlock >= 250)
         {
             GC.Bedroom_Lvl2_R_Clik_Unlock -=250;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl2_R = 5;
             bedroom_Lvl2_R_Up_4.SetActive(false);
             bedroom_Lvl2_R_Up_5.SetActive(true); DiplayUiStats();
@@ -1459,6 +1957,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl2_R_Clik_Unlock >= 275)
         {
             GC.Bedroom_Lvl2_R_Clik_Unlock -=275;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl2_R = 6;
             bedroom_Lvl2_R_Up_5.SetActive(false);
             bedroom_Lvl2_R_Up_6.SetActive(true); DiplayUiStats();
@@ -1469,6 +1968,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl2_R_Clik_Unlock >= 300)
         {
             GC.Bedroom_Lvl2_R_Clik_Unlock -=300;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl2_R = 7;
             bedroom_Lvl2_R_Up_6.SetActive(false);
             bedroom_Lvl2_R_Up_7.SetActive(true); DiplayUiStats();
@@ -1479,6 +1979,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl2_R_Clik_Unlock >= 325)
         {
             GC.Bedroom_Lvl2_R_Clik_Unlock -=325;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl2_R = 8;
             bedroom_Lvl2_R_Up_7.SetActive(false);
             bedroom_Lvl2_R_Up_8.SetActive(true); DiplayUiStats();
@@ -1489,6 +1990,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl2_R_Clik_Unlock >= 350)
         {
             GC.Bedroom_Lvl2_R_Clik_Unlock -=350;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl2_R = 9;
             bedroom_Lvl2_R_Up_8.SetActive(false);
             bedroom_Lvl2_R_Up_9.SetActive(true); DiplayUiStats();
@@ -1499,6 +2001,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl2_R_Clik_Unlock >= 375)
         {
             GC.Bedroom_Lvl2_R_Clik_Unlock -=375;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl2_R = 10;
             bedroom_Lvl2_R_Up_9.SetActive(false);
             bedroom_Lvl2_R_Up_10.SetActive(true); DiplayUiStats();
@@ -1555,6 +2058,7 @@ private void LivingSpacesBonus() { }
         if (GC.Research_Lvl3_L2 && GC.Bedroom_Lvl3_L_Clik_Unlock >= 250)
         {
             GC.Bedroom_Lvl3_L_Clik_Unlock -=250;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Lvl3_L = true;
             GC.Bedroom_Upg_Lvl3_L = 0;
             bedroom_Lvl3_L_Rock.SetActive(true); DiplayUiStats();
@@ -1565,6 +2069,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl3_L_Clik_Unlock >= 275)
         {
             GC.Bedroom_Lvl3_L_Clik_Unlock -=275;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl3_L = 1;
             bedroom_Lvl3_L_Rock.SetActive(false);
             bedroom_Lvl3_L_Up_1.SetActive(true); DiplayUiStats();
@@ -1575,6 +2080,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl3_L_Clik_Unlock >= 300)
         {
             GC.Bedroom_Lvl3_L_Clik_Unlock -=300;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl3_L = 2;
             bedroom_Lvl3_L_Up_1.SetActive(false);
             bedroom_Lvl3_L_Up_2.SetActive(true); DiplayUiStats();
@@ -1585,6 +2091,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl3_L_Clik_Unlock >= 325)
         {
             GC.Bedroom_Lvl3_L_Clik_Unlock -=325;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl3_L = 3;
             bedroom_Lvl3_L_Up_2.SetActive(false);
             bedroom_Lvl3_L_Up_3.SetActive(true); DiplayUiStats();
@@ -1595,6 +2102,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl3_L_Clik_Unlock >= 350)
         {
             GC.Bedroom_Lvl3_L_Clik_Unlock -=350;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl3_L = 4;
             bedroom_Lvl3_L_Up_3.SetActive(false);
             bedroom_Lvl3_L_Up_4.SetActive(true); DiplayUiStats();
@@ -1605,6 +2113,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl3_L_Clik_Unlock >= 375)
         {
             GC.Bedroom_Lvl3_L_Clik_Unlock -=375;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl3_L = 5;
             bedroom_Lvl3_L_Up_4.SetActive(false);
             bedroom_Lvl3_L_Up_5.SetActive(true); DiplayUiStats();
@@ -1615,6 +2124,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl3_L_Clik_Unlock >= 400)
         {
             GC.Bedroom_Lvl3_L_Clik_Unlock -=400;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl3_L = 6;
             bedroom_Lvl3_L_Up_5.SetActive(false);
             bedroom_Lvl3_L_Up_6.SetActive(true); DiplayUiStats();
@@ -1625,6 +2135,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl3_L_Clik_Unlock >= 425)
         {
             GC.Bedroom_Lvl3_L_Clik_Unlock -=425;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl3_L = 7;
             bedroom_Lvl3_L_Up_6.SetActive(false);
             bedroom_Lvl3_L_Up_7.SetActive(true); DiplayUiStats();
@@ -1635,6 +2146,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl3_L_Clik_Unlock >= 450)
         {
             GC.Bedroom_Lvl3_L_Clik_Unlock -=450;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl3_L = 8;
             bedroom_Lvl3_L_Up_7.SetActive(false);
             bedroom_Lvl3_L_Up_8.SetActive(true); DiplayUiStats();
@@ -1645,6 +2157,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl3_L_Clik_Unlock >= 475)
         {
             GC.Bedroom_Lvl3_L_Clik_Unlock -=475;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl3_L = 9;
             bedroom_Lvl3_L_Up_8.SetActive(false);
             bedroom_Lvl3_L_Up_9.SetActive(true); DiplayUiStats();
@@ -1655,6 +2168,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl3_L_Clik_Unlock >= 500)
         {
             GC.Bedroom_Lvl3_L_Clik_Unlock -=500;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl3_L = 10;
             bedroom_Lvl3_L_Up_9.SetActive(false);
             bedroom_Lvl3_L_Up_10.SetActive(true); DiplayUiStats();
@@ -1711,6 +2225,7 @@ private void LivingSpacesBonus() { }
         if (GC.LivingSpace_Lvl3_R2 && GC.Bedroom_Lvl3_R_Clik_Unlock >= 250)
         {
             GC.Bedroom_Lvl3_R_Clik_Unlock -=250;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Lvl3_R = true;
             GC.Bedroom_Upg_Lvl3_R = 0;
             bedroom_Lvl3_R_Rock.SetActive(true); DiplayUiStats();
@@ -1721,6 +2236,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl3_R_Clik_Unlock >= 275)
         {
             GC.Bedroom_Lvl3_R_Clik_Unlock -=275;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl3_R = 1;
             bedroom_Lvl3_R_Rock.SetActive(false);
             bedroom_Lvl3_R_Up_1.SetActive(true); DiplayUiStats();
@@ -1731,6 +2247,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl3_R_Clik_Unlock >= 300)
         {
             GC.Bedroom_Lvl3_R_Clik_Unlock -=300;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl3_R = 2;
             bedroom_Lvl3_R_Up_1.SetActive(false);
             bedroom_Lvl3_R_Up_2.SetActive(true); DiplayUiStats();
@@ -1741,6 +2258,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl3_R_Clik_Unlock >= 325)
         {
             GC.Bedroom_Lvl3_R_Clik_Unlock -=325;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl3_R = 3;
             bedroom_Lvl3_R_Up_2.SetActive(false);
             bedroom_Lvl3_R_Up_3.SetActive(true); DiplayUiStats();
@@ -1751,6 +2269,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl3_R_Clik_Unlock >= 350)
         {
             GC.Bedroom_Lvl3_R_Clik_Unlock -=350;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl3_R = 4;
             bedroom_Lvl3_R_Up_3.SetActive(false);
             bedroom_Lvl3_R_Up_4.SetActive(true); DiplayUiStats();
@@ -1761,6 +2280,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl3_R_Clik_Unlock >= 375)
         {
             GC.Bedroom_Lvl3_R_Clik_Unlock -=375;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl3_R = 5;
             bedroom_Lvl3_R_Up_4.SetActive(false);
             bedroom_Lvl3_R_Up_5.SetActive(true); DiplayUiStats();
@@ -1771,6 +2291,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl3_R_Clik_Unlock >= 400)
         {
             GC.Bedroom_Lvl3_R_Clik_Unlock -=400;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl3_R = 6;
             bedroom_Lvl3_R_Up_5.SetActive(false);
             bedroom_Lvl3_R_Up_6.SetActive(true); DiplayUiStats();
@@ -1781,6 +2302,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl3_R_Clik_Unlock >= 425)
         {
             GC.Bedroom_Lvl3_R_Clik_Unlock -=425;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl3_R = 7;
             bedroom_Lvl3_R_Up_6.SetActive(false);
             bedroom_Lvl3_R_Up_7.SetActive(true); DiplayUiStats();
@@ -1791,6 +2313,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl3_R_Clik_Unlock >= 450)
         {
             GC.Bedroom_Lvl3_R_Clik_Unlock -=450;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl3_R = 8;
             bedroom_Lvl3_R_Up_7.SetActive(false);
             bedroom_Lvl3_R_Up_8.SetActive(true); DiplayUiStats();
@@ -1801,6 +2324,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl3_R_Clik_Unlock >= 475)
         {
             GC.Bedroom_Lvl3_R_Clik_Unlock -=475;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl3_R = 9;
             bedroom_Lvl3_R_Up_8.SetActive(false);
             bedroom_Lvl3_R_Up_9.SetActive(true); DiplayUiStats();
@@ -1811,6 +2335,7 @@ private void LivingSpacesBonus() { }
         if (GC.Bedroom_Lvl3_R_Clik_Unlock >= 500)
         {
             GC.Bedroom_Lvl3_R_Clik_Unlock -=500;
+            GC.Player_Capacity += 1;
             GC.Bedroom_Upg_Lvl3_R = 10;
             bedroom_Lvl3_R_Up_9.SetActive(false);
             bedroom_Lvl3_R_Up_10.SetActive(true); DiplayUiStats();
@@ -3338,6 +3863,1477 @@ private void LivingSpacesBonus() { }
             wall_Left_Up_11.SetActive(true); DiplayUiStats(); 
         }
     }*/
+    #endregion
+    #endregion
+
+
+    #region Set game after load checks
+    #region Check Buildings & Upgrades
+    // BEDROOM LVL1 LEFT UNLOCK
+    #region Check Unlock Bedroom Lvl1 L & Upgrades
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Check_Upgrade_Bedroom_Lvl1_L()
+    {
+        if (GC.Bedroom_Lvl1_L) { Check_Unlock_Bedroom_Lvl1_L();
+            switch (GC.Bedroom_Upg_Lvl1_L)
+            {
+                case 0:
+                    Check_1_Bedroom_Lvl1_L();
+                    break;
+                case 1:
+                    Check_2_Bedroom_Lvl1_L();
+                    break;
+                case 2:
+                    Check_3_Bedroom_Lvl1_L();
+                    break;
+                case 3:
+                    Check_4_Bedroom_Lvl1_L();
+                    break;
+                case 4:
+                    Check_5_Bedroom_Lvl1_L();
+                    break;
+                case 5:
+                    Check_6_Bedroom_Lvl1_L();
+                    break;
+                case 6:
+                    Check_7_Bedroom_Lvl1_L();
+                    break;
+                case 7:
+                    Check_8_Bedroom_Lvl1_L();
+                    break;
+                case 8:
+                    Check_9_Bedroom_Lvl1_L();
+                    break;
+                case 9:
+                    Check_10_Bedroom_Lvl1_L();
+                    break;
+            }
+        }
+    }
+    private void Check_Unlock_Bedroom_Lvl1_L()
+    {
+        bedroom_Lvl1_L_Rock.SetActive(true); DiplayUiStats();
+    }
+    private void Check_1_Bedroom_Lvl1_L()
+    {
+        bedroom_Lvl1_L_Rock.SetActive(false);
+        bedroom_Lvl1_L_Up_1.SetActive(true); DiplayUiStats();
+    }
+    private void Check_2_Bedroom_Lvl1_L()
+    {
+        bedroom_Lvl1_L_Up_1.SetActive(false);
+        bedroom_Lvl1_L_Up_2.SetActive(true); DiplayUiStats();
+    }
+    private void Check_3_Bedroom_Lvl1_L()
+    {
+        bedroom_Lvl1_L_Up_2.SetActive(false);
+        bedroom_Lvl1_L_Up_3.SetActive(true); DiplayUiStats();
+    }
+    private void Check_4_Bedroom_Lvl1_L()
+    {
+        bedroom_Lvl1_L_Up_3.SetActive(false);
+        bedroom_Lvl1_L_Up_4.SetActive(true); DiplayUiStats();
+    }
+    private void Check_5_Bedroom_Lvl1_L()
+    {
+        bedroom_Lvl1_L_Up_4.SetActive(false);
+        bedroom_Lvl1_L_Up_5.SetActive(true); DiplayUiStats();
+    }
+    private void Check_6_Bedroom_Lvl1_L()
+    {
+        bedroom_Lvl1_L_Up_5.SetActive(false);
+        bedroom_Lvl1_L_Up_6.SetActive(true); DiplayUiStats();
+    }
+    private void Check_7_Bedroom_Lvl1_L()
+    {
+        bedroom_Lvl1_L_Up_6.SetActive(false);
+        bedroom_Lvl1_L_Up_7.SetActive(true); DiplayUiStats();
+    }
+    private void Check_8_Bedroom_Lvl1_L()
+    {
+        bedroom_Lvl1_L_Up_7.SetActive(false);
+        bedroom_Lvl1_L_Up_8.SetActive(true); DiplayUiStats();
+    }
+    private void Check_9_Bedroom_Lvl1_L()
+    {
+        bedroom_Lvl1_L_Up_8.SetActive(false);
+        bedroom_Lvl1_L_Up_9.SetActive(true); DiplayUiStats();
+    }
+    private void Check_10_Bedroom_Lvl1_L()
+    {
+        bedroom_Lvl1_L_Up_9.SetActive(false);
+        bedroom_Lvl1_L_Up_10.SetActive(true); DiplayUiStats();
+    }
+    #endregion
+    // BEDROOM LVL1 RIGHT UNLOCK
+    #region Check Unlock Bedroom Lvl1 R & Upgrades
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Check_Upgrade_Bedroom_Lvl1_R()
+    {
+        if (GC.Bedroom_Lvl1_R) { Check_Unlock_Bedroom_Lvl1_R();
+            switch (GC.Bedroom_Upg_Lvl1_R)
+            {
+                case 0:
+                    Check_1_Bedroom_Lvl1_R();
+                    break;
+                case 1:
+                    Check_2_Bedroom_Lvl1_R();
+                    break;
+                case 2:
+                    Check_3_Bedroom_Lvl1_R();
+                    break;
+                case 3:
+                    Check_4_Bedroom_Lvl1_R();
+                    break;
+                case 4:
+                    Check_5_Bedroom_Lvl1_R();
+                    break;
+                case 5:
+                    Check_6_Bedroom_Lvl1_R();
+                    break;
+                case 6:
+                    Check_7_Bedroom_Lvl1_R();
+                    break;
+                case 7:
+                    Check_8_Bedroom_Lvl1_R();
+                    break;
+                case 8:
+                    Check_9_Bedroom_Lvl1_R();
+                    break;
+                case 9:
+                    Check_10_Bedroom_Lvl1_R();
+                    break;
+            }
+        }
+    }
+    private void Check_Unlock_Bedroom_Lvl1_R()
+    {
+        bedroom_Lvl1_R_Rock.SetActive(true); DiplayUiStats();
+    }
+    private void Check_1_Bedroom_Lvl1_R()
+    {
+        bedroom_Lvl1_R_Rock.SetActive(false);
+        bedroom_Lvl1_R_Up_1.SetActive(true); DiplayUiStats();
+    }
+    private void Check_2_Bedroom_Lvl1_R()
+    {
+        bedroom_Lvl1_R_Up_1.SetActive(false);
+        bedroom_Lvl1_R_Up_2.SetActive(true); DiplayUiStats();
+    }
+    private void Check_3_Bedroom_Lvl1_R()
+    {
+        bedroom_Lvl1_R_Up_2.SetActive(false);
+        bedroom_Lvl1_R_Up_3.SetActive(true); DiplayUiStats();
+    }
+    private void Check_4_Bedroom_Lvl1_R()
+    {
+        bedroom_Lvl1_R_Up_3.SetActive(false);
+        bedroom_Lvl1_R_Up_4.SetActive(true); DiplayUiStats();
+    }
+    private void Check_5_Bedroom_Lvl1_R()
+    {
+        bedroom_Lvl1_R_Up_4.SetActive(false);
+        bedroom_Lvl1_R_Up_5.SetActive(true); DiplayUiStats();
+    }
+    private void Check_6_Bedroom_Lvl1_R()
+    {
+        bedroom_Lvl1_R_Up_5.SetActive(false);
+        bedroom_Lvl1_R_Up_6.SetActive(true); DiplayUiStats();
+    }
+    private void Check_7_Bedroom_Lvl1_R()
+    {
+        bedroom_Lvl1_R_Up_6.SetActive(false);
+        bedroom_Lvl1_R_Up_7.SetActive(true); DiplayUiStats();
+    }
+    private void Check_8_Bedroom_Lvl1_R()
+    {
+        bedroom_Lvl1_R_Up_7.SetActive(false);
+        bedroom_Lvl1_R_Up_8.SetActive(true); DiplayUiStats();
+    }
+    private void Check_9_Bedroom_Lvl1_R()
+    {
+        bedroom_Lvl1_R_Up_8.SetActive(false);
+        bedroom_Lvl1_R_Up_9.SetActive(true); DiplayUiStats();
+    }
+    private void Check_10_Bedroom_Lvl1_R()
+    {
+        bedroom_Lvl1_R_Up_9.SetActive(false);
+        bedroom_Lvl1_R_Up_10.SetActive(true); DiplayUiStats();
+    }
+    #endregion
+    // BEDROOM LVL2 LEFT UNLOCK
+    #region Check Unlock Bedroom Lvl2 L & Upgrades
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Check_Upgrade_Bedroom_Lvl2_L()
+    {
+        if (GC.Bedroom_Lvl2_L) { Check_Unlock_Bedroom_Lvl2_L();
+            switch (GC.Bedroom_Upg_Lvl2_L)
+            {
+                case 0:
+                    Check_1_Bedroom_Lvl2_L();
+                    break;
+                case 1:
+                    Check_2_Bedroom_Lvl2_L();
+                    break;
+                case 2:
+                    Check_3_Bedroom_Lvl2_L();
+                    break;
+                case 3:
+                    Check_4_Bedroom_Lvl2_L();
+                    break;
+                case 4:
+                    Check_5_Bedroom_Lvl2_L();
+                    break;
+                case 5:
+                    Check_6_Bedroom_Lvl2_L();
+                    break;
+                case 6:
+                    Check_7_Bedroom_Lvl2_L();
+                    break;
+                case 7:
+                    Check_8_Bedroom_Lvl2_L();
+                    break;
+                case 8:
+                    Check_9_Bedroom_Lvl2_L();
+                    break;
+                case 9:
+                    Check_10_Bedroom_Lvl2_L();
+                    break;
+            }
+        }
+    }
+    private void Check_Unlock_Bedroom_Lvl2_L()
+    {
+        bedroom_Lvl2_L_Rock.SetActive(true); DiplayUiStats();
+    }
+    private void Check_1_Bedroom_Lvl2_L()
+    {
+        bedroom_Lvl2_L_Rock.SetActive(false);
+        bedroom_Lvl2_L_Up_1.SetActive(true); DiplayUiStats();
+    }
+    private void Check_2_Bedroom_Lvl2_L()
+    {
+        bedroom_Lvl2_L_Up_1.SetActive(false);
+        bedroom_Lvl2_L_Up_2.SetActive(true); DiplayUiStats();
+    }
+    private void Check_3_Bedroom_Lvl2_L()
+    {
+        bedroom_Lvl2_L_Up_2.SetActive(false);
+        bedroom_Lvl2_L_Up_3.SetActive(true); DiplayUiStats();
+    }
+    private void Check_4_Bedroom_Lvl2_L()
+    {
+        bedroom_Lvl2_L_Up_3.SetActive(false);
+        bedroom_Lvl2_L_Up_4.SetActive(true); DiplayUiStats();
+    }
+    private void Check_5_Bedroom_Lvl2_L()
+    {
+        bedroom_Lvl2_L_Up_4.SetActive(false);
+        bedroom_Lvl2_L_Up_5.SetActive(true); DiplayUiStats();
+    }
+    private void Check_6_Bedroom_Lvl2_L()
+    {
+        bedroom_Lvl2_L_Up_5.SetActive(false);
+        bedroom_Lvl2_L_Up_6.SetActive(true); DiplayUiStats();
+    }
+    private void Check_7_Bedroom_Lvl2_L()
+    {
+        bedroom_Lvl2_L_Up_6.SetActive(false);
+        bedroom_Lvl2_L_Up_7.SetActive(true); DiplayUiStats();
+    }
+    private void Check_8_Bedroom_Lvl2_L()
+    {
+        bedroom_Lvl2_L_Up_7.SetActive(false);
+        bedroom_Lvl2_L_Up_8.SetActive(true); DiplayUiStats();
+    }
+    private void Check_9_Bedroom_Lvl2_L()
+    {
+        bedroom_Lvl2_L_Up_8.SetActive(false);
+        bedroom_Lvl2_L_Up_9.SetActive(true); DiplayUiStats();
+    }
+    private void Check_10_Bedroom_Lvl2_L()
+    {
+        bedroom_Lvl2_L_Up_9.SetActive(false);
+        bedroom_Lvl2_L_Up_10.SetActive(true); DiplayUiStats();
+    }
+    #endregion
+    // BEDROOM LVL2 RIGHT UNLOCK
+    #region Check Unlock Bedroom Lvl2 R & Upgrades
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Check_Upgrade_Bedroom_Lvl2_R()
+    {
+        if (GC.Bedroom_Lvl2_R) { Check_Unlock_Bedroom_Lvl2_R();
+            switch (GC.Bedroom_Upg_Lvl2_R)
+            {
+                case 0:
+                    Check_1_Bedroom_Lvl2_R();
+                    break;
+                case 1:
+                    Check_2_Bedroom_Lvl2_R();
+                    break;
+                case 2:
+                    Check_3_Bedroom_Lvl2_R();
+                    break;
+                case 3:
+                    Check_4_Bedroom_Lvl2_R();
+                    break;
+                case 4:
+                    Check_5_Bedroom_Lvl2_R();
+                    break;
+                case 5:
+                    Check_6_Bedroom_Lvl2_R();
+                    break;
+                case 6:
+                    Check_7_Bedroom_Lvl2_R();
+                    break;
+                case 7:
+                    Check_8_Bedroom_Lvl2_R();
+                    break;
+                case 8:
+                    Check_9_Bedroom_Lvl2_R();
+                    break;
+                case 9:
+                    Check_10_Bedroom_Lvl2_R();
+                    break;
+            }
+        }
+    }
+    private void Check_Unlock_Bedroom_Lvl2_R()
+    {
+        bedroom_Lvl2_R_Rock.SetActive(true); DiplayUiStats();
+    }
+    private void Check_1_Bedroom_Lvl2_R()
+    {
+        bedroom_Lvl2_R_Rock.SetActive(false);
+        bedroom_Lvl2_R_Up_1.SetActive(true); DiplayUiStats();
+    }
+    private void Check_2_Bedroom_Lvl2_R()
+    {
+        bedroom_Lvl2_R_Up_1.SetActive(false);
+        bedroom_Lvl2_R_Up_2.SetActive(true); DiplayUiStats();
+    }
+    private void Check_3_Bedroom_Lvl2_R()
+    {
+        bedroom_Lvl2_R_Up_2.SetActive(false);
+        bedroom_Lvl2_R_Up_3.SetActive(true); DiplayUiStats();
+    }
+    private void Check_4_Bedroom_Lvl2_R()
+    {
+        bedroom_Lvl2_R_Up_3.SetActive(false);
+        bedroom_Lvl2_R_Up_4.SetActive(true); DiplayUiStats();
+    }
+    private void Check_5_Bedroom_Lvl2_R()
+    {
+        bedroom_Lvl2_R_Up_4.SetActive(false);
+        bedroom_Lvl2_R_Up_5.SetActive(true); DiplayUiStats();
+    }
+    private void Check_6_Bedroom_Lvl2_R()
+    {
+        bedroom_Lvl2_R_Up_5.SetActive(false);
+        bedroom_Lvl2_R_Up_6.SetActive(true); DiplayUiStats();
+    }
+    private void Check_7_Bedroom_Lvl2_R()
+    {
+        bedroom_Lvl2_R_Up_6.SetActive(false);
+        bedroom_Lvl2_R_Up_7.SetActive(true); DiplayUiStats();
+    }
+    private void Check_8_Bedroom_Lvl2_R()
+    {
+        bedroom_Lvl2_R_Up_7.SetActive(false);
+        bedroom_Lvl2_R_Up_8.SetActive(true); DiplayUiStats();
+    }
+    private void Check_9_Bedroom_Lvl2_R()
+    {
+        bedroom_Lvl2_R_Up_8.SetActive(false);
+        bedroom_Lvl2_R_Up_9.SetActive(true); DiplayUiStats();
+    }
+    private void Check_10_Bedroom_Lvl2_R()
+    {
+        bedroom_Lvl2_R_Up_9.SetActive(false);
+        bedroom_Lvl2_R_Up_10.SetActive(true); DiplayUiStats();
+    }
+    #endregion
+    // BEDROOM LVL3 LEFT UNLOCK
+    #region Check Unlock Bedroom Lvl3 L & Upgrades
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Check_Upgrade_Bedroom_Lvl3_L()
+    {
+        if (GC.Bedroom_Lvl3_L) { Check_Unlock_Bedroom_Lvl3_L();
+            switch (GC.Bedroom_Upg_Lvl3_L)
+            {
+                case 0:
+                    Check_1_Bedroom_Lvl3_L();
+                    break;
+                case 1:
+                    Check_2_Bedroom_Lvl3_L();
+                    break;
+                case 2:
+                    Check_3_Bedroom_Lvl3_L();
+                    break;
+                case 3:
+                    Check_4_Bedroom_Lvl3_L();
+                    break;
+                case 4:
+                    Check_5_Bedroom_Lvl3_L();
+                    break;
+                case 5:
+                    Check_6_Bedroom_Lvl3_L();
+                    break;
+                case 6:
+                    Check_7_Bedroom_Lvl3_L();
+                    break;
+                case 7:
+                    Check_8_Bedroom_Lvl3_L();
+                    break;
+                case 8:
+                    Check_9_Bedroom_Lvl3_L();
+                    break;
+                case 9:
+                    Check_10_Bedroom_Lvl3_L();
+                    break;
+            }
+        }
+    }
+    private void Check_Unlock_Bedroom_Lvl3_L()
+    {
+        bedroom_Lvl3_L_Rock.SetActive(true); DiplayUiStats();
+    }
+    private void Check_1_Bedroom_Lvl3_L()
+    {
+        bedroom_Lvl3_L_Rock.SetActive(false);
+        bedroom_Lvl3_L_Up_1.SetActive(true); DiplayUiStats();
+    }
+    private void Check_2_Bedroom_Lvl3_L()
+    {
+        bedroom_Lvl3_L_Up_1.SetActive(false);
+        bedroom_Lvl3_L_Up_2.SetActive(true); DiplayUiStats();
+    }
+    private void Check_3_Bedroom_Lvl3_L()
+    {
+        bedroom_Lvl3_L_Up_2.SetActive(false);
+        bedroom_Lvl3_L_Up_3.SetActive(true); DiplayUiStats();
+    }
+    private void Check_4_Bedroom_Lvl3_L()
+    {
+        bedroom_Lvl3_L_Up_3.SetActive(false);
+        bedroom_Lvl3_L_Up_4.SetActive(true); DiplayUiStats();
+    }
+    private void Check_5_Bedroom_Lvl3_L()
+    {
+        bedroom_Lvl3_L_Up_4.SetActive(false);
+        bedroom_Lvl3_L_Up_5.SetActive(true); DiplayUiStats();
+    }
+    private void Check_6_Bedroom_Lvl3_L()
+    {
+        bedroom_Lvl3_L_Up_5.SetActive(false);
+        bedroom_Lvl3_L_Up_6.SetActive(true); DiplayUiStats();
+    }
+    private void Check_7_Bedroom_Lvl3_L()
+    {
+        bedroom_Lvl3_L_Up_6.SetActive(false);
+        bedroom_Lvl3_L_Up_7.SetActive(true); DiplayUiStats();
+    }
+    private void Check_8_Bedroom_Lvl3_L()
+    {
+        bedroom_Lvl3_L_Up_7.SetActive(false);
+        bedroom_Lvl3_L_Up_8.SetActive(true); DiplayUiStats();
+    }
+    private void Check_9_Bedroom_Lvl3_L()
+    {
+        bedroom_Lvl3_L_Up_8.SetActive(false);
+        bedroom_Lvl3_L_Up_9.SetActive(true); DiplayUiStats();
+    }
+    private void Check_10_Bedroom_Lvl3_L()
+    {
+        bedroom_Lvl3_L_Up_9.SetActive(false);
+        bedroom_Lvl3_L_Up_10.SetActive(true); DiplayUiStats();
+    }
+    #endregion
+    // BEDROOM LVL3 RIGHT UNLOCK
+    #region Check Unlock Bedroom Lvl3 R & Upgrades
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Check_Upgrade_Bedroom_Lvl3_R()
+    {
+        if (GC.Bedroom_Lvl3_R) { Check_Unlock_Bedroom_Lvl3_R();
+            switch (GC.Bedroom_Upg_Lvl3_R)
+            {
+                case 0:
+                    Check_1_Bedroom_Lvl3_R();
+                    break;
+                case 1:
+                    Check_2_Bedroom_Lvl3_R();
+                    break;
+                case 2:
+                    Check_3_Bedroom_Lvl3_R();
+                    break;
+                case 3:
+                    Check_4_Bedroom_Lvl3_R();
+                    break;
+                case 4:
+                    Check_5_Bedroom_Lvl3_R();
+                    break;
+                case 5:
+                    Check_6_Bedroom_Lvl3_R();
+                    break;
+                case 6:
+                    Check_7_Bedroom_Lvl3_R();
+                    break;
+                case 7:
+                    Check_8_Bedroom_Lvl3_R();
+                    break;
+                case 8:
+                    Check_9_Bedroom_Lvl3_R();
+                    break;
+                case 9:
+                    Check_10_Bedroom_Lvl3_R();
+                    break;
+            }
+        }
+    }
+    private void Check_Unlock_Bedroom_Lvl3_R()
+    {
+        bedroom_Lvl3_R_Rock.SetActive(true); DiplayUiStats();
+    }
+    private void Check_1_Bedroom_Lvl3_R()
+    {
+        bedroom_Lvl3_R_Rock.SetActive(false);
+        bedroom_Lvl3_R_Up_1.SetActive(true); DiplayUiStats();
+    }
+    private void Check_2_Bedroom_Lvl3_R()
+    {
+        bedroom_Lvl3_R_Up_1.SetActive(false);
+        bedroom_Lvl3_R_Up_2.SetActive(true); DiplayUiStats();
+    }
+    private void Check_3_Bedroom_Lvl3_R()
+    {
+        bedroom_Lvl3_R_Up_2.SetActive(false);
+        bedroom_Lvl3_R_Up_3.SetActive(true); DiplayUiStats();
+    }
+    private void Check_4_Bedroom_Lvl3_R()
+    {
+        bedroom_Lvl3_R_Up_3.SetActive(false);
+        bedroom_Lvl3_R_Up_4.SetActive(true); DiplayUiStats();
+    }
+    private void Check_5_Bedroom_Lvl3_R()
+    {
+        bedroom_Lvl3_R_Up_4.SetActive(false);
+        bedroom_Lvl3_R_Up_5.SetActive(true); DiplayUiStats();
+    }
+    private void Check_6_Bedroom_Lvl3_R()
+    {
+        bedroom_Lvl3_R_Up_5.SetActive(false);
+        bedroom_Lvl3_R_Up_6.SetActive(true); DiplayUiStats();
+    }
+    private void Check_7_Bedroom_Lvl3_R()
+    {
+        bedroom_Lvl3_R_Up_6.SetActive(false);
+        bedroom_Lvl3_R_Up_7.SetActive(true); DiplayUiStats();
+    }
+    private void Check_8_Bedroom_Lvl3_R()
+    {
+        bedroom_Lvl3_R_Up_7.SetActive(false);
+        bedroom_Lvl3_R_Up_8.SetActive(true); DiplayUiStats();
+    }
+    private void Check_9_Bedroom_Lvl3_R()
+    {
+        bedroom_Lvl3_R_Up_8.SetActive(false);
+        bedroom_Lvl3_R_Up_9.SetActive(true); DiplayUiStats();
+    }
+    private void Check_10_Bedroom_Lvl3_R()
+    {
+        bedroom_Lvl3_R_Up_9.SetActive(false);
+        bedroom_Lvl3_R_Up_10.SetActive(true); DiplayUiStats();
+    }
+    #endregion 
+    // STAIRS 2 UNLOCK
+    #region Check Stairs 2 Unlock
+    public void Check_Upgrade_Stairs_2()
+    {
+        Check_Unlock_Stairs_2();
+    }
+    private void Check_Unlock_Stairs_2()
+    {
+        if (GC.Stairs_2)
+        {
+            stairs_2_Unlocked.SetActive(true); DiplayUiStats();
+        }
+    }
+    #endregion
+    // STAIRS 3 UNLOCK
+    #region Check Stairs 3 Unlock
+    public void Check_Upgrade_Stairs_3()
+    {
+        Check_Unlock_Stairs_3();
+    }
+    private void Check_Unlock_Stairs_3()
+    {
+        if (GC.Stairs_3)
+        {
+            stairs_3_Unlocked.SetActive(true); DiplayUiStats();
+        }
+    }
+    #endregion
+    // Expedition(1) & Training(2) IS LEVEL 2 RIGHT SIDE
+    #region Check Expedition & Upgrades // not figured out the values to spend on unlocks
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Check_Upgrade_Expedition_Building()
+    {
+        switch (GC.Expedition_Upg_Lvl1_R1)
+        {
+            case 0:
+                Check_1_Expedition();
+                break;
+            case 1:
+                Check_2_Expedition();
+                break;
+            case 2:
+                Check_3_Expedition();
+                break;
+            case 3:
+                Check_4_Expedition();
+                break;
+            case 4:
+                Check_5_Expedition();
+                break;
+        }
+    }
+    private void Check_1_Expedition()
+    {
+        expedition_Lvl1_R1_Def.SetActive(false);
+        expedition_Lvl1_R1_Up_1.SetActive(true); DiplayUiStats();
+    }
+    private void Check_2_Expedition()
+    {
+        expedition_Lvl1_R1_Up_1.SetActive(false);
+        expedition_Lvl1_R1_Up_2.SetActive(true); DiplayUiStats();
+    }
+    private void Check_3_Expedition()
+    {
+        expedition_Lvl1_R1_Up_2.SetActive(false);
+        expedition_Lvl1_R1_Up_3.SetActive(true); DiplayUiStats();
+    }
+    private void Check_4_Expedition()
+    {
+        expedition_Lvl1_R1_Up_3.SetActive(false);
+        expedition_Lvl1_R1_Up_4.SetActive(true); DiplayUiStats();
+    }
+    private void Check_5_Expedition()
+    {
+        expedition_Lvl1_R1_Up_4.SetActive(false);
+        expedition_Lvl1_R1_Up_5.SetActive(true); DiplayUiStats();
+    }
+    #endregion
+    #region Check Training & Upgrades // not figured out the values to spend on unlocks
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Check_Upgrade_Training_Building()
+    {
+        switch (GC.Training_Upg_Lvl1_R2)
+        {
+            case 0:
+                Check_1_Training();
+                break;
+            case 1:
+                Check_2_Training();
+                break;
+            case 2:
+                Check_3_Training();
+                break;
+            case 3:
+                Check_4_Training();
+                break;
+            case 4:
+                Check_5_Training();
+                break;
+        }
+    }
+    private void Check_1_Training()
+    {
+        training_Lvl1_R2_Def.SetActive(false);
+        training_Lvl1_R2_Up_1.SetActive(true); DiplayUiStats();
+    }
+    private void Check_2_Training()
+    {
+        training_Lvl1_R2_Up_1.SetActive(false);
+        training_Lvl1_R2_Up_2.SetActive(true); DiplayUiStats();
+    }
+    private void Check_3_Training()
+    {
+        training_Lvl1_R2_Up_2.SetActive(false);
+        training_Lvl1_R2_Up_3.SetActive(true); DiplayUiStats();
+    }
+    private void Check_4_Training()
+    {
+        training_Lvl1_R2_Up_3.SetActive(false);
+        training_Lvl1_R2_Up_4.SetActive(true); DiplayUiStats();
+    }
+    private void Check_5_Training()
+    {
+        training_Lvl1_R2_Up_4.SetActive(false);
+        training_Lvl1_R2_Up_5.SetActive(true); DiplayUiStats();
+    }
+    #endregion
+    // UnderGarden(1) & Radio(2) IS LEVEL 1 LEFT SIDE
+    #region  Check UnderGarden & Upgrades // not figured out the values to spend on unlocks
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Check_Upgrade_UnderGarden_Building()
+    {
+        switch (GC.UnderGarden_Upg_Lvl1_L1)
+        {
+            case 0:
+                Check_1_UnderGarden();
+                break;
+            case 1:
+                Check_2_UnderGarden();
+                break;
+            case 2:
+                Check_3_UnderGarden();
+                break;
+            case 3:
+                Check_4_UnderGarden();
+                break;
+            case 4:
+                Check_5_UnderGarden();
+                break;
+        }
+    }
+    private void Check_1_UnderGarden()
+    {
+        underGarden_Lvl1_L1_Def.SetActive(false);
+        underGarden_Lvl1_L1_Up_1.SetActive(true); DiplayUiStats();
+    }
+    private void Check_2_UnderGarden()
+    {
+        underGarden_Lvl1_L1_Up_1.SetActive(false);
+        underGarden_Lvl1_L1_Up_2.SetActive(true); DiplayUiStats();
+    }
+    private void Check_3_UnderGarden()
+    {
+        underGarden_Lvl1_L1_Up_2.SetActive(false);
+        underGarden_Lvl1_L1_Up_3.SetActive(true); DiplayUiStats();
+    }
+    private void Check_4_UnderGarden()
+    {
+        underGarden_Lvl1_L1_Up_3.SetActive(false);
+        underGarden_Lvl1_L1_Up_4.SetActive(true); DiplayUiStats();
+    }
+    private void Check_5_UnderGarden()
+    {
+        underGarden_Lvl1_L1_Up_4.SetActive(false);
+        underGarden_Lvl1_L1_Up_5.SetActive(true); DiplayUiStats();
+    }
+    #endregion
+    #region Check Radio & Upgrades // not figured out the values to spend on unlocks
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Check_Upgrade_Radio_Building()
+    {
+        switch (GC.Radio_Upg_Lvl1_L2)
+        {
+            case 0:
+                Check_1_Radio();
+                break;
+            case 1:
+                Check_2_Radio();
+                break;
+            case 2:
+                Check_3_Radio();
+                break;
+            case 3:
+                Check_4_Radio();
+                break;
+            case 4:
+                Check_5_Radio();
+                break;
+        }
+    }
+    private void Check_1_Radio()
+    {
+        radio_Lvl1_L2_Def.SetActive(false);
+        radio_Lvl1_L2_Up_1.SetActive(true); DiplayUiStats();
+    }
+    private void Check_2_Radio()
+    {
+        radio_Lvl1_L2_Up_1.SetActive(false);
+        radio_Lvl1_L2_Up_2.SetActive(true); DiplayUiStats();
+    }
+    private void Check_3_Radio()
+    {
+        radio_Lvl1_L2_Up_2.SetActive(false);
+        radio_Lvl1_L2_Up_3.SetActive(true); DiplayUiStats();
+    }
+    private void Check_4_Radio()
+    {
+        radio_Lvl1_L2_Up_3.SetActive(false);
+        radio_Lvl1_L2_Up_4.SetActive(true); DiplayUiStats();
+    }
+    private void Check_5_Radio()
+    {
+        radio_Lvl1_L2_Up_4.SetActive(false);
+        radio_Lvl1_L2_Up_5.SetActive(true); DiplayUiStats();
+    }
+    #endregion
+    // GENERATOR IS LEVEL 2 RIGHT SIDE
+    #region Check Unlock Generator 1 & Upgrades
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Check_Upgrade_Generator_Building_1()
+    {
+        if (GC.Generator_Lvl2_R1) { Check_Unlock_Generator_1();
+            switch (GC.Generator_Upg_Lvl2_R1)
+            {
+                case 0:
+                    Check_1_Generator_1();
+                    break;
+                case 1:
+                    Check_2_Generator_1();
+                    break;
+                case 2:
+                    Check_3_Generator_1();
+                    break;
+                case 3:
+                    Check_4_Generator_1();
+                    break;
+                case 4:
+                    Check_5_Generator_1();
+                    break;
+            }
+        }
+    }
+    private void Check_Unlock_Generator_1()
+    {
+        generator_Lvl2_R1_Def.SetActive(true); DiplayUiStats();
+    }
+    private void Check_1_Generator_1()
+    {
+        generator_Lvl2_R1_Def.SetActive(false);
+        generator_Lvl2_R1_Up_1.SetActive(true); DiplayUiStats();
+    }
+    private void Check_2_Generator_1()
+    {
+        generator_Lvl2_R1_Up_1.SetActive(false);
+        generator_Lvl2_R1_Up_2.SetActive(true); DiplayUiStats();
+    }
+    private void Check_3_Generator_1()
+    {
+        generator_Lvl2_R1_Up_2.SetActive(false);
+        generator_Lvl2_R1_Up_3.SetActive(true); DiplayUiStats();
+    }
+    private void Check_4_Generator_1()
+    {
+        generator_Lvl2_R1_Up_3.SetActive(false);
+        generator_Lvl2_R1_Up_4.SetActive(true); DiplayUiStats();
+    }
+    private void Check_5_Generator_1()
+    {
+        generator_Lvl2_R1_Up_4.SetActive(false);
+        generator_Lvl2_R1_Up_5.SetActive(true); DiplayUiStats();
+    }
+    #endregion
+    #region Check Unlock Generator 2 & Upgrades
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Check_Upgrade_Generator_Building_2()
+    {
+        if (GC.Generator_Lvl2_R2) { Check_Unlock_Generator_2();
+            switch (GC.Generator_Upg_Lvl2_R2)
+            {
+                case 0:
+                    Check_1_Generator_2();
+                    break;
+                case 1:
+                    Check_2_Generator_2();
+                    break;
+                case 2:
+                    Check_3_Generator_2();
+                    break;
+                case 3:
+                    Check_4_Generator_2();
+                    break;
+                case 4:
+                    Check_5_Generator_2();
+                    break;
+            }
+        }
+    }
+    private void Check_Unlock_Generator_2()
+    {
+        generator_Lvl2_R2_Def.SetActive(true); DiplayUiStats();
+    }
+    private void Check_1_Generator_2()
+    {
+        generator_Lvl2_R2_Def.SetActive(false);
+        generator_Lvl2_R2_Up_1.SetActive(true); DiplayUiStats();
+    }
+    private void Check_2_Generator_2()
+    {
+        generator_Lvl2_R2_Up_1.SetActive(false);
+        generator_Lvl2_R2_Up_2.SetActive(true); DiplayUiStats();
+    }
+    private void Check_3_Generator_2()
+    {
+        generator_Lvl2_R2_Up_2.SetActive(false);
+        generator_Lvl2_R2_Up_3.SetActive(true); DiplayUiStats();
+    }
+    private void Check_4_Generator_2()
+    {
+        generator_Lvl2_R2_Up_3.SetActive(false);
+        generator_Lvl2_R2_Up_4.SetActive(true); DiplayUiStats();
+    }
+    private void Check_5_Generator_2()
+    {
+        generator_Lvl2_R2_Up_4.SetActive(false);
+        generator_Lvl2_R2_Up_5.SetActive(true); DiplayUiStats();
+    }
+    #endregion
+    // WORKSHOP IS LEVEL 2 LEFT SIDE
+    #region Check Unlock Workshop 1 & Upgrades
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Check_Upgrade_Workshop_Building_1()
+    {
+        if (GC.Workshop_Lvl2_L1) { Check_Unlock_Workshop_1();
+            switch (GC.Workshop_Upg_Lvl2_L1)
+            {
+                case 0:
+                    Check_1_Workshop_1();
+                    break;
+                case 1:
+                    Check_2_Workshop_1();
+                    break;
+                case 2:
+                    Check_3_Workshop_1();
+                    break;
+                case 3:
+                    Check_4_Workshop_1();
+                    break;
+                case 4:
+                    Check_5_Workshop_1();
+                    break;
+            }
+        }
+    }
+    private void Check_Unlock_Workshop_1()
+    {
+        workshop_Lvl2_L1_Def.SetActive(true); DiplayUiStats();
+    }
+    private void Check_1_Workshop_1()
+    {
+        workshop_Lvl2_L1_Def.SetActive(false);
+        workshop_Lvl2_L1_Up_1.SetActive(true); DiplayUiStats();
+    }
+    private void Check_2_Workshop_1()
+    {
+        workshop_Lvl2_L1_Up_1.SetActive(false);
+        workshop_Lvl2_L1_Up_2.SetActive(true); DiplayUiStats();
+    }
+    private void Check_3_Workshop_1()
+    {
+        workshop_Lvl2_L1_Up_2.SetActive(false);
+        workshop_Lvl2_L1_Up_3.SetActive(true); DiplayUiStats();
+    }
+    private void Check_4_Workshop_1()
+    {
+        workshop_Lvl2_L1_Up_3.SetActive(false);
+        workshop_Lvl2_L1_Up_4.SetActive(true); DiplayUiStats();
+    }
+    private void Check_5_Workshop_1()
+    {
+        workshop_Lvl2_L1_Up_4.SetActive(false);
+        workshop_Lvl2_L1_Up_5.SetActive(true); DiplayUiStats();
+    }
+    #endregion
+    #region Check Unlock Workshop 2 & Upgrades
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Check_Upgrade_Workshop_Building_2()
+    {
+        if (GC.Workshop_Lvl2_L2) { Check_Unlock_Workshop_2();
+            switch (GC.Workshop_Upg_Lvl2_L2)
+            {
+                case 0:
+                    Check_1_Workshop_2();
+                    break;
+                case 1:
+                    Check_2_Workshop_2();
+                    break;
+                case 2:
+                    Check_3_Workshop_2();
+                    break;
+                case 3:
+                    Check_4_Workshop_2();
+                    break;
+                case 4:
+                    Check_5_Workshop_2();
+                    break;
+            }
+        }
+    }
+    private void Check_Unlock_Workshop_2()
+    {
+        workshop_Lvl2_L2_Def.SetActive(true); DiplayUiStats();
+    }
+    private void Check_1_Workshop_2()
+    {
+        workshop_Lvl2_L2_Def.SetActive(false);
+        workshop_Lvl2_L2_Up_1.SetActive(true); DiplayUiStats();
+    }
+    private void Check_2_Workshop_2()
+    {
+        workshop_Lvl2_L2_Up_1.SetActive(false);
+        workshop_Lvl2_L2_Up_2.SetActive(true); DiplayUiStats();
+    }
+    private void Check_3_Workshop_2()
+    {
+        workshop_Lvl2_L2_Up_2.SetActive(false);
+        workshop_Lvl2_L2_Up_3.SetActive(true); DiplayUiStats();
+    }
+    private void Check_4_Workshop_2()
+    {
+        workshop_Lvl2_L2_Up_3.SetActive(false);
+        workshop_Lvl2_L2_Up_4.SetActive(true); DiplayUiStats();
+    }
+    private void Check_5_Workshop_2()
+    {
+        workshop_Lvl2_L2_Up_4.SetActive(false);
+        workshop_Lvl2_L2_Up_5.SetActive(true); DiplayUiStats();
+    }
+    #endregion
+    // LIVING IS LEVEL 3 RIGHT SIDE
+    #region Check Unlock LivingSpace 1 & Upgrades
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Check_Upgrade_LivingSpace_Building_1()
+    {
+        if (GC.LivingSpace_Lvl3_R1) { Check_Unlock_LivingSpace_1();
+            switch (GC.LivingSpace_Upg_Lvl3_R1)
+            {
+                case 0:
+                    Check_1_LivingSpace_1();
+                    break;
+                case 1:
+                    Check_2_LivingSpace_1();
+                    break;
+                case 2:
+                    Check_3_LivingSpace_1();
+                    break;
+                case 3:
+                    Check_4_LivingSpace_1();
+                    break;
+                case 4:
+                    Check_5_LivingSpace_1();
+                    break;
+            }
+        }
+    }
+    private void Check_Unlock_LivingSpace_1()
+    {
+        livingSpace_Lvl3_R1_Def.SetActive(true); DiplayUiStats();
+    }
+    private void Check_1_LivingSpace_1()
+    {
+        livingSpace_Lvl3_R1_Def.SetActive(false);
+        livingSpace_Lvl3_R1_Up_1.SetActive(true); DiplayUiStats();
+    }
+    private void Check_2_LivingSpace_1()
+    {
+        livingSpace_Lvl3_R1_Up_1.SetActive(false);
+        livingSpace_Lvl3_R1_Up_2.SetActive(true); DiplayUiStats();
+    }
+    private void Check_3_LivingSpace_1()
+    {
+        livingSpace_Lvl3_R1_Up_2.SetActive(false);
+        livingSpace_Lvl3_R1_Up_3.SetActive(true); DiplayUiStats();
+    }
+    private void Check_4_LivingSpace_1()
+    {
+        livingSpace_Lvl3_R1_Up_3.SetActive(false);
+        livingSpace_Lvl3_R1_Up_4.SetActive(true); DiplayUiStats();
+    }
+    private void Check_5_LivingSpace_1()
+    {
+        livingSpace_Lvl3_R1_Up_4.SetActive(false);
+        livingSpace_Lvl3_R1_Up_5.SetActive(true); DiplayUiStats();
+    }
+    #endregion
+    #region Check Unlock LivingSpace 2 & Upgrades
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Check_Upgrade_LivingSpace_Building_2()
+    {
+        if (GC.LivingSpace_Lvl3_R2) { Check_Unlock_LivingSpace_2();
+            switch (GC.LivingSpace_Upg_Lvl3_R2)
+            {
+                case 0:
+                    Check_1_LivingSpace_2();
+                    break;
+                case 1:
+                    Check_2_LivingSpace_2();
+                    break;
+                case 2:
+                    Check_3_LivingSpace_2();
+                    break;
+                case 3:
+                    Check_4_LivingSpace_2();
+                    break;
+                case 4:
+                    Check_5_LivingSpace_2();
+                    break;
+            }
+        }
+    }
+    private void Check_Unlock_LivingSpace_2()
+    {
+        livingSpace_Lvl3_R2_Def.SetActive(true); DiplayUiStats();
+    }
+    private void Check_1_LivingSpace_2()
+    {
+        livingSpace_Lvl3_R2_Def.SetActive(false);
+        livingSpace_Lvl3_R2_Up_1.SetActive(true); DiplayUiStats();
+    }
+    private void Check_2_LivingSpace_2()
+    {
+        livingSpace_Lvl3_R2_Up_1.SetActive(false);
+        livingSpace_Lvl3_R2_Up_2.SetActive(true); DiplayUiStats();
+    }
+    private void Check_3_LivingSpace_2()
+    {
+        livingSpace_Lvl3_R2_Up_2.SetActive(false);
+        livingSpace_Lvl3_R2_Up_3.SetActive(true); DiplayUiStats();
+    }
+    private void Check_4_LivingSpace_2()
+    {
+        livingSpace_Lvl3_R2_Up_3.SetActive(false);
+        livingSpace_Lvl3_R2_Up_4.SetActive(true); DiplayUiStats();
+    }
+    private void Check_5_LivingSpace_2()
+    {
+        livingSpace_Lvl3_R2_Up_4.SetActive(false);
+        livingSpace_Lvl3_R2_Up_5.SetActive(true); DiplayUiStats();
+    }
+    #endregion
+    // RESEARCH IS LEVEL 3 LEFT SIDE
+    #region  Check Unlock Research 1 & Upgrades
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Check_Upgrade_Research_Building_1()
+    {
+        if (GC.Research_Lvl3_L1) { Check_Unlock_Research_1();
+            switch (GC.Research_Upg_Lvl3_L1)
+            {
+                case 0:
+                    Check_1_Research_1();
+                    break;
+                case 1:
+                    Check_2_Research_1();
+                    break;
+                case 2:
+                    Check_3_Research_1();
+                    break;
+                case 3:
+                    Check_4_Research_1();
+                    break;
+                case 4:
+                    Check_5_Research_1();
+                    break;
+            }
+        }
+    }
+    private void Check_Unlock_Research_1()
+    {
+        research_Lvl3_L1_Def.SetActive(true); DiplayUiStats();
+    }
+    private void Check_1_Research_1()
+    {
+        research_Lvl3_L1_Def.SetActive(false);
+        research_Lvl3_L1_Up_1.SetActive(true); DiplayUiStats();
+    }
+    private void Check_2_Research_1()
+    {
+        research_Lvl3_L1_Up_1.SetActive(false);
+        research_Lvl3_L1_Up_2.SetActive(true); DiplayUiStats();
+    }
+    private void Check_3_Research_1()
+    {
+        research_Lvl3_L1_Up_2.SetActive(false);
+        research_Lvl3_L1_Up_3.SetActive(true); DiplayUiStats();
+    }
+    private void Check_4_Research_1()
+    {
+        research_Lvl3_L1_Up_3.SetActive(false);
+        research_Lvl3_L1_Up_4.SetActive(true); DiplayUiStats();
+    }
+    private void Check_5_Research_1()
+    {
+        research_Lvl3_L1_Up_4.SetActive(false);
+        research_Lvl3_L1_Up_5.SetActive(true); DiplayUiStats();
+    }
+    #endregion
+    #region Check Unlock Research 2 & Upgrades
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Check_Upgrade_Reserach_Building_2()
+    {
+        if (GC.Research_Lvl3_L2) { Check_Unlock_Research_2();
+            switch (GC.Research_Upg_Lvl3_L2)
+            {
+                case 0:
+                    Check_1_Research_2();
+                    break;
+                case 1:
+                    Check_2_Research_2();
+                    break;
+                case 2:
+                    Check_3_Research_2();
+                    break;
+                case 3:
+                    Check_4_Research_2();
+                    break;
+                case 4:
+                    Check_5_Research_2();
+                    break;
+            }
+        }
+    }
+    private void Check_Unlock_Research_2()
+    {
+        research_Lvl3_L2_Def.SetActive(true); DiplayUiStats();
+    }
+    private void Check_1_Research_2()
+    {
+        research_Lvl3_L2_Def.SetActive(false);
+        research_Lvl3_L2_Up_1.SetActive(true); DiplayUiStats();
+    }
+    private void Check_2_Research_2()
+    {
+        research_Lvl3_L2_Up_1.SetActive(false);
+        research_Lvl3_L2_Up_2.SetActive(true); DiplayUiStats();
+    }
+    private void Check_3_Research_2()
+    {
+        research_Lvl3_L2_Up_2.SetActive(false);
+        research_Lvl3_L2_Up_3.SetActive(true); DiplayUiStats();
+    }
+    private void Check_4_Research_2()
+    {
+        research_Lvl3_L2_Up_3.SetActive(false);
+        research_Lvl3_L2_Up_4.SetActive(true); DiplayUiStats();
+    }
+    private void Check_5_Research_2()
+    {
+        research_Lvl3_L2_Up_4.SetActive(false);
+        research_Lvl3_L2_Up_5.SetActive(true); DiplayUiStats();
+    }
+    #endregion
+    // WALL L Check Save
+    #region Check Unlock Wall L & Upgrades
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Check_Save_Wall_L()
+    {
+        if (GC.Wall_L) { Check_Unlock_Wall_L();
+            switch (GC.Wall_L_Upg)
+            {
+                case 0:
+                    Check_1_Wall_L();
+                    break;
+                case 1:
+                    Check_2_Wall_L();
+                    break;
+                case 2:
+                    Check_3_Wall_L();
+                    break;
+                case 3:
+                    Check_4_Wall_L();
+                    break;
+                case 4:
+                    Check_5_Wall_L();
+                    break;
+                case 5:
+                    Check_6_Wall_L();
+                    break;
+                case 6:
+                    Check_7_Wall_L();
+                    break;
+                case 7:
+                    Check_8_Wall_L();
+                    break;
+                case 8:
+                    Check_9_Wall_L();
+                    break;
+            }
+        }
+            
+    }
+    private void Check_Unlock_Wall_L()
+    {
+        wall_Left_None.SetActive(false);
+        wall_Left_Up_1.SetActive(true); DiplayUiStats();
+    }
+    private void Check_1_Wall_L()
+    {
+        wall_Left_Up_1.SetActive(false);
+        wall_Left_Up_2.SetActive(true); DiplayUiStats();
+    }
+    private void Check_2_Wall_L()
+    {
+        wall_Left_Up_2.SetActive(false);
+        wall_Left_Up_3.SetActive(true); DiplayUiStats();
+    }
+    private void Check_3_Wall_L()
+    {
+        wall_Left_Up_3.SetActive(false);
+        wall_Left_Up_4.SetActive(true); DiplayUiStats();
+    }
+    private void Check_4_Wall_L()
+    {
+        wall_Left_Up_4.SetActive(false);
+        wall_Left_Up_5.SetActive(true); DiplayUiStats();
+    }
+    private void Check_5_Wall_L()
+    {
+        wall_Left_Up_5.SetActive(false);
+        wall_Left_Up_6.SetActive(true); DiplayUiStats();
+    }
+    private void Check_6_Wall_L()
+    {
+        wall_Left_Up_6.SetActive(false);
+        wall_Left_Up_7.SetActive(true); DiplayUiStats();
+    }
+    private void Check_7_Wall_L()
+    {
+        wall_Left_Up_7.SetActive(false);
+        wall_Left_Up_8.SetActive(true); DiplayUiStats();
+    }
+    private void Check_8_Wall_L()
+    {
+        wall_Left_Up_8.SetActive(false);
+        wall_Left_Up_9.SetActive(true); DiplayUiStats();
+    }
+    private void Check_9_Wall_L()
+    {
+        wall_Left_Up_9.SetActive(false);
+        wall_Left_Up_10.SetActive(true); DiplayUiStats();
+    }
+    #endregion
+    // WALL R Check Save
+    #region Check Unlock Wall R & Upgrades
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Check_Save_Wall_R()
+    {
+        if (GC.Wall_R) { Check_Save_Unlock_Wall_R();
+            switch (GC.Wall_R_Upg)
+            {
+                case 0:
+                    Check_Save_1_Wall_R();
+                    break;
+                case 1:
+                    Check_Save_2_Wall_R();
+                    break;
+                case 2:
+                    Check_Save_3_Wall_R();
+                    break;
+                case 3:
+                    Check_Save_4_Wall_R();
+                    break;
+                case 4:
+                    Check_Save_5_Wall_R();
+                    break;
+                case 5:
+                    Check_Save_6_Wall_R();
+                    break;
+                case 6:
+                    Check_Save_7_Wall_R();
+                    break;
+                case 7:
+                    Check_Save_8_Wall_R();
+                    break;
+                case 8:
+                    Check_Save_9_Wall_R();
+                    break;
+            }
+        }
+
+    }
+    private void Check_Save_Unlock_Wall_R()
+    {
+        wall_Right_None.SetActive(false);
+        wall_Right_Up_1.SetActive(true); DiplayUiStats();
+    }
+    private void Check_Save_1_Wall_R()
+    {
+        wall_Right_Up_1.SetActive(false);
+        wall_Right_Up_2.SetActive(true); DiplayUiStats();
+    }
+    private void Check_Save_2_Wall_R()
+    {
+        wall_Right_Up_2.SetActive(false);
+        wall_Right_Up_3.SetActive(true); DiplayUiStats();
+    }
+    private void Check_Save_3_Wall_R()
+    {
+        wall_Right_Up_3.SetActive(false);
+        wall_Right_Up_4.SetActive(true); DiplayUiStats();
+    }
+    private void Check_Save_4_Wall_R()
+    {
+        wall_Right_Up_4.SetActive(false);
+        wall_Right_Up_5.SetActive(true); DiplayUiStats();
+    }
+    private void Check_Save_5_Wall_R()
+    {
+        wall_Right_Up_5.SetActive(false);
+        wall_Right_Up_6.SetActive(true); DiplayUiStats();
+    }
+    private void Check_Save_6_Wall_R()
+    {
+        wall_Right_Up_6.SetActive(false);
+        wall_Right_Up_7.SetActive(true); DiplayUiStats();
+    }
+    private void Check_Save_7_Wall_R()
+    {
+        wall_Right_Up_7.SetActive(false);
+        wall_Right_Up_8.SetActive(true); DiplayUiStats();
+    }
+    private void Check_Save_8_Wall_R()
+    {
+        wall_Right_Up_8.SetActive(false);
+        wall_Right_Up_9.SetActive(true); DiplayUiStats();
+    }
+    private void Check_Save_9_Wall_R()
+    {
+        wall_Right_Up_9.SetActive(false);
+        wall_Right_Up_10.SetActive(true); DiplayUiStats();
+    }
     #endregion
     #endregion
     #endregion

@@ -10,21 +10,19 @@ public class SetDefs : MonoBehaviour
     {
         gCont = GameObject.Find("GameController").GetComponent<GameController>();
         gSave = GameObject.Find("GameSave").GetComponent<SaveGame>();
-        if (!gCont.PlayerSave)
+        /*if (!gCont.PlayerSave)
         {
-            SetDefaults();
+            //SetDefaults();
             gSave.SavingGame();
         }
-        else { gSave.LoadingGame(); }
+        else { gSave.LoadingGame(); }*/
     }
     private void SetDefaults()
     {
         gCont.PlayerSave = true; // sets the save file to true so the game doesnt load defaults
         gCont.Vault_Health = 1000;
-        gCont.Wall_Left_Health = 250;
-        gCont.Wall_Right_Health = 250;
-        gCont.Wall_Left_Upgrade = 0;
-        gCont.Wall_Right_Upgrade = 0;
+        gCont.Wall_L_Health = 250;
+        gCont.Wall_R_Health = 250;
         #region Default Buildings
         gCont.Room_Radio = 1;
         gCont.Room_Training = 1;

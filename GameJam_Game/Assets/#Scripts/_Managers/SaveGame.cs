@@ -149,10 +149,8 @@ public class SaveGame : MonoBehaviour
         data.player_Sound = gCont.Player_Sound;
         #region Vault Heath Items
         data.vault_Health = gCont.Vault_Health;
-        data.wall_Left_Upgrade = gCont.Wall_Left_Upgrade;
-        data.wall_Left_Health = gCont.Wall_Left_Health;
-        data.wall_Right_Upgrade = gCont.Wall_Right_Upgrade;
-        data.wall_Right_Health = gCont.Wall_Right_Health;
+        data.wall_L_Health = gCont.Wall_L_Health;
+        data.wall_R_Health = gCont.Wall_R_Health;
         #endregion
 
         #region DefaultBuildings
@@ -226,7 +224,8 @@ public class SaveGame : MonoBehaviour
         #region Main Game Stats
         data.player_Turns = gCont.Player_Turns;
         data.player_Tasks = gCont.Player_Tasks;
-        data.player_Civilians = gCont.Player_People;
+        data.player_People = gCont.Player_People;
+        data.player_Capacity = gCont.Player_Capacity;
         data.player_Science = gCont.Player_Science;
         #endregion
         #region Main Game Resources
@@ -266,10 +265,6 @@ public class SaveGame : MonoBehaviour
             gCont.Player_Sound = data.player_Sound;
             #region Vault Heath Items
             gCont.Vault_Health = data.vault_Health;
-            gCont.Wall_Left_Upgrade = data.wall_Left_Upgrade;
-            gCont.Wall_Left_Health = data.wall_Left_Health;
-            gCont.Wall_Right_Upgrade = data.wall_Right_Upgrade;
-            gCont.Wall_Right_Health = data.wall_Right_Health;
             #endregion
             #region DefaultBuildings
             gCont.Room_Radio = data.room_Radio;
@@ -290,6 +285,8 @@ public class SaveGame : MonoBehaviour
             gCont.Wall_R_Clik_Unlock = data.wall_R_Clicks_Unlock;
             gCont.Wall_L_Upg = data.wall_L_Upg;
             gCont.Wall_R_Upg = data.wall_R_Upg;
+            gCont.Wall_L_Health = data.wall_L_Health;
+            gCont.Wall_R_Health = data.wall_R_Health;
             /// <summary>
             /// Rooms are ordered in layers with left and right number 1 room is closest to the stairs
             /// </summary>
@@ -342,7 +339,8 @@ public class SaveGame : MonoBehaviour
             #region Main Game Stats
             gCont.Player_Turns = data.player_Turns;
             gCont.Player_Tasks = data.player_Tasks;
-            gCont.Player_People = data.player_Civilians;
+            gCont.Player_People = data.player_People;
+            gCont.Player_Capacity = data.player_Capacity;
             gCont.Player_Science = data.player_Science;
             #endregion
             #region Main Game Resources
@@ -409,10 +407,6 @@ public class GameData
     public bool playerSave;
     public bool player_Sound;
     public int vault_Health;
-    public int wall_Left_Upgrade;
-    public int wall_Left_Health;
-    public int wall_Right_Health;
-    public int wall_Right_Upgrade;
     #endregion
     #region Default Buildings
     public int room_Radio;
@@ -432,6 +426,8 @@ public class GameData
     public int wall_R_Clicks_Unlock;
     public int wall_L_Upg;
     public int wall_R_Upg;
+    public int wall_L_Health;
+    public int wall_R_Health;
 
     /// <summary>
     /// Rooms are ordered in layers with left and right number 1 room is closest to the stairs
@@ -485,7 +481,8 @@ public class GameData
     #region Main Game Stats
     public int player_Turns;
     public int player_Tasks;
-    public int player_Civilians;
+    public int player_People;
+    public int player_Capacity;
     public int player_Science;
     #endregion
     #region Main Game Resources

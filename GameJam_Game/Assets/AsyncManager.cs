@@ -10,7 +10,7 @@ public class AsyncManager : MonoBehaviour
     private string q1, q2, q3, q4, q5, q6, q7, q8, q9, q10;
 
     private string q1_Aut, q2_Aut, q3_Aut, q4_Aut, q5_Aut, q6_Aut, q7_Aut, q8_Aut, q9_Aut, q10_Aut;
-    private float timer1 = 8f, timer2 = 8f;
+    private float timer1 = 3f, timer2 = 3f;
     private bool timerGo = true, timerStop = false;
     public enum Quote { Quote_1, Quote_2, Quote_3, Quote_4, Quote_5, Quote_6, Quote_7, Quote_8, Quote_9, Quote_10 };
     public Quote quote;
@@ -23,8 +23,8 @@ public class AsyncManager : MonoBehaviour
     }
     private void Update()
     {
-        if (timerGo) { timer1 -= Time.deltaTime; if (timer1 <= 0) { timer1 = 8; RandomQuote(); timerStop = true; timerGo = false; } }
-        if (timerStop) { timer2 -= Time.deltaTime; if (timer2 <= 0) { timer2 = 8; RandomQuote(); timerGo = true; timerStop = false; } }
+        if (timerGo) { timer1 -= Time.deltaTime; if (timer1 <= 0) { timer1 = 3; RandomQuote(); timerStop = true; timerGo = false; } }
+        if (timerStop) { timer2 -= Time.deltaTime; if (timer2 <= 0) { timer2 = 3; RandomQuote(); timerGo = true; timerStop = false; } }
     }
     private void Quotes()
     {

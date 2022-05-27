@@ -18,6 +18,7 @@ public class CameraHandler : MonoBehaviour
     private bool zoomBlocked = false;
     private float zoomTimer;
     private int zoomLevel;
+
     private int currentOrthoZoom;
     private int zoomLevelOrthoSetting_1 = 630, zoomLevelOrthoSetting_2 = 845, zoomLevelOrthoSetting_3 = 1100;
     private int camArea_1_MaxY = 1185, camArea_1_MinY = 15, camArea_1_MaxX = 5655, camArea_1_MinX = 148;//camArea_1_MinY = 145
@@ -35,6 +36,7 @@ public class CameraHandler : MonoBehaviour
         camFollow.Setup(() => camFollowPosition, () => currentOrthoZoom);
         camFollow.SetCamFollowPos(homeLocation);
         camFollow.SetCamZoom(currentOrthoZoom);
+        LinkZoomItems();
     }
     private void Update()
     {
@@ -54,6 +56,7 @@ public class CameraHandler : MonoBehaviour
         zoom_1X = display_Zoom_Amount.transform.GetChild(0).gameObject;
         zoom_2X = display_Zoom_Amount.transform.GetChild(1).gameObject;
         zoom_3X = display_Zoom_Amount.transform.GetChild(2).gameObject;
+        CheckZoomIcon();
     }
     private void ZoomTimer() { if (zoomBlocked) { zoomTimer -= Time.deltaTime; if (zoomTimer <= 0) { zoomBlocked = false; } } }
     private void ManualMovement()
@@ -113,6 +116,10 @@ public class CameraHandler : MonoBehaviour
             //zoom = Mathf.Clamp(zoom, 515f, 1100f);
         }
     }
+    public void ClickZoom()
+    {
+        CameraZoomStep(true); zoomBlocked = true;
+    }
     private void ControlZoom()
     {
         if (!zoomBlocked) {
@@ -124,6 +131,12 @@ public class CameraHandler : MonoBehaviour
             if (Input.GetKeyUp(KeyCode.Underscore)) { CameraZoomStep(false); zoomBlocked = true; }
             if (Input.GetKeyUp(KeyCode.KeypadMinus)) { CameraZoomStep(false); zoomBlocked = true; }
         }
+    }
+    private void CheckZoomIcon()
+    {
+        if (zoomLevel == 1) { zoom_1X.SetActive(false); zoom_2X.SetActive(true); zoom_3X.SetActive(false); }
+        else if (zoomLevel == 2) { zoom_1X.SetActive(false); zoom_2X.SetActive(false); zoom_3X.SetActive(true); }
+        else if (zoomLevel == 3) { zoom_1X.SetActive(true); zoom_2X.SetActive(false); zoom_3X.SetActive(false); }
     }
     private void CameraZoomStep(bool positive)
     {
