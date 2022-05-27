@@ -14,10 +14,6 @@ public class GameController : MonoBehaviour
     #endregion
     #region Vault Heath Items
     public int Vault_Health { get; set; }
-    public int Wall_Left_Upgrade { get; set; }
-    public int Wall_Left_Health { get; set; }
-    public int Wall_Right_Upgrade { get; set; }
-    public int Wall_Right_Health { get; set; }
     #endregion
     #region Vault Room Upgrades
     public bool Stairs_1 { get; set; }
@@ -79,11 +75,14 @@ public class GameController : MonoBehaviour
     public int Wall_R_Clik_Unlock { get; set; }
     public int Wall_L_Upg { get; set; }
     public int Wall_R_Upg { get; set; }
+    public int Wall_L_Health { get; set; }
+    public int Wall_R_Health { get; set; }
     #endregion
     #region Main Game Stats
     public int Player_Turns { get; set; }
     public int Player_Tasks { get; set; }
     public int Player_People { get; set; }
+    public int Player_Capacity { get; set; }
     public int Player_Science { get; set; }
     #endregion
     #region Main Game Resources
