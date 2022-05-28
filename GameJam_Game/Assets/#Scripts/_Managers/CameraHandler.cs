@@ -11,7 +11,7 @@ public class CameraHandler : MonoBehaviour
     //private float zoom = 1100f;
     //private float zoomChangeAmount =160;
     private bool centered = true;
-    private float moveAmount = 2;//moveAmount = 600f;
+    private float moveAmount = 10;//moveAmount = 600f;
     private float edgeSize = 20f;
     private bool edgeScrolling = true;
     private Vector3 homeLocation = new Vector3(2875, 537, -10);
