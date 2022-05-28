@@ -23,8 +23,8 @@ public class AsyncManager : MonoBehaviour
     }
     private void Update()
     {
-        if (timerGo) { timer1 -= Time.deltaTime; if (timer1 <= 0) { timer1 = 3; RandomQuote(); timerStop = true; timerGo = false; } }
-        if (timerStop) { timer2 -= Time.deltaTime; if (timer2 <= 0) { timer2 = 3; RandomQuote(); timerGo = true; timerStop = false; } }
+        //if (timerGo) { timer1 -= Time.deltaTime; if (timer1 <= 0) { timer1 = 3; RandomQuote(); timerStop = true; timerGo = false; } }
+        //if (timerStop) { timer2 -= Time.deltaTime; if (timer2 <= 0) { timer2 = 3; RandomQuote(); timerGo = true; timerStop = false; } }
     }
     private void Quotes()
     {

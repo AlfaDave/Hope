@@ -40,7 +40,7 @@ public class Game_Logic : MonoBehaviour
     private GameObject bedroom_Lvl3_R_Rock, bedroom_Lvl3_R_Up_1, bedroom_Lvl3_R_Up_2, bedroom_Lvl3_R_Up_3, bedroom_Lvl3_R_Up_4, bedroom_Lvl3_R_Up_5, bedroom_Lvl3_R_Up_6, bedroom_Lvl3_R_Up_7, bedroom_Lvl3_R_Up_8, bedroom_Lvl3_R_Up_9, bedroom_Lvl3_R_Up_10;
     #endregion
     #region Stairs
-    private GameObject stairs_1_Locked, stairs_1_Unlocked, stairs_2_Locked, stairs_2_Unlocked, stairs_3_Locked, stairs_3_Unlocked;
+    private GameObject stairs_1_Unlocked, stairs_2_Locked, stairs_2_Unlocked, stairs_3_Locked, stairs_3_Unlocked;
     #endregion
     #region Walls
     private GameObject wall_Left_None, wall_Left_Up_1, wall_Left_Up_2, wall_Left_Up_3, wall_Left_Up_4, wall_Left_Up_5, wall_Left_Up_6, wall_Left_Up_7, wall_Left_Up_8, wall_Left_Up_9, wall_Left_Up_10;
@@ -336,12 +336,11 @@ public class Game_Logic : MonoBehaviour
         bedroom_Lvl3_R_Up_10 = bedroom_Lvl3_R.transform.GetChild(12).gameObject;
         #endregion
         #region Stairs
-        stairs_1_Locked = stairs_1.transform.GetChild(0).gameObject;
         stairs_1_Unlocked = stairs_1.transform.GetChild(1).gameObject;
-        stairs_2_Locked = stairs_2.transform.GetChild(1).gameObject;
-        stairs_2_Unlocked = stairs_2.transform.GetChild(2).gameObject;
-        stairs_3_Locked = stairs_3.transform.GetChild(1).gameObject;
-        stairs_3_Unlocked = stairs_3.transform.GetChild(2).gameObject;
+        stairs_2_Locked = stairs_2.transform.GetChild(2).gameObject;
+        stairs_2_Unlocked = stairs_2.transform.GetChild(3).gameObject;
+        stairs_3_Locked = stairs_3.transform.GetChild(2).gameObject;
+        stairs_3_Unlocked = stairs_3.transform.GetChild(3).gameObject;
         #endregion
         #region Walls
         wall_Left_None = wall_Left.transform.GetChild(2).gameObject;
@@ -498,34 +497,34 @@ public class Game_Logic : MonoBehaviour
     }
     private void SetAllButtonsActive()
     {
-        res_Metal_Button.interactable = false;
-        res_Wood_Button.interactable = false;
-        res_Food_Button.interactable = false;
-        res_Tech_Button.interactable = false;
-        hatch_Button.interactable = false;
-        wall_Left_Button.interactable = false;
-        wall_Right_Button.interactable = false;
-        stairs_1_Button.interactable = false;
-        stairs_2_Button.interactable = false;
-        stairs_3_Button.interactable = false;
-        underGarden_Lvl1_L1_Button.interactable = false;
-        radio_Lvl1_L2_Button.interactable = false;
-        expedition_Lvl1_R1_Button.interactable = false;
-        training_Lvl1_R2_Button.interactable = false;
-        workshop_Lvl2_L1_Button.interactable = false;
-        workshop_Lvl2_L2_Button.interactable = false;
-        generator_Lvl2_R1_Button.interactable = false;
-        generator_Lvl2_R2_Button.interactable = false;
-        research_Lvl3_L1_Button.interactable = false;
-        research_Lvl3_L2_Button.interactable = false;
-        livingSpace_Lvl3_R1_Button.interactable = false;
-        livingSpace_Lvl3_R2_Button.interactable = false;
-        bedroom_lvl1_L_Button.interactable = false;
-        bedroom_Lvl1_R_Button.interactable = false;
-        bedroom_Lvl2_L_Button.interactable = false;
-        bedroom_Lvl2_R_Button.interactable = false;
-        bedroom_Lvl3_L_Button.interactable = false;
-        bedroom_Lvl3_R_Button.interactable = false;
+        res_Metal_Button.interactable = true;
+        res_Wood_Button.interactable = true;
+        res_Food_Button.interactable = true;
+        res_Tech_Button.interactable = true;
+        hatch_Button.interactable = true;
+        wall_Left_Button.interactable = true;
+        wall_Right_Button.interactable = true;
+        stairs_1_Button.interactable = true;
+        stairs_2_Button.interactable = true;
+        stairs_3_Button.interactable = true;
+        underGarden_Lvl1_L1_Button.interactable = true;
+        radio_Lvl1_L2_Button.interactable = true;
+        expedition_Lvl1_R1_Button.interactable = true;
+        training_Lvl1_R2_Button.interactable = true;
+        workshop_Lvl2_L1_Button.interactable = true;
+        workshop_Lvl2_L2_Button.interactable = true;
+        generator_Lvl2_R1_Button.interactable = true;
+        generator_Lvl2_R2_Button.interactable = true;
+        research_Lvl3_L1_Button.interactable = true;
+        research_Lvl3_L2_Button.interactable = true;
+        livingSpace_Lvl3_R1_Button.interactable = true;
+        livingSpace_Lvl3_R2_Button.interactable = true;
+        bedroom_lvl1_L_Button.interactable = true;
+        bedroom_Lvl1_R_Button.interactable = true;
+        bedroom_Lvl2_L_Button.interactable = true;
+        bedroom_Lvl2_R_Button.interactable = true;
+        bedroom_Lvl3_L_Button.interactable = true;
+        bedroom_Lvl3_R_Button.interactable = true;
     }
     private void SetDefaultBuildingsViewsAndSetThemInCode()
     {
@@ -637,7 +636,6 @@ public class Game_Logic : MonoBehaviour
         //
         #region Stairs 1
         GC.Stairs_1 = true;
-        stairs_1_Locked.SetActive(false);
         stairs_1_Unlocked.SetActive(true);
         #endregion
         //
@@ -901,7 +899,6 @@ public class Game_Logic : MonoBehaviour
         bedroom_Lvl3_R_Up_10.SetActive(false);
         #endregion
         #region Stairs
-        stairs_1_Locked.SetActive(false);
         stairs_1_Unlocked.SetActive(false);
         stairs_2_Locked.SetActive(false);
         stairs_2_Unlocked.SetActive(false);
@@ -1489,6 +1486,8 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl1_L = 10;
             bedroom_Lvl1_L_Up_9.SetActive(false);
             bedroom_Lvl1_L_Up_10.SetActive(true); DiplayUiStats();
+
+            bedroom_lvl1_L_Button.interactable = false;
         }
     }
     #endregion
@@ -1646,6 +1645,8 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl1_R = 10;
             bedroom_Lvl1_R_Up_9.SetActive(false);
             bedroom_Lvl1_R_Up_10.SetActive(true); DiplayUiStats();
+
+            bedroom_Lvl1_R_Button.interactable = false;
         }
     }
     #endregion
@@ -1803,6 +1804,8 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl2_L = 10;
             bedroom_Lvl2_L_Up_9.SetActive(false);
             bedroom_Lvl2_L_Up_10.SetActive(true); DiplayUiStats();
+            
+            bedroom_Lvl2_L_Button.interactable = false;
         }
     }
     #endregion
@@ -1960,6 +1963,8 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl2_R = 10;
             bedroom_Lvl2_R_Up_9.SetActive(false);
             bedroom_Lvl2_R_Up_10.SetActive(true); DiplayUiStats();
+
+            bedroom_Lvl2_R_Button.interactable = false;
         }
     }
     #endregion
@@ -2117,6 +2122,8 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl3_L = 10;
             bedroom_Lvl3_L_Up_9.SetActive(false);
             bedroom_Lvl3_L_Up_10.SetActive(true); DiplayUiStats();
+            
+            bedroom_Lvl3_L_Button.interactable = false;
         }
     }
     #endregion
@@ -2274,6 +2281,8 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl3_R = 10;
             bedroom_Lvl3_R_Up_9.SetActive(false);
             bedroom_Lvl3_R_Up_10.SetActive(true); DiplayUiStats();
+
+            bedroom_Lvl3_R_Button.interactable = false;
         }
     }
     #endregion 
@@ -2290,6 +2299,8 @@ public class Game_Logic : MonoBehaviour
             GC.Stairs_2_Clicks_Unlock -=25;
             GC.Stairs_2 = true;
             stairs_2_Locked.SetActive(false); stairs_2_Unlocked.SetActive(true); DiplayUiStats();
+
+            stairs_2_Button.interactable = false;
         }
     }
     #endregion
@@ -2306,6 +2317,8 @@ public class Game_Logic : MonoBehaviour
             GC.Stairs_3_Clicks_Unlock -=125;
             GC.Stairs_3 = true;
             stairs_3_Locked.SetActive(false); stairs_3_Unlocked.SetActive(true); DiplayUiStats();
+            
+            stairs_3_Button.interactable = false;
         }
     }
     #endregion
@@ -2381,6 +2394,8 @@ public class Game_Logic : MonoBehaviour
             GC.Expedition_Upg_Lvl1_R1 = 5;
             expedition_Lvl1_R1_Up_4.SetActive(false);
             expedition_Lvl1_R1_Up_5.SetActive(true); DiplayUiStats();
+            
+            expedition_Lvl1_R1_Button.interactable = false;
         }
     }
     #endregion
@@ -2455,6 +2470,8 @@ public class Game_Logic : MonoBehaviour
             GC.Training_Upg_Lvl1_R2 = 5;
             training_Lvl1_R2_Up_4.SetActive(false);
             training_Lvl1_R2_Up_5.SetActive(true); DiplayUiStats();
+            
+            training_Lvl1_R2_Button.interactable = false;
         }
     }
     #endregion
@@ -2530,6 +2547,8 @@ public class Game_Logic : MonoBehaviour
             GC.UnderGarden_Upg_Lvl1_L1 = 5;
             underGarden_Lvl1_L1_Up_4.SetActive(false);
             underGarden_Lvl1_L1_Up_5.SetActive(true); DiplayUiStats();
+            
+            underGarden_Lvl1_L1_Button.interactable = false;
         }
     }
     #endregion
@@ -2604,6 +2623,8 @@ public class Game_Logic : MonoBehaviour
             GC.Radio_Upg_Lvl1_L2 = 5;
             radio_Lvl1_L2_Up_4.SetActive(false);
             radio_Lvl1_L2_Up_5.SetActive(true); DiplayUiStats();
+            
+            radio_Lvl1_L2_Button.interactable = false;
         }
     }
     #endregion
@@ -2696,6 +2717,8 @@ public class Game_Logic : MonoBehaviour
             GC.Generator_Upg_Lvl2_R1 = 5;
             generator_Lvl2_R1_Up_4.SetActive(false);
             generator_Lvl2_R1_Up_5.SetActive(true); DiplayUiStats();
+            
+            generator_Lvl2_R1_Button.interactable = false;
         }
     }
     #endregion
@@ -2787,6 +2810,8 @@ public class Game_Logic : MonoBehaviour
             GC.Generator_Upg_Lvl2_R2 = 5;
             generator_Lvl2_R2_Up_4.SetActive(false);
             generator_Lvl2_R2_Up_5.SetActive(true); DiplayUiStats();
+            
+            generator_Lvl2_R2_Button.interactable = false;
         }
     }
     #endregion
@@ -2879,6 +2904,8 @@ public class Game_Logic : MonoBehaviour
             GC.Workshop_Upg_Lvl2_L1 = 5;
             workshop_Lvl2_L1_Up_4.SetActive(false);
             workshop_Lvl2_L1_Up_5.SetActive(true); DiplayUiStats();
+            
+            workshop_Lvl2_L1_Button.interactable = false;
         }
     }
     #endregion
@@ -2970,6 +2997,8 @@ public class Game_Logic : MonoBehaviour
             GC.Workshop_Upg_Lvl2_L2 = 5;
             workshop_Lvl2_L2_Up_4.SetActive(false);
             workshop_Lvl2_L2_Up_5.SetActive(true); DiplayUiStats();
+
+            workshop_Lvl2_L2_Button.interactable = false;
         }
     }
     #endregion
@@ -3062,6 +3091,8 @@ public class Game_Logic : MonoBehaviour
             GC.LivingSpace_Upg_Lvl3_R1 = 5;
             livingSpace_Lvl3_R1_Up_4.SetActive(false);
             livingSpace_Lvl3_R1_Up_5.SetActive(true); DiplayUiStats();
+
+            livingSpace_Lvl3_R1_Button.interactable = false;
         }
     }
     #endregion
@@ -3153,6 +3184,8 @@ public class Game_Logic : MonoBehaviour
             GC.LivingSpace_Upg_Lvl3_R2 = 5;
             livingSpace_Lvl3_R2_Up_4.SetActive(false);
             livingSpace_Lvl3_R2_Up_5.SetActive(true); DiplayUiStats();
+            
+            livingSpace_Lvl3_R2_Button.interactable = false;
         }
     }
     #endregion
@@ -3245,6 +3278,8 @@ public class Game_Logic : MonoBehaviour
             GC.Research_Upg_Lvl3_L1 = 5;
             research_Lvl3_L1_Up_4.SetActive(false);
             research_Lvl3_L1_Up_5.SetActive(true); DiplayUiStats();
+            
+            research_Lvl3_L1_Button.interactable = false;
         }
     }
     #endregion
@@ -3286,7 +3321,7 @@ public class Game_Logic : MonoBehaviour
             GC.Player_Tech -= (purchaseValue * 4);
             GC.Research_Lvl3_L2 = true;
             GC.Research_Upg_Lvl3_L2 = 1;
-            research_Lvl3_L1_Up_1.SetActive(true); research_Lvl3_L2_Def.SetActive(false); DiplayUiStats();
+            research_Lvl3_L2_Up_1.SetActive(true); research_Lvl3_L2_Def.SetActive(false); DiplayUiStats();
         }
     }
     private void Buy_Up_To_2_Research_2()
@@ -3334,7 +3369,9 @@ public class Game_Logic : MonoBehaviour
             GC.Player_Tech -= (purchaseValue * 16);
             GC.Research_Upg_Lvl3_L2 = 5;
             research_Lvl3_L2_Up_4.SetActive(false);
-            research_Lvl3_L2_Up_5.SetActive(true); DiplayUiStats(); 
+            research_Lvl3_L2_Up_5.SetActive(true); DiplayUiStats();
+            
+            research_Lvl3_L2_Button.interactable = false;
         }
     }
     #endregion
@@ -3481,19 +3518,11 @@ public class Game_Logic : MonoBehaviour
             GC.Wall_L_Clik_Unlock -=225;
             GC.Wall_L_Upg = 10;
             wall_Left_Up_9.SetActive(false);
-            wall_Left_Up_10.SetActive(true); DiplayUiStats(); 
+            wall_Left_Up_10.SetActive(true); DiplayUiStats();
+            
+            wall_Left_Button.interactable = false;
         }
     }
-    /*private void Buy_Up_10_Bedroom_Lvl1_R()
-    {
-        if (GC.Wall_R_Clik_Unlock >= 250)
-        {
-            GC.Wall_R_Clik_Unlock = 0;
-            GC.Wall_R_Upg = 10;
-            wall_Left_Up_10.SetActive(false);
-            wall_Left_Up_11.SetActive(true); DiplayUiStats(); 
-        }
-    }*/
     #endregion
     // WALL RIGHT UNLOCK
     #region Unlock Wall R & Upgrades
@@ -3548,7 +3577,9 @@ public class Game_Logic : MonoBehaviour
             GC.Wall_R = true;
             GC.Wall_R_Upg = 1;
             wall_Right_None.SetActive(false);
-            wall_Right_Up_1.SetActive(true); DiplayUiStats();
+            wall_Right_Up_1.SetActive(true);
+            wall_Left_None.SetActive(false);
+            wall_Left_Up_1.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_To_2_Wall_R()
@@ -3558,7 +3589,9 @@ public class Game_Logic : MonoBehaviour
             GC.Wall_R_Clik_Unlock -=25;
             GC.Wall_R_Upg = 2;
             wall_Right_Up_1.SetActive(false);
-            wall_Right_Up_2.SetActive(true); DiplayUiStats();
+            wall_Right_Up_2.SetActive(true);
+            wall_Left_Up_1.SetActive(false);
+            wall_Left_Up_2.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_To_3_Wall_R()
@@ -3568,7 +3601,9 @@ public class Game_Logic : MonoBehaviour
             GC.Wall_R_Clik_Unlock -=50;
             GC.Wall_R_Upg = 3;
             wall_Right_Up_2.SetActive(false);
-            wall_Right_Up_3.SetActive(true); DiplayUiStats();
+            wall_Right_Up_3.SetActive(true);
+            wall_Left_Up_2.SetActive(false);
+            wall_Left_Up_3.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_To_4_Wall_R()
@@ -3578,7 +3613,9 @@ public class Game_Logic : MonoBehaviour
             GC.Wall_R_Clik_Unlock -=75;
             GC.Wall_R_Upg = 4;
             wall_Right_Up_3.SetActive(false);
-            wall_Right_Up_4.SetActive(true); DiplayUiStats();
+            wall_Right_Up_4.SetActive(true);
+            wall_Left_Up_3.SetActive(false);
+            wall_Left_Up_4.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_To_5_Wall_R()
@@ -3588,7 +3625,9 @@ public class Game_Logic : MonoBehaviour
             GC.Wall_R_Clik_Unlock -=100;
             GC.Wall_R_Upg = 5;
             wall_Right_Up_4.SetActive(false);
-            wall_Right_Up_5.SetActive(true); DiplayUiStats();
+            wall_Right_Up_5.SetActive(true);
+            wall_Left_Up_4.SetActive(false);
+            wall_Left_Up_5.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_To_6_Wall_R()
@@ -3598,7 +3637,9 @@ public class Game_Logic : MonoBehaviour
             GC.Wall_R_Clik_Unlock -=125;
             GC.Wall_R_Upg = 6;
             wall_Right_Up_5.SetActive(false);
-            wall_Right_Up_6.SetActive(true); DiplayUiStats();
+            wall_Right_Up_6.SetActive(true);
+            wall_Left_Up_5.SetActive(false);
+            wall_Left_Up_6.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_To_7_Wall_R()
@@ -3608,7 +3649,9 @@ public class Game_Logic : MonoBehaviour
             GC.Wall_R_Clik_Unlock -=150;
             GC.Wall_R_Upg = 7;
             wall_Right_Up_6.SetActive(false);
-            wall_Right_Up_7.SetActive(true); DiplayUiStats();
+            wall_Right_Up_7.SetActive(true);
+            wall_Left_Up_6.SetActive(false);
+            wall_Left_Up_7.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_To_8_Wall_R()
@@ -3618,7 +3661,9 @@ public class Game_Logic : MonoBehaviour
             GC.Wall_R_Clik_Unlock -=175;
             GC.Wall_R_Upg = 8;
             wall_Right_Up_7.SetActive(false);
-            wall_Right_Up_8.SetActive(true); DiplayUiStats();
+            wall_Right_Up_8.SetActive(true);
+            wall_Left_Up_7.SetActive(false);
+            wall_Left_Up_8.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_To_9_Wall_R()
@@ -3628,7 +3673,9 @@ public class Game_Logic : MonoBehaviour
             GC.Wall_R_Clik_Unlock -=200;
             GC.Wall_R_Upg = 9;
             wall_Right_Up_8.SetActive(false);
-            wall_Right_Up_9.SetActive(true); DiplayUiStats();
+            wall_Right_Up_9.SetActive(true);
+            wall_Left_Up_8.SetActive(false);
+            wall_Left_Up_9.SetActive(true); DiplayUiStats();
         }
     }
     private void Buy_Up_To_10_Wall_R()
@@ -3638,19 +3685,15 @@ public class Game_Logic : MonoBehaviour
             GC.Wall_R_Clik_Unlock -=225;
             GC.Wall_R_Upg = 10;
             wall_Right_Up_9.SetActive(false);
-            wall_Right_Up_10.SetActive(true); DiplayUiStats(); 
+            wall_Right_Up_10.SetActive(true);
+
+            wall_Right_Button.interactable = false;
+            wall_Left_Up_9.SetActive(false);
+            wall_Left_Up_10.SetActive(true); DiplayUiStats();
+
+            wall_Left_Button.interactable = false;
         }
     }
-    /*private void Buy_Up_10_Bedroom_Lvl1_R()
-    {
-        if (GC.Wall_R_Clik_Unlock >= 250)
-        {
-            GC.Wall_R_Clik_Unlock = 0;
-            GC.Wall_R_Upg = 10;
-            wall_Left_Up_10.SetActive(false);
-            wall_Left_Up_11.SetActive(true); DiplayUiStats(); 
-        }
-    }*/
     #endregion
     #endregion
 
@@ -3754,6 +3797,8 @@ public class Game_Logic : MonoBehaviour
     {
         bedroom_Lvl1_L_Up_9.SetActive(false);
         bedroom_Lvl1_L_Up_10.SetActive(true); DiplayUiStats();
+        
+        bedroom_lvl1_L_Button.interactable = false;
     }
     #endregion
     // BEDROOM LVL1 RIGHT UNLOCK
@@ -3853,6 +3898,8 @@ public class Game_Logic : MonoBehaviour
     {
         bedroom_Lvl1_R_Up_9.SetActive(false);
         bedroom_Lvl1_R_Up_10.SetActive(true); DiplayUiStats();
+        
+        bedroom_Lvl1_R_Button.interactable = false;
     }
     #endregion
     // BEDROOM LVL2 LEFT UNLOCK
@@ -3952,6 +3999,8 @@ public class Game_Logic : MonoBehaviour
     {
         bedroom_Lvl2_L_Up_9.SetActive(false);
         bedroom_Lvl2_L_Up_10.SetActive(true); DiplayUiStats();
+        
+        bedroom_Lvl2_L_Button.interactable = false;
     }
     #endregion
     // BEDROOM LVL2 RIGHT UNLOCK
@@ -4051,6 +4100,8 @@ public class Game_Logic : MonoBehaviour
     {
         bedroom_Lvl2_R_Up_9.SetActive(false);
         bedroom_Lvl2_R_Up_10.SetActive(true); DiplayUiStats();
+        
+        bedroom_Lvl2_R_Button.interactable = false;
     }
     #endregion
     // BEDROOM LVL3 LEFT UNLOCK
@@ -4150,6 +4201,8 @@ public class Game_Logic : MonoBehaviour
     {
         bedroom_Lvl3_L_Up_9.SetActive(false);
         bedroom_Lvl3_L_Up_10.SetActive(true); DiplayUiStats();
+        
+        bedroom_Lvl3_L_Button.interactable = false;
     }
     #endregion
     // BEDROOM LVL3 RIGHT UNLOCK
@@ -4249,6 +4302,8 @@ public class Game_Logic : MonoBehaviour
     {
         bedroom_Lvl3_R_Up_9.SetActive(false);
         bedroom_Lvl3_R_Up_10.SetActive(true); DiplayUiStats();
+        
+        bedroom_Lvl3_R_Button.interactable = false;
     }
     #endregion 
     // STAIRS 2 UNLOCK
@@ -4263,6 +4318,8 @@ public class Game_Logic : MonoBehaviour
         {
             stairs_2_Locked.SetActive(false);
             stairs_2_Unlocked.SetActive(true); DiplayUiStats();
+            
+            stairs_2_Button.interactable = false;
         }
         else
         {
@@ -4283,6 +4340,8 @@ public class Game_Logic : MonoBehaviour
         {
             stairs_3_Locked.SetActive(false);
             stairs_3_Unlocked.SetActive(true); DiplayUiStats();
+
+            stairs_3_Button.interactable = false;
         }
         else
         {
@@ -4341,6 +4400,8 @@ public class Game_Logic : MonoBehaviour
     {
         expedition_Lvl1_R1_Up_4.SetActive(false);
         expedition_Lvl1_R1_Up_5.SetActive(true); DiplayUiStats();
+        
+        expedition_Lvl1_R1_Button.interactable = false;
     }
     #endregion
     #region Check Training & Upgrades // not figured out the values to spend on unlocks
@@ -4392,6 +4453,8 @@ public class Game_Logic : MonoBehaviour
     {
         training_Lvl1_R2_Up_4.SetActive(false);
         training_Lvl1_R2_Up_5.SetActive(true); DiplayUiStats();
+        
+        training_Lvl1_R2_Button.interactable = false;
     }
     #endregion
     // UnderGarden(1) & Radio(2) IS LEVEL 1 LEFT SIDE
@@ -4444,6 +4507,8 @@ public class Game_Logic : MonoBehaviour
     {
         underGarden_Lvl1_L1_Up_4.SetActive(false);
         underGarden_Lvl1_L1_Up_5.SetActive(true); DiplayUiStats();
+
+        underGarden_Lvl1_L1_Button.interactable = false;
     }
     #endregion
     #region Check Radio & Upgrades // not figured out the values to spend on unlocks
@@ -4495,6 +4560,8 @@ public class Game_Logic : MonoBehaviour
     {
         radio_Lvl1_L2_Up_4.SetActive(false);
         radio_Lvl1_L2_Up_5.SetActive(true); DiplayUiStats();
+        
+        radio_Lvl1_L2_Button.interactable = false;
     }
     #endregion
     // GENERATOR IS LEVEL 2 RIGHT SIDE
@@ -4554,6 +4621,8 @@ public class Game_Logic : MonoBehaviour
     {
         generator_Lvl2_R1_Up_4.SetActive(false);
         generator_Lvl2_R1_Up_5.SetActive(true); DiplayUiStats();
+        
+        generator_Lvl2_R1_Button.interactable = false;
     }
     #endregion
     #region Check Unlock Generator 2 & Upgrades
@@ -4612,6 +4681,8 @@ public class Game_Logic : MonoBehaviour
     {
         generator_Lvl2_R2_Up_4.SetActive(false);
         generator_Lvl2_R2_Up_5.SetActive(true); DiplayUiStats();
+        
+        generator_Lvl2_R2_Button.interactable = false;
     }
     #endregion
     // WORKSHOP IS LEVEL 2 LEFT SIDE
@@ -4671,6 +4742,8 @@ public class Game_Logic : MonoBehaviour
     {
         workshop_Lvl2_L1_Up_4.SetActive(false);
         workshop_Lvl2_L1_Up_5.SetActive(true); DiplayUiStats();
+        
+        workshop_Lvl2_L1_Button.interactable = false;
     }
     #endregion
     #region Check Unlock Workshop 2 & Upgrades
@@ -4729,6 +4802,8 @@ public class Game_Logic : MonoBehaviour
     {
         workshop_Lvl2_L2_Up_4.SetActive(false);
         workshop_Lvl2_L2_Up_5.SetActive(true); DiplayUiStats();
+        
+        workshop_Lvl2_L2_Button.interactable = false;
     }
     #endregion
     // LIVING IS LEVEL 3 RIGHT SIDE
@@ -4788,6 +4863,8 @@ public class Game_Logic : MonoBehaviour
     {
         livingSpace_Lvl3_R1_Up_4.SetActive(false);
         livingSpace_Lvl3_R1_Up_5.SetActive(true); DiplayUiStats();
+        
+        livingSpace_Lvl3_R1_Button.interactable = false;
     }
     #endregion
     #region Check Unlock LivingSpace 2 & Upgrades
@@ -4846,6 +4923,8 @@ public class Game_Logic : MonoBehaviour
     {
         livingSpace_Lvl3_R2_Up_4.SetActive(false);
         livingSpace_Lvl3_R2_Up_5.SetActive(true); DiplayUiStats();
+        
+        livingSpace_Lvl3_R2_Button.interactable = false;
     }
     #endregion
     // RESEARCH IS LEVEL 3 LEFT SIDE
@@ -4906,6 +4985,8 @@ public class Game_Logic : MonoBehaviour
     {
         research_Lvl3_L1_Up_4.SetActive(false);
         research_Lvl3_L1_Up_5.SetActive(true); DiplayUiStats();
+        
+        research_Lvl3_L1_Button.interactable = false;
     }
     #endregion
     #region Check Unlock Research 2 & Upgrades
@@ -4964,6 +5045,8 @@ public class Game_Logic : MonoBehaviour
     {
         research_Lvl3_L2_Up_4.SetActive(false);
         research_Lvl3_L2_Up_5.SetActive(true); DiplayUiStats();
+        
+        research_Lvl3_L2_Button.interactable = false;
     }
     #endregion
     // WALL L Check Save
@@ -5063,6 +5146,8 @@ public class Game_Logic : MonoBehaviour
     {
         wall_Left_Up_9.SetActive(false);
         wall_Left_Up_10.SetActive(true); DiplayUiStats();
+
+        wall_Left_Button.interactable = false;
     }
     #endregion
     // WALL R Check Save
@@ -5112,57 +5197,82 @@ public class Game_Logic : MonoBehaviour
     }
     private void Check_Save_Locked_Wall_R()
     {
-        wall_Right_None.SetActive(true); DiplayUiStats();
+        wall_Right_None.SetActive(true); wall_Left_None.SetActive(true); DiplayUiStats();
     }
     private void Check_Save_1_Wall_R()
     {
         wall_Right_None.SetActive(false);
-        wall_Right_Up_1.SetActive(true); DiplayUiStats();
+        wall_Right_Up_1.SetActive(true);
+        wall_Left_None.SetActive(false);
+        wall_Left_Up_1.SetActive(true); DiplayUiStats();
     }
     private void Check_Save_2_Wall_R()
     {
         wall_Right_Up_1.SetActive(false);
-        wall_Right_Up_2.SetActive(true); DiplayUiStats();
+        wall_Right_Up_2.SetActive(true);
+        wall_Left_Up_1.SetActive(false);
+        wall_Left_Up_2.SetActive(true); DiplayUiStats();
     }
     private void Check_Save_3_Wall_R()
     {
         wall_Right_Up_2.SetActive(false);
-        wall_Right_Up_3.SetActive(true); DiplayUiStats();
+        wall_Right_Up_3.SetActive(true);
+        wall_Left_Up_2.SetActive(false);
+        wall_Left_Up_3.SetActive(true); DiplayUiStats();
     }
     private void Check_Save_4_Wall_R()
     {
         wall_Right_Up_3.SetActive(false);
-        wall_Right_Up_4.SetActive(true); DiplayUiStats();
+        wall_Right_Up_4.SetActive(true);
+        wall_Left_Up_3.SetActive(false);
+        wall_Left_Up_4.SetActive(true); DiplayUiStats();
     }
     private void Check_Save_5_Wall_R()
     {
         wall_Right_Up_4.SetActive(false);
-        wall_Right_Up_5.SetActive(true); DiplayUiStats();
+        wall_Right_Up_5.SetActive(true);
+        wall_Left_Up_4.SetActive(false);
+        wall_Left_Up_5.SetActive(true); DiplayUiStats();
     }
     private void Check_Save_6_Wall_R()
     {
         wall_Right_Up_5.SetActive(false);
-        wall_Right_Up_6.SetActive(true); DiplayUiStats();
+        wall_Right_Up_6.SetActive(true);
+        wall_Left_Up_5.SetActive(false);
+        wall_Left_Up_6.SetActive(true); DiplayUiStats();
     }
     private void Check_Save_7_Wall_R()
     {
         wall_Right_Up_6.SetActive(false);
-        wall_Right_Up_7.SetActive(true); DiplayUiStats();
+        wall_Right_Up_7.SetActive(true);
+        wall_Left_Up_6.SetActive(false);
+        wall_Left_Up_7.SetActive(true); DiplayUiStats();
     }
     private void Check_Save_8_Wall_R()
     {
         wall_Right_Up_7.SetActive(false);
-        wall_Right_Up_8.SetActive(true); DiplayUiStats();
+        wall_Right_Up_8.SetActive(true);
+        wall_Left_Up_7.SetActive(false);
+        wall_Left_Up_8.SetActive(true); DiplayUiStats();
     }
     private void Check_Save_9_Wall_R()
     {
         wall_Right_Up_8.SetActive(false);
-        wall_Right_Up_9.SetActive(true); DiplayUiStats();
+        wall_Right_Up_9.SetActive(true);
+        wall_Left_Up_8.SetActive(false);
+        wall_Left_Up_9.SetActive(true); DiplayUiStats();
     }
     private void Check_Save_10_Wall_R()
     {
         wall_Right_Up_9.SetActive(false);
-        wall_Right_Up_10.SetActive(true); DiplayUiStats();
+        wall_Right_Up_10.SetActive(true);
+
+        wall_Right_Button.interactable = false;
+
+        wall_Left_Up_9.SetActive(false);
+        wall_Left_Up_10.SetActive(true); DiplayUiStats();
+
+        wall_Left_Button.interactable = false;
     }
     #endregion
     #endregion
