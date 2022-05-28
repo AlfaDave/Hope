@@ -20,6 +20,8 @@ public class Game_Logic : MonoBehaviour
     [SerializeField] internal GameObject underGarden_Lvl1_L1, radio_Lvl1_L2, expedition_Lvl1_R1, training_Lvl1_R2, workshop_Lvl2_L1, workshop_Lvl2_L2, generator_Lvl2_R1, generator_Lvl2_R2, research_Lvl3_L1, research_Lvl3_L2, livingSpace_Lvl3_R1, livingSpace_Lvl3_R2, bedroom_Lvl1_L, bedroom_Lvl1_R, bedroom_Lvl2_L, bedroom_Lvl2_R, bedroom_Lvl3_L, bedroom_Lvl3_R;
     #region Buttons for gathering
     private Button res_Metal_Button, res_Wood_Button, res_Food_Button, res_Tech_Button;
+    private GameObject res_Metal_Wait, res_Wood_Wait, res_Food_Wait, res_Tech_Wait;
+    private Text res_Metal_Wait_Text, res_Wood_Wait_Text, res_Food_Wait_Text, res_Tech_Wait_Text;
     #endregion
     #region Buttons for Repair
     private Button hatch_Button, wall_Left_Button, wall_Right_Button;
@@ -29,6 +31,9 @@ public class Game_Logic : MonoBehaviour
     #endregion
     #region Buttons for Rooms
     private Button underGarden_Lvl1_L1_Button, radio_Lvl1_L2_Button, expedition_Lvl1_R1_Button, training_Lvl1_R2_Button, workshop_Lvl2_L1_Button, workshop_Lvl2_L2_Button, generator_Lvl2_R1_Button, generator_Lvl2_R2_Button, research_Lvl3_L1_Button, research_Lvl3_L2_Button, livingSpace_Lvl3_R1_Button, livingSpace_Lvl3_R2_Button, bedroom_lvl1_L_Button, bedroom_Lvl1_R_Button, bedroom_Lvl2_L_Button, bedroom_Lvl2_R_Button, bedroom_Lvl3_L_Button, bedroom_Lvl3_R_Button;
+    #endregion
+    #region End Turn Button
+    public GameObject endTurn;
     #endregion
     #region Upgrade GameObjects
     #region Bedrooms
@@ -66,7 +71,7 @@ public class Game_Logic : MonoBehaviour
     private bool wait_Wood;
     private bool wait_Food;
     private bool wait_Tech;
-    private float wait_Button_Defaults = 30;
+    private float wait_Button_Defaults = 6;
     private float wait_Button_Metal;
     private float wait_Button_Wood;
     private float wait_Button_Food;
@@ -77,22 +82,7 @@ public class Game_Logic : MonoBehaviour
     //private float WaitPowerGenBonus = 0;
     //private float WaitLivingSpace = 0;
     private int purchaseValue = 250;
-    private void Waiting_Metal()
-    {
-
-    }
-    private void Waiting_Wood()
-    {
-
-    }
-    private void Waiting_Food()
-    {
-
-    }
-    private void Waiting_Tech()
-    {
-
-    }
+    
     private void Start()
     {
         
@@ -106,15 +96,57 @@ public class Game_Logic : MonoBehaviour
         //
         CheckRoomUnlockProgress();
         DiplayUiStats();
-        CheatMode();
+        //CheatMode();
         DiplayUiStats();
+        Turn();
     }
     private void Update()
     {
-        if (wait_Metal) { wait_Button_Metal -= Time.deltaTime; Debug.Log("wait button metal "+wait_Button_Metal); if(wait_Button_Metal <= 0) { Unlock_Metal_Button(); } }
-        if (wait_Wood) { wait_Button_Wood -= Time.deltaTime; Debug.Log("wait button wood " + wait_Button_Wood); if (wait_Button_Wood <= 0) { Unlock_Wood_Button(); } }
-        if (wait_Food) { wait_Button_Food -= Time.deltaTime; Debug.Log("wait button food " + wait_Button_Food); if (wait_Button_Food <= 0) { Unlock_Food_Button(); } }
-        if (wait_Tech) { wait_Button_Tech -= Time.deltaTime; Debug.Log("wait button tech " + wait_Button_Tech); if (wait_Button_Tech <= 0) { Unlock_Tech_Button(); } }
+        WaitTimers();
+    }
+    private void WaitTimers()
+    {
+        if (wait_Metal)
+        {
+            wait_Button_Metal -= Time.deltaTime;
+            if (wait_Button_Metal <= 0) { wait_Button_Metal = 0; Unlock_Metal_Button(); }
+        }
+        if (wait_Wood)
+        {
+            wait_Button_Wood -= Time.deltaTime;
+            if (wait_Button_Wood <= 0) { wait_Button_Wood = 0; Unlock_Wood_Button(); }
+        }
+        if (wait_Food)
+        {
+            wait_Button_Food -= Time.deltaTime;
+            if (wait_Button_Food <= 0) { wait_Button_Food = 0; Unlock_Food_Button(); }
+        }
+        if (wait_Tech)
+        {
+            wait_Button_Tech -= Time.deltaTime;
+            if (wait_Button_Tech <= 0) { wait_Button_Tech = 0; Unlock_Tech_Button(); }
+        }
+    }
+    public void Turn()
+    {
+        endTurn.SetActive(false);
+        if (GC.Player_Turns <= 1) { GC.Player_People = 4;GC.Player_Capacity = 4; }
+        GC.Player_Turns += 1;
+        Debug.Log("Amount of people are " + GC.Player_People);
+        Debug.Log("Amount of capacity is " + GC.Player_Capacity);
+        Debug.Log("Turns are " + GC.Player_Turns);
+        GC.Player_Tasks = 0;
+        Debug.Log("Tasks are " + GC.Player_Tasks);
+
+        GC.Player_Tasks += GC.Player_People * 3;
+        Debug.Log("Tasks are  now " + GC.Player_Tasks);
+        DiplayUiStats();
+
+        gSave.SavingGame();
+
+
+
+        //AttackingTurn();
     }
     private void FindAllStatics()
     {
@@ -228,6 +260,16 @@ public class Game_Logic : MonoBehaviour
         display_Text_Res_Metal_Shadow = display_Res_Metal.transform.GetChild(2).GetChild(0).GetComponent<Text>();
         display_Text_Res_Wood_Shadow = display_Res_Wood.transform.GetChild(2).GetChild(0).GetComponent<Text>();
         display_Text_Res_Tech_Shadow = display_Res_Tech.transform.GetChild(2).GetChild(0).GetComponent<Text>();
+
+
+        res_Metal_Wait = res_Metal.transform.GetChild(1).gameObject;
+        res_Wood_Wait = res_Wood.transform.GetChild(1).gameObject;
+        res_Food_Wait = res_Food.transform.GetChild(1).gameObject;
+        res_Tech_Wait = res_Tech.transform.GetChild(1).gameObject;
+        res_Metal_Wait_Text = res_Metal_Wait.transform.GetChild(1).GetComponent<Text>();
+        res_Wood_Wait_Text = res_Wood_Wait.transform.GetChild(1).GetComponent<Text>();
+        res_Food_Wait_Text = res_Food_Wait.transform.GetChild(1).GetComponent<Text>();
+        res_Tech_Wait_Text = res_Tech_Wait.transform.GetChild(1).GetComponent<Text>();
     }
     private void LinkButtons()
     {
@@ -1005,82 +1047,126 @@ public class Game_Logic : MonoBehaviour
         #endregion
         #endregion
     }
+    private void NextTurnItems()
+    {
+        endTurn.SetActive(true);
+    }
     // Calculations for the wait time after pressing a gathering resource
     #region Gathering resources
     public void Gather_Metal()
     {
-        GC.Player_Metal += 10;
-        Calculate_Wait_Metal();
+        if (GC.Player_Tasks >= 1)
+        {
+            GC.Player_Metal += 10;
+            GC.Player_Tasks -= 1;
+            DiplayUiStats();
+            Lock_Metal_Button();
+            Calculate_Wait_Metal();
+        }
+        else
+        {
+            // no turns left 
+            NextTurnItems();
+        }
     }
     public void Gather_Wood()
     {
-        GC.Player_Wood += 10;
-        Calculate_Wait_Wood();
+        if (GC.Player_Tasks >= 1)
+        {
+            GC.Player_Wood += 10;
+            GC.Player_Tasks -= 1;
+            DiplayUiStats();
+            Lock_Wood_Button();
+            Calculate_Wait_Wood();
+        }
+        else
+        {
+            // no turns left 
+            NextTurnItems();
+        }
     }
     public void Gather_Food()
     {
-        GC.Player_Food += 10;
-        Calculate_Wait_Food();
+        if (GC.Player_Tasks >= 1)
+        {
+            GC.Player_Food += 10;
+            GC.Player_Tasks -= 1;
+            DiplayUiStats();
+            Lock_Food_Button();
+            Calculate_Wait_Food();
+        }
+        else
+        {
+            // no turns left 
+            NextTurnItems();
+        }
     }
     public void Gather_Tech()
     {
-        GC.Player_Tech += 10;
-        Calculate_Wait_Tech();
+        if (GC.Player_Tasks >= 1)
+        {
+            GC.Player_Tech += 10;
+            GC.Player_Tasks -= 1;
+            DiplayUiStats();
+            Lock_Tech_Button();
+            Calculate_Wait_Tech();
+        }
+        else
+        {
+            // no turns left 
+            NextTurnItems();
+        }
     }
     private void Get_Layer_1_Building_Bonus(int building)
     {
-        if (building == 1)// Generator
+        if (building == 1)// Generator metal
         {
             tempMetal = 0;
             switch (GC.Generator_Upg_Lvl2_R1)
             {
-                case 0: tempMetal = 1.0f; break;
-                case 1: tempMetal = 1.2f; break;
-                case 2: tempMetal = 1.4f; break;
-                case 3: tempMetal = 1.6f; break;
-                case 4: tempMetal = 1.8f; break;
-                case 5: tempMetal = 2.0f; break;
+                case 1: tempMetal = 0.5f; break;
+                case 2: tempMetal = 1.0f; break;
+                case 3: tempMetal = 1.5f; break;
+                case 4: tempMetal = 2.0f; break;
+                case 5: tempMetal = 2.5f; break;
             }
         }
-        else if (building == 2) // Workshop
+        else if (building == 2) // Workshop wood
         {
             tempWood = 0;
             switch (GC.Workshop_Upg_Lvl2_L1)
             {
-                case 0: tempWood = 1.0f; break;
-                case 1: tempWood = 1.2f; break;
-                case 2: tempWood = 1.4f; break;
-                case 3: tempWood = 1.6f; break;
-                case 4: tempWood = 1.8f; break;
-                case 5: tempWood = 2.0f; break;
+                case 1: tempWood = 0.5f; break;
+                case 2: tempWood = 1.0f; break;
+                case 3: tempWood = 1.5f; break;
+                case 4: tempWood = 2.0f; break;
+                case 5: tempWood = 2.5f; break;
             }
 
         }
-        else if (building == 3) // LivingSpace
+        else if (building == 3) // LivingSpace food
         {
             tempFood = 0;
             switch (GC.LivingSpace_Upg_Lvl3_R1)
             {
-                case 0: tempFood = 1.0f; break;
-                case 1: tempFood = 1.2f; break;
-                case 2: tempFood = 1.4f; break;
-                case 3: tempFood = 1.6f; break;
-                case 4: tempFood = 1.8f; break;
-                case 5: tempFood = 2.0f; break;
+                case 1: tempFood = 0.5f; break;
+                case 2: tempFood = 1.0f; break;
+                case 3: tempFood = 1.5f; break;
+                case 4: tempFood = 2.0f; break;
+                case 5: tempFood = 2.5f; break;
             }
 
         }
-        else if (building == 4) // Research
+        else if (building == 4) // Research tech
         {
             tempTech = 0;
             switch (GC.Research_Upg_Lvl3_L1)
             {
-                case 0: tempTech = 1.0f; break;
-                case 1: tempTech = 1.2f; break;
-                case 2: tempTech = 1.4f; break;
-                case 3: tempTech = 1.6f; break;
-                case 4: tempTech = 1.8f; break;
-                case 5: tempTech = 2.0f; break;
+                case 1: tempTech = 0.5f; break;
+                case 2: tempTech = 1.0f; break;
+                case 3: tempTech = 1.5f; break;
+                case 4: tempTech = 2.0f; break;
+                case 5: tempTech = 2.5f; break;
             }
         }
     }
@@ -1090,24 +1176,22 @@ public class Game_Logic : MonoBehaviour
         {
             switch (GC.Generator_Upg_Lvl2_R2)
             {
-                case 0: tempMetal = 1.0f; break;
-                case 1: tempMetal = 1.2f; break;
-                case 2: tempMetal = 1.4f; break;
-                case 3: tempMetal = 1.6f; break;
-                case 4: tempMetal = 1.8f; break;
-                case 5: tempMetal = 2.0f; break;
+                case 1: tempMetal = 0.5f; break;
+                case 2: tempMetal = 1.0f; break;
+                case 3: tempMetal = 1.5f; break;
+                case 4: tempMetal = 2.0f; break;
+                case 5: tempMetal = 2.5f; break;
             }
         }
         else if (building == 2) // Workshop
         {
             switch (GC.Workshop_Upg_Lvl2_L2)
             {
-                case 0: tempWood = 1.0f; break;
-                case 1: tempWood = 1.2f; break;
-                case 2: tempWood = 1.4f; break;
-                case 3: tempWood = 1.6f; break;
-                case 4: tempWood = 1.8f; break;
-                case 5: tempWood = 2.0f; break;
+                case 1: tempWood = 0.5f; break;
+                case 2: tempWood = 1.0f; break;
+                case 3: tempWood = 1.5f; break;
+                case 4: tempWood = 2.0f; break;
+                case 5: tempWood = 2.5f; break;
             }
 
         }
@@ -1115,12 +1199,11 @@ public class Game_Logic : MonoBehaviour
         {
             switch (GC.LivingSpace_Upg_Lvl3_R2)
             {
-                case 0: tempFood = 1.0f; break;
-                case 1: tempFood = 1.2f; break;
-                case 2: tempFood = 1.4f; break;
-                case 3: tempFood = 1.6f; break;
-                case 4: tempFood = 1.8f; break;
-                case 5: tempFood = 2.0f; break;
+                case 1: tempFood = 0.5f; break;
+                case 2: tempFood = 1.0f; break;
+                case 3: tempFood = 1.5f; break;
+                case 4: tempFood = 2.0f; break;
+                case 5: tempFood = 2.5f; break;
             }
 
         }
@@ -1128,114 +1211,109 @@ public class Game_Logic : MonoBehaviour
         {
             switch (GC.Research_Upg_Lvl3_L2)
             {
-                case 0: tempTech = 1.0f; break;
-                case 1: tempTech = 1.2f; break;
-                case 2: tempTech = 1.4f; break;
-                case 3: tempTech = 1.6f; break;
-                case 4: tempTech = 1.8f; break;
-                case 5: tempTech = 2.0f; break;
+                case 1: tempTech = 0.5f; break;
+                case 2: tempTech = 1.0f; break;
+                case 3: tempTech = 1.5f; break;
+                case 4: tempTech = 2.0f; break;
+                case 5: tempTech = 2.5f; break;
             }
         }
     } 
     private void Calculate_Wait_Metal()
     {
-        float i = wait_Button_Defaults;
+        wait_Button_Metal = 0;
         Get_Layer_1_Building_Bonus(1);
-        i += tempMetal;
-        Debug.Log(i);
+        wait_Button_Metal = wait_Button_Defaults -= tempMetal;
+        tempMetal = 0;
+
         Get_Layer_2_Building_Bonus(1);
-        i += tempMetal;
-        Debug.Log(i);
-        wait_Button_Metal = (wait_Button_Metal -= i);
-        Debug.Log(wait_Button_Metal);
-        Lock_Metal_Button();
+        wait_Button_Metal = wait_Button_Metal -= tempMetal;
+        tempMetal = 0;
+        res_Metal_Wait.SetActive(true);
+        res_Metal_Wait_Text.text = wait_Button_Metal.ToString()+ " Seconds";
     }
     private void Calculate_Wait_Wood()
     {
-        float i = wait_Button_Defaults;
+        wait_Button_Wood = 0;
         Get_Layer_1_Building_Bonus(2);
-        i += tempWood;
-        Debug.Log(i);
+        wait_Button_Wood = wait_Button_Defaults -= tempWood;
+        tempWood = 0;
+
         Get_Layer_2_Building_Bonus(2);
-        i += tempWood;
-        Debug.Log(i);
-        wait_Button_Wood = (wait_Button_Wood -= i);
-        Debug.Log(wait_Button_Wood);
-        Lock_Wood_Button();
+        wait_Button_Wood = wait_Button_Wood -= tempWood;
+        tempWood = 0;
+        res_Wood_Wait.SetActive(true);
+        res_Wood_Wait_Text.text = wait_Button_Wood.ToString() + " Seconds";
     }
     private void Calculate_Wait_Food()
     {
-        float i = wait_Button_Defaults;
+        wait_Button_Food = 0;
         Get_Layer_1_Building_Bonus(3);
-        i += tempFood;
-        Debug.Log(i);
+        wait_Button_Food = wait_Button_Defaults -= tempFood;
+        tempFood = 0;
+
         Get_Layer_2_Building_Bonus(3);
-        i += tempFood;
-        Debug.Log(i);
-        wait_Button_Food = (wait_Button_Food -= i);
-        Debug.Log(wait_Button_Food);
-        Lock_Food_Button();
+        wait_Button_Food = wait_Button_Food -= tempFood;
+        tempFood = 0;
+        res_Food_Wait.SetActive(true);
+        res_Food_Wait_Text.text = wait_Button_Food.ToString() + " Seconds";
     }
     private void Calculate_Wait_Tech()
     {
-        float i = wait_Button_Defaults;
+        wait_Button_Tech = 0;
         Get_Layer_1_Building_Bonus(4);
-        i += tempTech;
-        Debug.Log(i);
+        wait_Button_Tech = wait_Button_Defaults -= tempTech;
+        tempTech = 0;
+
         Get_Layer_2_Building_Bonus(4);
-        i += tempTech;
-        Debug.Log(i);
-        wait_Button_Tech = (wait_Button_Tech -= i);
-        Debug.Log(wait_Button_Tech);
-        Lock_Tech_Button();
+        wait_Button_Tech = wait_Button_Tech -= tempTech;
+        tempTech = 0;
+        res_Tech_Wait.SetActive(true);
+        res_Tech_Wait_Text.text = wait_Button_Tech.ToString() + " Seconds";
     }
 
     private void Unlock_Metal_Button()
     {
         wait_Metal = false;
-        Debug.Log("unlock metal button");
+        res_Metal_Wait.SetActive(false);
         res_Metal_Button.enabled = true;
     }
     private void Lock_Metal_Button()
     {
         wait_Metal = true;
-        Debug.Log("lock metal button");
         res_Metal_Button.enabled = false;
     }
     private void Unlock_Wood_Button()
     {
         wait_Wood = false;
-        Debug.Log("unlock wood button");
+        res_Wood_Wait.SetActive(false);
         res_Wood_Button.enabled = true;
     }
     private void Lock_Wood_Button()
     {
         wait_Wood = true;
-        Debug.Log("lock wood button");
         res_Wood_Button.enabled = false;
     }
     private void Unlock_Food_Button()
     {
         wait_Food = false;
-        Debug.Log("unlock food button");
+        res_Food_Wait.SetActive(false);
         res_Food_Button.enabled = true;
     }
     private void Lock_Food_Button()
     {
         wait_Food = true;
-        Debug.Log("lock food button");
         res_Food_Button.enabled = false;
     }
     private void Unlock_Tech_Button()
     {
         wait_Tech = false;
-        Debug.Log("unlock tech button");
+        res_Tech_Wait.SetActive(false);
         res_Tech_Button.enabled = true;
     }
     private void Lock_Tech_Button()
     {
         wait_Tech = true;
-        Debug.Log("lock tech button");
         res_Tech_Button.enabled = false;
     }
     
@@ -1339,37 +1417,60 @@ public class Game_Logic : MonoBehaviour
     /// </summary>
     public void Upgrade_Bedroom_Lvl1_L()
     {
-        if (!GC.Bedroom_Lvl1_L) { Unlock_Bedroom_Lvl1_L(); }
+        if (!GC.Bedroom_Lvl1_L)
+        {
+            GC.Player_Tasks -= 1;
+            if (GC.Player_Tasks >= 1) { Unlock_Bedroom_Lvl1_L(); }
+            else { NextTurnItems(); }
+        }
         else
         {
             switch (GC.Bedroom_Upg_Lvl1_L)
             {
                 case 1:
-                    Buy_Up_To_2_Bedroom_Lvl1_L();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >=1) { Buy_Up_To_2_Bedroom_Lvl1_L(); }
+                    else { NextTurnItems(); }
                     break;
                 case 2:
-                    Buy_Up_To_3_Bedroom_Lvl1_L();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_3_Bedroom_Lvl1_L(); }
+                    else { NextTurnItems(); }
                     break;
                 case 3:
-                    Buy_Up_To_4_Bedroom_Lvl1_L();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_4_Bedroom_Lvl1_L(); }
+                    else { NextTurnItems(); }
                     break;
                 case 4:
-                    Buy_Up_To_5_Bedroom_Lvl1_L();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_5_Bedroom_Lvl1_L(); }
+                    else { NextTurnItems(); }
                     break;
                 case 5:
-                    Buy_Up_To_6_Bedroom_Lvl1_L();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_6_Bedroom_Lvl1_L(); }
+                    else { NextTurnItems(); }
                     break;
                 case 6:
-                    Buy_Up_To_7_Bedroom_Lvl1_L();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_7_Bedroom_Lvl1_L(); }
+                    else { NextTurnItems(); }
                     break;
                 case 7:
-                    Buy_Up_To_8_Bedroom_Lvl1_L();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_8_Bedroom_Lvl1_L(); }
+                    else { NextTurnItems(); }
                     break;
                 case 8:
-                    Buy_Up_To_9_Bedroom_Lvl1_L();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_9_Bedroom_Lvl1_L(); }
+                    else { NextTurnItems(); }
                     break;
                 case 9:
-                    Buy_Up_To_10_Bedroom_Lvl1_L();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_10_Bedroom_Lvl1_L(); }
+                    else { NextTurnItems(); }
                     break;
                 case 10:
                     // Ui message Max Level
@@ -1498,37 +1599,69 @@ public class Game_Logic : MonoBehaviour
     /// </summary>
     public void Upgrade_Bedroom_Lvl1_R()
     {
-        if (!GC.Bedroom_Lvl1_R) { Unlock_Bedroom_Lvl1_R(); }
+        if (!GC.Bedroom_Lvl1_R)
+        {
+            GC.Player_Tasks -= 1;
+            if (GC.Player_Tasks >= 1) { Unlock_Bedroom_Lvl1_R(); }
+            else { NextTurnItems(); }
+        }
         else
         {
             switch (GC.Bedroom_Upg_Lvl1_R)
             {
                 case 1:
-                    Buy_Up_To_2_Bedroom_Lvl1_R();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_2_Bedroom_Lvl1_R(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 2:
-                    Buy_Up_To_3_Bedroom_Lvl1_R();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_3_Bedroom_Lvl1_R(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 3:
-                    Buy_Up_To_4_Bedroom_Lvl1_R();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_4_Bedroom_Lvl1_R(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 4:
-                    Buy_Up_To_5_Bedroom_Lvl1_R();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_5_Bedroom_Lvl1_R(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 5:
-                    Buy_Up_To_6_Bedroom_Lvl1_R();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_6_Bedroom_Lvl1_R(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 6:
-                    Buy_Up_To_7_Bedroom_Lvl1_R();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_7_Bedroom_Lvl1_R(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 7:
-                    Buy_Up_To_8_Bedroom_Lvl1_R();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_8_Bedroom_Lvl1_R(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 8:
-                    Buy_Up_To_9_Bedroom_Lvl1_R();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_9_Bedroom_Lvl1_R(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 9:
-                    Buy_Up_To_10_Bedroom_Lvl1_R();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_10_Bedroom_Lvl1_R(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 10:
                     // message max level
@@ -1657,37 +1790,60 @@ public class Game_Logic : MonoBehaviour
     /// </summary>
     public void Upgrade_Bedroom_Lvl2_L()
     {
-        if (!GC.Bedroom_Lvl2_L) { Unlock_Bedroom_Lvl2_L(); }
+        if (!GC.Bedroom_Lvl2_L)
+        {
+            GC.Player_Tasks -= 1;
+            if (GC.Player_Tasks >= 1) { Unlock_Bedroom_Lvl2_L(); }
+            else { NextTurnItems(); }
+        }
         else
         {
             switch (GC.Bedroom_Upg_Lvl2_L)
             {
                 case 1:
-                    Buy_Up_To_2_Bedroom_Lvl2_L();
+                     GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_2_Bedroom_Lvl2_L(); }
+                    else { NextTurnItems(); }
                     break;
                 case 2:
-                    Buy_Up_To_3_Bedroom_Lvl2_L();
+                     GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_3_Bedroom_Lvl2_L(); }
+                    else { NextTurnItems(); }
                     break;
                 case 3:
-                    Buy_Up_To_4_Bedroom_Lvl2_L();
+                     GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_4_Bedroom_Lvl2_L(); }
+                    else { NextTurnItems(); }
                     break;
                 case 4:
-                    Buy_Up_To_5_Bedroom_Lvl2_L();
+                     GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_5_Bedroom_Lvl2_L(); }
+                    else { NextTurnItems(); }
                     break;
                 case 5:
-                    Buy_Up_To_6_Bedroom_Lvl2_L();
+                     GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_6_Bedroom_Lvl2_L(); }
+                    else { NextTurnItems(); }
                     break;
                 case 6:
-                    Buy_Up_To_7_Bedroom_Lvl2_L();
+                     GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_7_Bedroom_Lvl2_L(); }
+                    else { NextTurnItems(); }
                     break;
                 case 7:
-                    Buy_Up_To_8_Bedroom_Lvl2_L();
+                     GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_8_Bedroom_Lvl2_L(); }
+                    else { NextTurnItems(); }
                     break;
                 case 8:
-                    Buy_Up_To_9_Bedroom_Lvl2_L();
+                     GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_9_Bedroom_Lvl2_L(); }
+                    else { NextTurnItems(); }
                     break;
                 case 9:
-                    Buy_Up_To_10_Bedroom_Lvl2_L();
+                     GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_10_Bedroom_Lvl2_L(); }
+                    else { NextTurnItems(); }
                     break;
                 case 10:
                     // Ui Message max level
@@ -1816,37 +1972,60 @@ public class Game_Logic : MonoBehaviour
     /// </summary>
     public void Upgrade_Bedroom_Lvl2_R()
     {
-        if (!GC.Bedroom_Lvl2_R) { Unlock_Bedroom_Lvl2_R(); }
+        if (!GC.Bedroom_Lvl2_R)
+        {
+            GC.Player_Tasks -= 1;
+            if (GC.Player_Tasks >= 1) { Unlock_Bedroom_Lvl2_R(); }
+            else { NextTurnItems(); }
+        }
         else
         {
             switch (GC.Bedroom_Upg_Lvl2_R)
             {
                 case 1:
-                    Buy_Up_To_2_Bedroom_Lvl2_R();
+                     GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_2_Bedroom_Lvl2_R(); }
+                    else { NextTurnItems(); }
                     break;
                 case 2:
-                    Buy_Up_To_3_Bedroom_Lvl2_R();
+                     GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_3_Bedroom_Lvl2_R(); }
+                    else { NextTurnItems(); }
                     break;
                 case 3:
-                    Buy_Up_To_4_Bedroom_Lvl2_R();
+                     GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_4_Bedroom_Lvl2_R(); }
+                    else { NextTurnItems(); }
                     break;
                 case 4:
-                    Buy_Up_To_5_Bedroom_Lvl2_R();
+                     GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_5_Bedroom_Lvl2_R(); }
+                    else { NextTurnItems(); }
                     break;
                 case 5:
-                    Buy_Up_To_6_Bedroom_Lvl2_R();
+                     GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_6_Bedroom_Lvl2_R(); }
+                    else { NextTurnItems(); }
                     break;
                 case 6:
-                    Buy_Up_To_7_Bedroom_Lvl2_R();
+                     GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_7_Bedroom_Lvl2_R(); }
+                    else { NextTurnItems(); }
                     break;
                 case 7:
-                    Buy_Up_To_8_Bedroom_Lvl2_R();
+                     GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_8_Bedroom_Lvl2_R(); }
+                    else { NextTurnItems(); }
                     break;
                 case 8:
-                    Buy_Up_To_9_Bedroom_Lvl2_R();
+                     GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_9_Bedroom_Lvl2_R(); }
+                    else { NextTurnItems(); }
                     break;
                 case 9:
-                    Buy_Up_To_10_Bedroom_Lvl2_R();
+                     GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_10_Bedroom_Lvl2_R(); }
+                    else { NextTurnItems(); }
                     break;
                 case 10:
                     // message max level
@@ -1975,37 +2154,69 @@ public class Game_Logic : MonoBehaviour
     /// </summary>
     public void Upgrade_Bedroom_Lvl3_L()
     {
-        if (!GC.Bedroom_Lvl3_L) { Unlock_Bedroom_Lvl3_L(); }
+        if (!GC.Bedroom_Lvl3_L)
+        {
+            GC.Player_Tasks -= 1;
+            if (GC.Player_Tasks >= 1) { Unlock_Bedroom_Lvl3_L(); }
+            else { NextTurnItems(); }
+        }
         else
         {
             switch (GC.Bedroom_Upg_Lvl3_L)
             {
                 case 1:
-                    Buy_Up_To_2_Bedroom_Lvl3_L();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_2_Bedroom_Lvl3_L(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 2:
-                    Buy_Up_To_3_Bedroom_Lvl3_L();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_3_Bedroom_Lvl3_L(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 3:
-                    Buy_Up_To_4_Bedroom_Lvl3_L();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_4_Bedroom_Lvl3_L(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 4:
-                    Buy_Up_To_5_Bedroom_Lvl3_L();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_5_Bedroom_Lvl3_L(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 5:
-                    Buy_Up_To_6_Bedroom_Lvl3_L();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_6_Bedroom_Lvl3_L(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 6:
-                    Buy_Up_To_7_Bedroom_Lvl3_L();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_7_Bedroom_Lvl3_L(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 7:
-                    Buy_Up_To_8_Bedroom_Lvl3_L();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_8_Bedroom_Lvl3_L(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 8:
-                    Buy_Up_To_9_Bedroom_Lvl3_L();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_9_Bedroom_Lvl3_L(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 9:
-                    Buy_Up_To_10_Bedroom_Lvl3_L();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_10_Bedroom_Lvl3_L(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 10:
                     // message max level
@@ -2134,37 +2345,69 @@ public class Game_Logic : MonoBehaviour
     /// </summary>
     public void Upgrade_Bedroom_Lvl3_R()
     {
-        if (!GC.Bedroom_Lvl3_R) { Unlock_Bedroom_Lvl3_R(); }
+        if (!GC.Bedroom_Lvl3_R)
+        {
+            GC.Player_Tasks -= 1;
+            if (GC.Player_Tasks >= 1) { Unlock_Bedroom_Lvl3_R(); }
+            else { NextTurnItems(); }
+        }
         else
         {
             switch (GC.Bedroom_Upg_Lvl3_R)
             {
                 case 1:
-                    Buy_Up_To_2_Bedroom_Lvl3_R();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_2_Bedroom_Lvl3_R(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 2:
-                    Buy_Up_To_3_Bedroom_Lvl3_R();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_3_Bedroom_Lvl3_R(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 3:
-                    Buy_Up_To_4_Bedroom_Lvl3_R();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_4_Bedroom_Lvl3_R(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 4:
-                    Buy_Up_To_5_Bedroom_Lvl3_R();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_5_Bedroom_Lvl3_R(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 5:
-                    Buy_Up_To_6_Bedroom_Lvl3_R();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_6_Bedroom_Lvl3_R(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 6:
-                    Buy_Up_To_7_Bedroom_Lvl3_R();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_7_Bedroom_Lvl3_R(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 7:
-                    Buy_Up_To_8_Bedroom_Lvl3_R();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_8_Bedroom_Lvl3_R(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 8:
-                    Buy_Up_To_9_Bedroom_Lvl3_R();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_9_Bedroom_Lvl3_R(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 9:
-                    Buy_Up_To_10_Bedroom_Lvl3_R();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_10_Bedroom_Lvl3_R(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 10:
                     // message max Level
@@ -2290,7 +2533,9 @@ public class Game_Logic : MonoBehaviour
     #region Stairs 2 Unlock
     public void Upgrade_Stairs_2()
     {
-        Unlock_Stairs_2();
+        GC.Player_Tasks -= 1;
+        if (GC.Player_Tasks >= 1) { Unlock_Stairs_2(); }
+        else { NextTurnItems(); }
     }
     private void Unlock_Stairs_2()
     {
@@ -2308,7 +2553,9 @@ public class Game_Logic : MonoBehaviour
     #region Stairs 3 Unlock
     public void Upgrade_Stairs_3()
     {
-        Unlock_Stairs_3();
+        GC.Player_Tasks -= 1;
+        if (GC.Player_Tasks >= 1) { Unlock_Stairs_3(); }
+        else { NextTurnItems(); }
     }
     private void Unlock_Stairs_3()
     {
@@ -2332,16 +2579,28 @@ public class Game_Logic : MonoBehaviour
         switch (GC.Expedition_Upg_Lvl1_R1)
         {
             case 1:
-                Buy_Up_To_2_Expedition();
+                GC.Player_Tasks -= 1;
+                if (GC.Player_Tasks >= 1) { Buy_Up_To_2_Expedition(); }
+                else { NextTurnItems(); }
+                
                 break;
             case 2:
-                Buy_Up_To_3_Expedition();
+                GC.Player_Tasks -= 1;
+                if (GC.Player_Tasks >= 1) { Buy_Up_To_3_Expedition(); }
+                else { NextTurnItems(); }
+                
                 break;
             case 3:
-                Buy_Up_To_4_Expedition();
+                GC.Player_Tasks -= 1;
+                if (GC.Player_Tasks >= 1) { Buy_Up_To_4_Expedition(); }
+                else { NextTurnItems(); }
+                
                 break;
             case 4:
-                Buy_Up_To_5_Expedition();
+                GC.Player_Tasks -= 1;
+                if (GC.Player_Tasks >= 1) { Buy_Up_To_5_Expedition(); }
+                else { NextTurnItems(); }
+                
                 break;
             case 5:
                // Ui message max level
@@ -2408,16 +2667,28 @@ public class Game_Logic : MonoBehaviour
         switch (GC.Training_Upg_Lvl1_R2)
             {
                 case 1:
-                Buy_Up_To_2_Training();
+                GC.Player_Tasks -= 1;
+                if (GC.Player_Tasks >= 1) { Buy_Up_To_2_Training(); }
+                else { NextTurnItems(); }
+                
                     break;
                 case 2:
-                Buy_Up_To_3_Training();
+                GC.Player_Tasks -= 1;
+                if (GC.Player_Tasks >= 1) { Buy_Up_To_3_Training(); }
+                else { NextTurnItems(); }
+                
                     break;
                 case 3:
-                Buy_Up_To_4_Training();
+                GC.Player_Tasks -= 1;
+                if (GC.Player_Tasks >= 1) { Buy_Up_To_4_Training(); }
+                else { NextTurnItems(); }
+                
                     break;
                 case 4:
-                Buy_Up_To_5_Training();
+                GC.Player_Tasks -= 1;
+                if (GC.Player_Tasks >= 1) { Buy_Up_To_5_Training(); }
+                else { NextTurnItems(); }
+                
                     break;
                 case 5:
                 // ui message max level
@@ -2485,16 +2756,28 @@ public class Game_Logic : MonoBehaviour
         switch (GC.UnderGarden_Upg_Lvl1_L1)
             {
                 case 1:
-                Buy_Up_To_2_UnderGarden();
+                GC.Player_Tasks -= 1;
+                if (GC.Player_Tasks >= 1) { Buy_Up_To_2_UnderGarden(); }
+                else { NextTurnItems(); }
+                
                     break;
                 case 2:
-                Buy_Up_To_3_UnderGarden();
+                GC.Player_Tasks -= 1;
+                if (GC.Player_Tasks >= 1) { Buy_Up_To_3_UnderGarden(); }
+                else { NextTurnItems(); }
+                
                     break;
                 case 3:
-                Buy_Up_To_4_UnderGarden();
+                GC.Player_Tasks -= 1;
+                if (GC.Player_Tasks >= 1) { Buy_Up_To_4_UnderGarden(); }
+                else { NextTurnItems(); }
+                
                     break;
                 case 4:
-                Buy_Up_To_5_UnderGarden();
+                GC.Player_Tasks -= 1;
+                if (GC.Player_Tasks >= 1) { Buy_Up_To_5_UnderGarden(); }
+                else { NextTurnItems(); }
+                
                     break;
                 case 5:
                 // ui message max level
@@ -2561,20 +2844,32 @@ public class Game_Logic : MonoBehaviour
         switch (GC.Radio_Upg_Lvl1_L2)
             {
                 case 1:
-                    Buy_Up_To_2_Radio();
-                    break;
+                GC.Player_Tasks -= 1;
+                if (GC.Player_Tasks >= 1) { Buy_Up_To_2_Radio(); }
+                else { NextTurnItems(); }
+
+                break;
                 case 2:
-                    Buy_Up_To_3_Radio();
-                    break;
+                GC.Player_Tasks -= 1;
+                if (GC.Player_Tasks >= 1) { Buy_Up_To_3_Radio(); }
+                else { NextTurnItems(); }
+
+                break;
                 case 3:
-                    Buy_Up_To_4_Radio();
-                    break;
+                GC.Player_Tasks -= 1;
+                if (GC.Player_Tasks >= 1) { Buy_Up_To_4_Radio(); }
+                else { NextTurnItems(); }
+
+                break;
                 case 4:
-                    Buy_Up_To_5_Radio();
-                    break;
+                GC.Player_Tasks -= 1;
+                if (GC.Player_Tasks >= 1) { Buy_Up_To_5_Radio(); }
+                else { NextTurnItems(); }
+
+                break;
                 case 5:
-                    // ui message max level
-                    break;
+                // ui message max level
+                break;
             }
     }
     private void Buy_Up_To_2_Radio()
@@ -2635,22 +2930,39 @@ public class Game_Logic : MonoBehaviour
     /// </summary>
     public void Upgrade_Generator_Building_1()
     {
-        if (!GC.Generator_Lvl2_R1) { Unlock_Generator_1(); }
+        if (!GC.Generator_Lvl2_R1)
+        {
+            GC.Player_Tasks -= 1;
+            if (GC.Player_Tasks >= 1) { Unlock_Generator_1(); }
+            else { NextTurnItems(); }
+        }
         else
         {
             switch (GC.Generator_Upg_Lvl2_R1)
             {
                 case 1:
-                    Buy_Up_To_2_Generator_1();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_2_Generator_1(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 2:
-                    Buy_Up_To_3_Generator_1();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_3_Generator_1(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 3:
-                    Buy_Up_To_4_Generator_1();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_4_Generator_1(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 4:
-                    Buy_Up_To_5_Generator_1();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_5_Generator_1(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 5:
                     // ui message max level
@@ -2728,22 +3040,40 @@ public class Game_Logic : MonoBehaviour
     /// </summary>
     public void Upgrade_Generator_Building_2()
     {
-        if (!GC.Generator_Lvl2_R2) { Unlock_Generator_2(); }
+        if (!GC.Generator_Lvl2_R2)
+        {
+            GC.Player_Tasks -= 1;
+            if (GC.Player_Tasks >= 1) { Unlock_Generator_2(); }
+            else { NextTurnItems(); }
+           
+        }
         else
         {
             switch (GC.Generator_Upg_Lvl2_R2)
             {
                 case 1:
-                    Buy_Up_To_2_Generator_2();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_2_Generator_2(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 2:
-                    Buy_Up_To_3_Generator_2();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_3_Generator_2(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 3:
-                    Buy_Up_To_4_Generator_2();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_4_Generator_2(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 4:
-                    Buy_Up_To_5_Generator_2();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_5_Generator_2(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 5:
                     // ui message max level
@@ -2822,22 +3152,40 @@ public class Game_Logic : MonoBehaviour
     /// </summary>
     public void Upgrade_Workshop_Building_1()
     {
-        if (!GC.Workshop_Lvl2_L1) { Unlock_Workshop_1(); }
+        if (!GC.Workshop_Lvl2_L1)
+        {
+            GC.Player_Tasks -= 1;
+            if (GC.Player_Tasks >= 1) { Unlock_Workshop_1(); }
+            else { NextTurnItems(); }
+            
+        }
         else
         {
             switch (GC.Workshop_Upg_Lvl2_L1)
             {
                 case 1:
-                    Buy_Up_To_2_Workshop_1();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_2_Workshop_1(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 2:
-                    Buy_Up_To_3_Workshop_1();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_3_Workshop_1(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 3:
-                    Buy_Up_To_4_Workshop_1();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_4_Workshop_1(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 4:
-                    Buy_Up_To_5_Workshop_1();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_5_Workshop_1(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 5:
                     // ui message max level
@@ -2915,22 +3263,40 @@ public class Game_Logic : MonoBehaviour
     /// </summary>
     public void Upgrade_Workshop_Building_2()
     {
-        if (!GC.Workshop_Lvl2_L2) { Unlock_Workshop_2(); }
+        if (!GC.Workshop_Lvl2_L2)
+        {
+            GC.Player_Tasks -= 1;
+            if (GC.Player_Tasks >= 1) { Unlock_Workshop_2(); }
+            else { NextTurnItems(); }
+            
+        }
         else
         {
             switch (GC.Workshop_Upg_Lvl2_L2)
             {
                 case 1:
-                    Buy_Up_To_2_Workshop_2();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_2_Workshop_2(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 2:
-                    Buy_Up_To_3_Workshop_2();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_3_Workshop_2(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 3:
-                    Buy_Up_To_4_Workshop_2();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_4_Workshop_2(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 4:
-                    Buy_Up_To_5_Workshop_2();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_5_Workshop_2(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 5:
                     //ui message max level
@@ -3009,22 +3375,40 @@ public class Game_Logic : MonoBehaviour
     /// </summary>
     public void Upgrade_LivingSpace_Building_1()
     {
-        if (!GC.LivingSpace_Lvl3_R1) { Unlock_LivingSpace_1(); }
+        if (!GC.LivingSpace_Lvl3_R1)
+        {
+            GC.Player_Tasks -= 1;
+            if (GC.Player_Tasks >= 1) { Unlock_LivingSpace_1(); }
+            else { NextTurnItems(); }
+            
+        }
         else
         {
             switch (GC.LivingSpace_Upg_Lvl3_R1)
             {
                 case 1:
-                    Buy_Up_To_2_LivingSpace_1();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_2_LivingSpace_1(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 2:
-                    Buy_Up_To_3_LivingSpace_1();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_3_LivingSpace_1(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 3:
-                    Buy_Up_To_4_LivingSpace_1();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_4_LivingSpace_1(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 4:
-                    Buy_Up_To_5_LivingSpace_1();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_5_LivingSpace_1(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 5:
                     // ui message max level
@@ -3102,22 +3486,40 @@ public class Game_Logic : MonoBehaviour
     /// </summary>
     public void Upgrade_LivingSpace_Building_2()
     {
-        if (!GC.LivingSpace_Lvl3_R2) { Unlock_LivingSpace_2(); }
+        if (!GC.LivingSpace_Lvl3_R2)
+        {
+            GC.Player_Tasks -= 1;
+            if (GC.Player_Tasks >= 1) { Unlock_LivingSpace_2(); }
+            else { NextTurnItems(); }
+            
+        }
         else
         {
             switch (GC.LivingSpace_Upg_Lvl3_R2)
             {
                 case 1:
-                    Buy_Up_To_2_LivingSpace_2();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_2_LivingSpace_2(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 2:
-                    Buy_Up_To_3_LivingSpace_2();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_3_LivingSpace_2(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 3:
-                    Buy_Up_To_4_LivingSpace_2();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_4_LivingSpace_2(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 4:
-                    Buy_Up_To_5_LivingSpace_2();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_5_LivingSpace_2(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 5:
                     // ui message max level
@@ -3196,22 +3598,40 @@ public class Game_Logic : MonoBehaviour
     /// </summary>
     public void Upgrade_Research_Building_1()
     {
-        if (!GC.Research_Lvl3_L1) { Unlock_Research_1(); }
+        if (!GC.Research_Lvl3_L1)
+        {
+            GC.Player_Tasks -= 1;
+            if (GC.Player_Tasks >= 1) { Unlock_Research_1(); }
+            else { NextTurnItems(); }
+            
+        }
         else
         {
             switch (GC.Research_Upg_Lvl3_L1)
             {
                 case 1:
-                    Buy_Up_To_2_Research_1();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_2_Research_1(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 2:
-                    Buy_Up_To_3_Research_1();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_3_Research_1(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 3:
-                    Buy_Up_To_4_Research_1();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_4_Research_1(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 4:
-                    Buy_Up_To_5_Research_1();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_5_Research_1(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 5:
                     // ui display max level
@@ -3289,22 +3709,40 @@ public class Game_Logic : MonoBehaviour
     /// </summary>
     public void Upgrade_Research_Building_2()
     {
-        if (!GC.Research_Lvl3_L2) { Unlock_Research_2(); }
+        if (!GC.Research_Lvl3_L2)
+        {
+            GC.Player_Tasks -= 1;
+            if (GC.Player_Tasks >= 1) { Unlock_Research_2(); }
+            else { NextTurnItems(); }
+            
+        }
         else
         {
             switch (GC.Research_Upg_Lvl3_L2)
             {
                 case 1:
-                    Buy_Up_To_2_Research_2();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_2_Research_2(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 2:
-                    Buy_Up_to_3_Research_2();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_to_3_Research_2(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 3:
-                    Buy_Up_To_4_Research_2();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_4_Research_2(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 4:
-                    Buy_Up_To_5_Research_2();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_5_Research_2(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 5:
                     // Flag Up UI Max Level
@@ -3382,37 +3820,70 @@ public class Game_Logic : MonoBehaviour
     /// </summary>
     public void Upgrade_Wall_L()
     {
-        if (!GC.Wall_L) { Unlock_Wall_L(); }
+        if (!GC.Wall_L)
+        {
+            GC.Player_Tasks -= 1;
+            if (GC.Player_Tasks >= 1) { Unlock_Wall_L(); }
+            else { NextTurnItems(); }
+            
+        }
         else
         {
             switch (GC.Wall_L_Upg)
             {
                 case 1:
-                    Buy_Up_To_2_Wall_L();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_2_Wall_L(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 2:
-                    Buy_Up_To_3_Wall_L();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_3_Wall_L(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 3:
-                    Buy_Up_To_4_Wall_L();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_4_Wall_L(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 4:
-                    Buy_Up_To_5_Wall_L();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_5_Wall_L(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 5:
-                    Buy_Up_To_6_Wall_L();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_6_Wall_L(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 6:
-                    Buy_Up_To_7_Wall_L();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_7_Wall_L(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 7:
-                    Buy_Up_To_8_Wall_L();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_8_Wall_L(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 8:
-                    Buy_Up_To_9_Wall_L();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_9_Wall_L(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 9:
-                    Buy_Up_To_10_Wall_L();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_10_Wall_L(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 10:
                     //Buy_Up_10_Wall_R();
@@ -3531,37 +4002,70 @@ public class Game_Logic : MonoBehaviour
     /// </summary>
     public void Upgrade_Wall_R()
     {
-        if (!GC.Wall_R) { Unlock_Up_1_Wall_R(); }
+        if (!GC.Wall_R)
+        {
+            GC.Player_Tasks -= 1;
+            if (GC.Player_Tasks >= 1) { Unlock_Up_1_Wall_R(); }
+            else { NextTurnItems(); }
+            
+        }
         else
         {
             switch (GC.Wall_R_Upg)
             {
                 case 1:
-                    Buy_Up_To_2_Wall_R();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_2_Wall_R(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 2:
-                    Buy_Up_To_3_Wall_R();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_3_Wall_R(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 3:
-                    Buy_Up_To_4_Wall_R();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_4_Wall_R(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 4:
-                    Buy_Up_To_5_Wall_R();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_5_Wall_R(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 5:
-                    Buy_Up_To_6_Wall_R();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_6_Wall_R(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 6:
-                    Buy_Up_To_7_Wall_R();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_7_Wall_R(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 7:
-                    Buy_Up_To_8_Wall_R();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_8_Wall_R(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 8:
-                    Buy_Up_To_9_Wall_R();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_9_Wall_R(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 9:
-                    Buy_Up_To_10_Wall_R();
+                    GC.Player_Tasks -= 1;
+                    if (GC.Player_Tasks >= 1) { Buy_Up_To_10_Wall_R(); }
+                    else { NextTurnItems(); }
+                    
                     break;
                 case 10:
                     //Buy_Up_10_Wall_R();
