@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Game_Logic : MonoBehaviour
 {
@@ -81,7 +82,8 @@ public class Game_Logic : MonoBehaviour
     //private float WaitWorkshopBonus = 0;
     //private float WaitPowerGenBonus = 0;
     //private float WaitLivingSpace = 0;
-    private int purchaseValue = 250;
+    private int purchaseValue = 50;
+    public GameObject exitGame, exitGameButton, exitCancelButton, exitProceedButton;
     
     private void Start()
     {
@@ -127,19 +129,37 @@ public class Game_Logic : MonoBehaviour
             if (wait_Button_Tech <= 0) { wait_Button_Tech = 0; Unlock_Tech_Button(); }
         }
     }
+    public void ExitGame()
+    {
+        exitGameButton.SetActive(false);
+        exitProceedButton.SetActive(true);
+        exitCancelButton.SetActive(true);
+        // pop up exit message
+        // change to two buttons exit and cancel
+    }
+    public void ExitCancel()
+    {
+        exitGameButton.SetActive(true);
+        exitProceedButton.SetActive(false);
+        exitCancelButton.SetActive(false);
+    }
+    public void FinalExitGame()
+    {
+        gSave.LoadLevel("Main");
+    }
     public void Turn()
     {
         endTurn.SetActive(false);
         if (GC.Player_Turns <= 1) { GC.Player_People = 4;GC.Player_Capacity = 4; }
         GC.Player_Turns += 1;
-        Debug.Log("Amount of people are " + GC.Player_People);
-        Debug.Log("Amount of capacity is " + GC.Player_Capacity);
-        Debug.Log("Turns are " + GC.Player_Turns);
+        //Debug.Log("Amount of people are " + GC.Player_People);
+        //Debug.Log("Amount of capacity is " + GC.Player_Capacity);
+        //Debug.Log("Turns are " + GC.Player_Turns);
         GC.Player_Tasks = 0;
-        Debug.Log("Tasks are " + GC.Player_Tasks);
+        //Debug.Log("Tasks are " + GC.Player_Tasks);
 
         GC.Player_Tasks += GC.Player_People * 3;
-        Debug.Log("Tasks are  now " + GC.Player_Tasks);
+        //Debug.Log("Tasks are  now " + GC.Player_Tasks);
         DiplayUiStats();
 
         gSave.SavingGame();
@@ -1322,7 +1342,198 @@ public class Game_Logic : MonoBehaviour
     private void ResearchBonus() { }
     private void WorkshopBonus() { }
     private void PowerGeneratorBonus() { }
-    
+    #region Set GameControl Resources for tool tips
+    private void SetGCResourceValues_Expedition(int value_Tasks, int value_Metal, int value_Wood, int value_Tech, int value_Seeds, int value_Science)
+    {
+        GC.value_Expedition_Tasks = value_Tasks;
+        GC.value_Expedition_Metal = value_Metal;
+        GC.value_Expedition_Wood = value_Wood;
+        GC.value_Expedition_Tech = value_Tech;
+        GC.value_Expedition_Seeds = value_Seeds;
+        GC.value_Expedition_Science = value_Science;
+    }
+    private void SetGCResourceValues_Training(int value_Tasks, int value_Metal, int value_Wood, int value_Tech, int value_Seeds, int value_Science)
+    {
+        GC.value_Training_Tasks = value_Tasks;
+        GC.value_Training_Metal = value_Metal;
+        GC.value_Training_Wood = value_Wood;
+        GC.value_Training_Tech = value_Tech;
+        GC.value_Training_Seeds = value_Seeds;
+        GC.value_Training_Science = value_Science;
+    }
+    private void SetGCResourceValues_Garden(int value_Tasks, int value_Metal, int value_Wood, int value_Tech, int value_Seeds, int value_Science)
+    {
+        GC.value_Garden_Tasks = value_Tasks;
+        GC.value_Garden_Metal = value_Metal;
+        GC.value_Garden_Wood = value_Wood;
+        GC.value_Garden_Tech = value_Tech;
+        GC.value_Garden_Seeds = value_Seeds;
+        GC.value_Garden_Science = value_Science;
+    }
+    private void SetGCResourceValues_Radio(int value_Tasks, int value_Metal, int value_Wood, int value_Tech, int value_Seeds, int value_Science)
+    {
+        GC.value_Radio_Tasks = value_Tasks;
+        GC.value_Radio_Metal = value_Metal;
+        GC.value_Radio_Wood = value_Wood;
+        GC.value_Radio_Tech = value_Tech;
+        GC.value_Radio_Seeds = value_Seeds;
+        GC.value_Radio_Science = value_Science;
+    }
+    private void SetGCResourceValues_Generator_1(int value_Tasks, int value_Metal, int value_Wood, int value_Tech, int value_Seeds, int value_Science)
+    {
+        GC.value_Generator_1_Tasks = value_Tasks;
+        GC.value_Generator_1_Metal = value_Metal;
+        GC.value_Generator_1_Wood = value_Wood;
+        GC.value_Generator_1_Tech = value_Tech;
+        GC.value_Generator_1_Seeds = value_Seeds;
+        GC.value_Generator_1_Science = value_Science;
+    }
+    private void SetGCResourceValues_Generator_2(int value_Tasks, int value_Metal, int value_Wood, int value_Tech, int value_Seeds, int value_Science)
+    {
+        GC.value_Generator_2_Tasks = value_Tasks;
+        GC.value_Generator_2_Metal = value_Metal;
+        GC.value_Generator_2_Wood = value_Wood;
+        GC.value_Generator_2_Tech = value_Tech;
+        GC.value_Generator_2_Seeds = value_Seeds;
+        GC.value_Generator_2_Science = value_Science;
+    }
+    private void SetGCResourceValues_Workshop_1(int value_Tasks, int value_Metal, int value_Wood, int value_Tech, int value_Seeds, int value_Science)
+    {
+        GC.value_Workshop_1_Tasks = value_Tasks;
+        GC.value_Workshop_1_Metal = value_Metal;
+        GC.value_Workshop_1_Wood = value_Wood;
+        GC.value_Workshop_1_Tech = value_Tech;
+        GC.value_Workshop_1_Seeds = value_Seeds;
+        GC.value_Workshop_1_Science = value_Science;
+    }
+    private void SetGCResourceValues_Workshop_2(int value_Tasks, int value_Metal, int value_Wood, int value_Tech, int value_Seeds, int value_Science)
+    {
+        GC.value_Workshop_2_Tasks = value_Tasks;
+        GC.value_Workshop_2_Metal = value_Metal;
+        GC.value_Workshop_2_Wood = value_Wood;
+        GC.value_Workshop_2_Tech = value_Tech;
+        GC.value_Workshop_2_Seeds = value_Seeds;
+        GC.value_Workshop_2_Science = value_Science;
+    }
+    private void SetGCResourceValues_LivingSpace_1(int value_Tasks, int value_Metal, int value_Wood, int value_Tech, int value_Seeds, int value_Science)
+    {
+        GC.value_LivingSpace_1_Tasks = value_Tasks;
+        GC.value_LivingSpace_1_Metal = value_Metal;
+        GC.value_LivingSpace_1_Wood = value_Wood;
+        GC.value_LivingSpace_1_Tech = value_Tech;
+        GC.value_LivingSpace_1_Seeds = value_Seeds;
+        GC.value_LivingSpace_1_Science = value_Science;
+    }
+    private void SetGCResourceValues_LivingSpace_2(int value_Tasks, int value_Metal, int value_Wood, int value_Tech, int value_Seeds, int value_Science)
+    {
+        GC.value_LivingSpace_2_Tasks = value_Tasks;
+        GC.value_LivingSpace_2_Metal = value_Metal;
+        GC.value_LivingSpace_2_Wood = value_Wood;
+        GC.value_LivingSpace_2_Tech = value_Tech;
+        GC.value_LivingSpace_2_Seeds = value_Seeds;
+        GC.value_LivingSpace_2_Science = value_Science;
+    }
+    private void SetGCResourceValues_Research_1(int value_Tasks, int value_Metal, int value_Wood, int value_Tech, int value_Seeds, int value_Science)
+    {
+        GC.value_Research_1_Tasks = value_Tasks;
+        GC.value_Research_1_Metal = value_Metal;
+        GC.value_Research_1_Wood = value_Wood;
+        GC.value_Research_1_Tech = value_Tech;
+        GC.value_Research_1_Seeds = value_Seeds;
+        GC.value_Research_1_Science = value_Science;
+    }
+    private void SetGCResourceValues_Research_2(int value_Tasks, int value_Metal, int value_Wood, int value_Tech, int value_Seeds, int value_Science)
+    {
+        GC.value_Research_2_Tasks = value_Tasks;
+        GC.value_Research_2_Metal = value_Metal;
+        GC.value_Research_2_Wood = value_Wood;
+        GC.value_Research_2_Tech = value_Tech;
+        GC.value_Research_2_Seeds = value_Seeds;
+        GC.value_Research_2_Science = value_Science;
+    }
+    private void SetGCResourceValues_Wall(int value_Tasks, int value_Metal, int value_Wood, int value_Tech, int value_Seeds, int value_Science)
+    {
+        GC.value_Wall_Tasks = value_Tasks;
+        GC.value_Wall_Metal = value_Metal;
+        GC.value_Wall_Wood = value_Wood;
+        GC.value_Wall_Tech = value_Tech;
+        GC.value_Wall_Seeds = value_Seeds;
+        GC.value_Wall_Science = value_Science;
+    }
+    private void SetGCResourceValues_Stairs_2(int value_Tasks, int value_Metal, int value_Wood, int value_Tech, int value_Seeds, int value_Science)
+    {
+        GC.value_Stairs_2_Tasks = value_Tasks;
+        GC.value_Stairs_2_Metal = value_Metal;
+        GC.value_Stairs_2_Wood = value_Wood;
+        GC.value_Stairs_2_Tech = value_Tech;
+        GC.value_Stairs_2_Seeds = value_Seeds;
+        GC.value_Stairs_2_Science = value_Science;
+    }
+    private void SetGCResourceValues_Stairs_3(int value_Tasks, int value_Metal, int value_Wood, int value_Tech, int value_Seeds, int value_Science)
+    {
+        GC.value_Stairs_3_Tasks = value_Tasks;
+        GC.value_Stairs_3_Metal = value_Metal;
+        GC.value_Stairs_3_Wood = value_Wood;
+        GC.value_Stairs_3_Tech = value_Tech;
+        GC.value_Stairs_3_Seeds = value_Seeds;
+        GC.value_Stairs_3_Science = value_Science;
+    }
+    private void SetGCResourceValues_Bedroom_Lvl1_L(int value_Tasks, int value_Metal, int value_Wood, int value_Tech, int value_Seeds, int value_Science)
+    {
+        GC.value_Bedroom_Lvl1_L_Tasks = value_Tasks;
+        GC.value_Bedroom_Lvl1_L_Metal = value_Metal;
+        GC.value_Bedroom_Lvl1_L_Wood = value_Wood;
+        GC.value_Bedroom_Lvl1_L_Tech = value_Tech;
+        GC.value_Bedroom_Lvl1_L_Seeds = value_Seeds;
+        GC.value_Bedroom_Lvl1_L_Science = value_Science;
+    }
+    private void SetGCResourceValues_Bedroom_Lvl1_R(int value_Tasks, int value_Metal, int value_Wood, int value_Tech, int value_Seeds, int value_Science)
+    {
+        GC.value_Bedroom_Lvl1_R_Tasks = value_Tasks;
+        GC.value_Bedroom_Lvl1_R_Metal = value_Metal;
+        GC.value_Bedroom_Lvl1_R_Wood = value_Wood;
+        GC.value_Bedroom_Lvl1_R_Tech = value_Tech;
+        GC.value_Bedroom_Lvl1_R_Seeds = value_Seeds;
+        GC.value_Bedroom_Lvl1_R_Science = value_Science;
+    }
+    private void SetGCResourceValues_Bedroom_Lvl2_L(int value_Tasks, int value_Metal, int value_Wood, int value_Tech, int value_Seeds, int value_Science)
+    {
+        GC.value_Bedroom_Lvl2_L_Tasks = value_Tasks;
+        GC.value_Bedroom_Lvl2_L_Metal = value_Metal;
+        GC.value_Bedroom_Lvl2_L_Wood = value_Wood;
+        GC.value_Bedroom_Lvl2_L_Tech = value_Tech;
+        GC.value_Bedroom_Lvl2_L_Seeds = value_Seeds;
+        GC.value_Bedroom_Lvl2_L_Science = value_Science;
+    }
+    private void SetGCResourceValues_Bedroom_Lvl2_R(int value_Tasks, int value_Metal, int value_Wood, int value_Tech, int value_Seeds, int value_Science)
+    {
+        GC.value_Bedroom_Lvl2_R_Tasks = value_Tasks;
+        GC.value_Bedroom_Lvl2_R_Metal = value_Metal;
+        GC.value_Bedroom_Lvl2_R_Wood = value_Wood;
+        GC.value_Bedroom_Lvl2_R_Tech = value_Tech;
+        GC.value_Bedroom_Lvl2_R_Seeds = value_Seeds;
+        GC.value_Bedroom_Lvl2_R_Science = value_Science;
+    }
+    private void SetGCResourceValues_Bedroom_Lvl3_L(int value_Tasks, int value_Metal, int value_Wood, int value_Tech, int value_Seeds, int value_Science)
+    {
+        GC.value_Bedroom_Lvl3_L_Tasks = value_Tasks;
+        GC.value_Bedroom_Lvl3_L_Metal = value_Metal;
+        GC.value_Bedroom_Lvl3_L_Wood = value_Wood;
+        GC.value_Bedroom_Lvl3_L_Tech = value_Tech;
+        GC.value_Bedroom_Lvl3_L_Seeds = value_Seeds;
+        GC.value_Bedroom_Lvl3_L_Science = value_Science;
+    }
+    private void SetGCResourceValues_Bedroom_Lvl3_R(int value_Tasks, int value_Metal, int value_Wood, int value_Tech, int value_Seeds, int value_Science)
+    {
+        GC.value_Bedroom_Lvl3_R_Tasks = value_Tasks;
+        GC.value_Bedroom_Lvl3_R_Metal = value_Metal;
+        GC.value_Bedroom_Lvl3_R_Wood = value_Wood;
+        GC.value_Bedroom_Lvl3_R_Tech = value_Tech;
+        GC.value_Bedroom_Lvl3_R_Seeds = value_Seeds;
+        GC.value_Bedroom_Lvl3_R_Science = value_Science;
+    }
+    #endregion
+
     private void CheckRoomUnlockProgress()
     {
         Check_Upgrade_Bedroom_Lvl1_L();
@@ -1488,6 +1699,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl1_L = 1;
             bedroom_Lvl1_L_Rock.SetActive(false);
             bedroom_Lvl1_L_Up_1.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl1_L(50, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_2_Bedroom_Lvl1_L()
@@ -1499,6 +1711,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl1_L = 2;
             bedroom_Lvl1_L_Up_1.SetActive(false);
             bedroom_Lvl1_L_Up_2.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl1_L(25, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_3_Bedroom_Lvl1_L()
@@ -1510,6 +1723,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl1_L = 3;
             bedroom_Lvl1_L_Up_2.SetActive(false);
             bedroom_Lvl1_L_Up_3.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl1_L(50, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_4_Bedroom_Lvl1_L()
@@ -1521,6 +1735,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl1_L = 4;
             bedroom_Lvl1_L_Up_3.SetActive(false);
             bedroom_Lvl1_L_Up_4.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl1_L(75, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_5_Bedroom_Lvl1_L()
@@ -1532,6 +1747,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl1_L = 5;
             bedroom_Lvl1_L_Up_4.SetActive(false);
             bedroom_Lvl1_L_Up_5.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl1_L(100, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_6_Bedroom_Lvl1_L()
@@ -1543,6 +1759,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl1_L = 6;
             bedroom_Lvl1_L_Up_5.SetActive(false);
             bedroom_Lvl1_L_Up_6.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl1_L(125, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_7_Bedroom_Lvl1_L()
@@ -1554,6 +1771,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl1_L = 7;
             bedroom_Lvl1_L_Up_6.SetActive(false);
             bedroom_Lvl1_L_Up_7.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl1_L(150, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_8_Bedroom_Lvl1_L()
@@ -1565,6 +1783,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl1_L = 8;
             bedroom_Lvl1_L_Up_7.SetActive(false);
             bedroom_Lvl1_L_Up_8.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl1_L(175, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_9_Bedroom_Lvl1_L()
@@ -1576,6 +1795,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl1_L = 9;
             bedroom_Lvl1_L_Up_8.SetActive(false);
             bedroom_Lvl1_L_Up_9.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl1_L(200, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_10_Bedroom_Lvl1_L()
@@ -1587,6 +1807,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl1_L = 10;
             bedroom_Lvl1_L_Up_9.SetActive(false);
             bedroom_Lvl1_L_Up_10.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl1_L(225, 0, 0, 0, 0, 0);
 
             bedroom_lvl1_L_Button.interactable = false;
         }
@@ -1679,6 +1900,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl1_R = 1;
             bedroom_Lvl1_R_Rock.SetActive(false);
             bedroom_Lvl1_R_Up_1.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl1_R(50, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_2_Bedroom_Lvl1_R()
@@ -1690,6 +1912,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl1_R = 2;
             bedroom_Lvl1_R_Up_1.SetActive(false);
             bedroom_Lvl1_R_Up_2.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl1_R(25, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_3_Bedroom_Lvl1_R()
@@ -1701,6 +1924,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl1_R = 3;
             bedroom_Lvl1_R_Up_2.SetActive(false);
             bedroom_Lvl1_R_Up_3.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl1_R(50, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_4_Bedroom_Lvl1_R()
@@ -1712,6 +1936,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl1_R = 4;
             bedroom_Lvl1_R_Up_3.SetActive(false);
             bedroom_Lvl1_R_Up_4.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl1_R(75, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_5_Bedroom_Lvl1_R()
@@ -1723,6 +1948,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl1_R = 5;
             bedroom_Lvl1_R_Up_4.SetActive(false);
             bedroom_Lvl1_R_Up_5.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl1_R(100, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_6_Bedroom_Lvl1_R()
@@ -1734,6 +1960,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl1_R = 6;
             bedroom_Lvl1_R_Up_5.SetActive(false);
             bedroom_Lvl1_R_Up_6.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl1_R(125, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_7_Bedroom_Lvl1_R()
@@ -1745,6 +1972,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl1_R = 7;
             bedroom_Lvl1_R_Up_6.SetActive(false);
             bedroom_Lvl1_R_Up_7.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl1_R(150, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_8_Bedroom_Lvl1_R()
@@ -1756,6 +1984,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl1_R = 8;
             bedroom_Lvl1_R_Up_7.SetActive(false);
             bedroom_Lvl1_R_Up_8.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl1_R(175, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_9_Bedroom_Lvl1_R()
@@ -1767,6 +1996,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl1_R = 9;
             bedroom_Lvl1_R_Up_8.SetActive(false);
             bedroom_Lvl1_R_Up_9.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl1_R(200, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_10_Bedroom_Lvl1_R()
@@ -1778,6 +2008,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl1_R = 10;
             bedroom_Lvl1_R_Up_9.SetActive(false);
             bedroom_Lvl1_R_Up_10.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl1_R(225, 0, 0, 0, 0, 0);
 
             bedroom_Lvl1_R_Button.interactable = false;
         }
@@ -1861,6 +2092,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl2_L = 1;
             bedroom_Lvl2_L_Rock.SetActive(false);
             bedroom_Lvl2_L_Up_1.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl2_L(125, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_2_Bedroom_Lvl2_L()
@@ -1872,6 +2104,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl2_L = 2;
             bedroom_Lvl2_L_Up_1.SetActive(false);
             bedroom_Lvl2_L_Up_2.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl2_L(150, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_3_Bedroom_Lvl2_L()
@@ -1883,6 +2116,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl2_L = 3;
             bedroom_Lvl2_L_Up_2.SetActive(false);
             bedroom_Lvl2_L_Up_3.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl2_L(175, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_4_Bedroom_Lvl2_L()
@@ -1894,6 +2128,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl2_L = 4;
             bedroom_Lvl2_L_Up_3.SetActive(false);
             bedroom_Lvl2_L_Up_4.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl2_L(200, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_5_Bedroom_Lvl2_L()
@@ -1905,6 +2140,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl2_L = 5;
             bedroom_Lvl2_L_Up_4.SetActive(false);
             bedroom_Lvl2_L_Up_5.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl2_L(225, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_6_Bedroom_Lvl2_L()
@@ -1916,6 +2152,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl2_L = 6;
             bedroom_Lvl2_L_Up_5.SetActive(false);
             bedroom_Lvl2_L_Up_6.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl2_L(250, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_7_Bedroom_Lvl2_L()
@@ -1927,6 +2164,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl2_L = 7;
             bedroom_Lvl2_L_Up_6.SetActive(false);
             bedroom_Lvl2_L_Up_7.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl2_L(275, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_8_Bedroom_Lvl2_L()
@@ -1938,6 +2176,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl2_L = 8;
             bedroom_Lvl2_L_Up_7.SetActive(false);
             bedroom_Lvl2_L_Up_8.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl2_L(300, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_9_Bedroom_Lvl2_L()
@@ -1949,6 +2188,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl2_L = 9;
             bedroom_Lvl2_L_Up_8.SetActive(false);
             bedroom_Lvl2_L_Up_9.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl2_L(325, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_10_Bedroom_Lvl2_L()
@@ -1960,7 +2200,8 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl2_L = 10;
             bedroom_Lvl2_L_Up_9.SetActive(false);
             bedroom_Lvl2_L_Up_10.SetActive(true); DiplayUiStats();
-            
+            SetGCResourceValues_Bedroom_Lvl2_L(350, 0, 0, 0, 0, 0);
+
             bedroom_Lvl2_L_Button.interactable = false;
         }
     }
@@ -2043,6 +2284,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl2_R = 1;
             bedroom_Lvl2_R_Rock.SetActive(false);
             bedroom_Lvl2_R_Up_1.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl2_R(125, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_2_Bedroom_Lvl2_R()
@@ -2054,6 +2296,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl2_R = 2;
             bedroom_Lvl2_R_Up_1.SetActive(false);
             bedroom_Lvl2_R_Up_2.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl2_R(150, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_3_Bedroom_Lvl2_R()
@@ -2065,6 +2308,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl2_R = 3;
             bedroom_Lvl2_R_Up_2.SetActive(false);
             bedroom_Lvl2_R_Up_3.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl2_R(175, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_4_Bedroom_Lvl2_R()
@@ -2076,6 +2320,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl2_R = 4;
             bedroom_Lvl2_R_Up_3.SetActive(false);
             bedroom_Lvl2_R_Up_4.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl2_R(200, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_5_Bedroom_Lvl2_R()
@@ -2087,6 +2332,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl2_R = 5;
             bedroom_Lvl2_R_Up_4.SetActive(false);
             bedroom_Lvl2_R_Up_5.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl2_R(225, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_6_Bedroom_Lvl2_R()
@@ -2098,6 +2344,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl2_R = 6;
             bedroom_Lvl2_R_Up_5.SetActive(false);
             bedroom_Lvl2_R_Up_6.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl2_R(250, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_7_Bedroom_Lvl2_R()
@@ -2109,6 +2356,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl2_R = 7;
             bedroom_Lvl2_R_Up_6.SetActive(false);
             bedroom_Lvl2_R_Up_7.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl2_R(275, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_8_Bedroom_Lvl2_R()
@@ -2120,6 +2368,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl2_R = 8;
             bedroom_Lvl2_R_Up_7.SetActive(false);
             bedroom_Lvl2_R_Up_8.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl2_R(300, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_9_Bedroom_Lvl2_R()
@@ -2131,6 +2380,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl2_R = 9;
             bedroom_Lvl2_R_Up_8.SetActive(false);
             bedroom_Lvl2_R_Up_9.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl2_R(325, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_10_Bedroom_Lvl2_R()
@@ -2142,6 +2392,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl2_R = 10;
             bedroom_Lvl2_R_Up_9.SetActive(false);
             bedroom_Lvl2_R_Up_10.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl2_R(350, 0, 0, 0, 0, 0);
 
             bedroom_Lvl2_R_Button.interactable = false;
         }
@@ -2234,6 +2485,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl3_L = 1;
             bedroom_Lvl3_L_Rock.SetActive(false);
             bedroom_Lvl3_L_Up_1.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl3_L(250, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_2_Bedroom_Lvl3_L()
@@ -2245,6 +2497,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl3_L = 2;
             bedroom_Lvl3_L_Up_1.SetActive(false);
             bedroom_Lvl3_L_Up_2.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl3_L(275, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_3_Bedroom_Lvl3_L()
@@ -2256,6 +2509,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl3_L = 3;
             bedroom_Lvl3_L_Up_2.SetActive(false);
             bedroom_Lvl3_L_Up_3.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl3_L(300, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_4_Bedroom_Lvl3_L()
@@ -2267,6 +2521,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl3_L = 4;
             bedroom_Lvl3_L_Up_3.SetActive(false);
             bedroom_Lvl3_L_Up_4.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl3_L(325, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_5_Bedroom_Lvl3_L()
@@ -2278,6 +2533,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl3_L = 5;
             bedroom_Lvl3_L_Up_4.SetActive(false);
             bedroom_Lvl3_L_Up_5.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl3_L(350, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_6_Bedroom_Lvl3_L()
@@ -2289,6 +2545,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl3_L = 6;
             bedroom_Lvl3_L_Up_5.SetActive(false);
             bedroom_Lvl3_L_Up_6.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl3_L(375, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_7_Bedroom_Lvl3_L()
@@ -2300,6 +2557,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl3_L = 7;
             bedroom_Lvl3_L_Up_6.SetActive(false);
             bedroom_Lvl3_L_Up_7.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl3_L(400, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_8_Bedroom_Lvl3_L()
@@ -2311,6 +2569,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl3_L = 8;
             bedroom_Lvl3_L_Up_7.SetActive(false);
             bedroom_Lvl3_L_Up_8.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl3_L(425, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_9_Bedroom_Lvl3_L()
@@ -2322,6 +2581,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl3_L = 9;
             bedroom_Lvl3_L_Up_8.SetActive(false);
             bedroom_Lvl3_L_Up_9.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl3_L(450, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_10_Bedroom_Lvl3_L()
@@ -2333,7 +2593,8 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl3_L = 10;
             bedroom_Lvl3_L_Up_9.SetActive(false);
             bedroom_Lvl3_L_Up_10.SetActive(true); DiplayUiStats();
-            
+            SetGCResourceValues_Bedroom_Lvl3_L(475, 0, 0, 0, 0, 0);
+
             bedroom_Lvl3_L_Button.interactable = false;
         }
     }
@@ -2425,6 +2686,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl3_R = 1;
             bedroom_Lvl3_R_Rock.SetActive(false);
             bedroom_Lvl3_R_Up_1.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl3_R(250, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_2_Bedroom_Lvl3_R()
@@ -2436,6 +2698,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl3_R = 2;
             bedroom_Lvl3_R_Up_1.SetActive(false);
             bedroom_Lvl3_R_Up_2.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl3_R(275, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_3_Bedroom_Lvl3_R()
@@ -2447,6 +2710,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl3_R = 3;
             bedroom_Lvl3_R_Up_2.SetActive(false);
             bedroom_Lvl3_R_Up_3.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl3_R(300, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_4_Bedroom_Lvl3_R()
@@ -2458,6 +2722,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl3_R = 4;
             bedroom_Lvl3_R_Up_3.SetActive(false);
             bedroom_Lvl3_R_Up_4.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl3_R(325, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_5_Bedroom_Lvl3_R()
@@ -2469,6 +2734,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl3_R = 5;
             bedroom_Lvl3_R_Up_4.SetActive(false);
             bedroom_Lvl3_R_Up_5.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl3_R(350, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_6_Bedroom_Lvl3_R()
@@ -2480,6 +2746,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl3_R = 6;
             bedroom_Lvl3_R_Up_5.SetActive(false);
             bedroom_Lvl3_R_Up_6.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl3_R(375, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_7_Bedroom_Lvl3_R()
@@ -2491,6 +2758,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl3_R = 7;
             bedroom_Lvl3_R_Up_6.SetActive(false);
             bedroom_Lvl3_R_Up_7.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl3_R(400, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_8_Bedroom_Lvl3_R()
@@ -2502,6 +2770,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl3_R = 8;
             bedroom_Lvl3_R_Up_7.SetActive(false);
             bedroom_Lvl3_R_Up_8.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl3_R(425, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_9_Bedroom_Lvl3_R()
@@ -2513,6 +2782,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl3_R = 9;
             bedroom_Lvl3_R_Up_8.SetActive(false);
             bedroom_Lvl3_R_Up_9.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl3_R(450, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_10_Bedroom_Lvl3_R()
@@ -2524,6 +2794,7 @@ public class Game_Logic : MonoBehaviour
             GC.Bedroom_Upg_Lvl3_R = 10;
             bedroom_Lvl3_R_Up_9.SetActive(false);
             bedroom_Lvl3_R_Up_10.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Bedroom_Lvl3_R(475, 0, 0, 0, 0, 0);
 
             bedroom_Lvl3_R_Button.interactable = false;
         }
@@ -2544,6 +2815,7 @@ public class Game_Logic : MonoBehaviour
             GC.Stairs_2_Clicks_Unlock -=25;
             GC.Stairs_2 = true;
             stairs_2_Locked.SetActive(false); stairs_2_Unlocked.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Stairs_2(25, 0, 0, 0, 0, 0);
 
             stairs_2_Button.interactable = false;
         }
@@ -2564,7 +2836,8 @@ public class Game_Logic : MonoBehaviour
             GC.Stairs_3_Clicks_Unlock -=125;
             GC.Stairs_3 = true;
             stairs_3_Locked.SetActive(false); stairs_3_Unlocked.SetActive(true); DiplayUiStats();
-            
+            SetGCResourceValues_Stairs_3(125, 0, 0, 0, 0, 0);
+
             stairs_3_Button.interactable = false;
         }
     }
@@ -2617,6 +2890,7 @@ public class Game_Logic : MonoBehaviour
             GC.Expedition_Upg_Lvl1_R1 = 2;
             expedition_Lvl1_R1_Up_1.SetActive(false);
             expedition_Lvl1_R1_Up_2.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Expedition(1, purchaseValue, purchaseValue, purchaseValue, 0, 0);
         }
     }
     private void Buy_Up_To_3_Expedition()
@@ -2629,6 +2903,7 @@ public class Game_Logic : MonoBehaviour
             GC.Expedition_Upg_Lvl1_R1 = 3;
             expedition_Lvl1_R1_Up_2.SetActive(false);
             expedition_Lvl1_R1_Up_3.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Expedition(1, (purchaseValue * 2), (purchaseValue * 2), (purchaseValue * 2), 0, 0);
         }
     }
     private void Buy_Up_To_4_Expedition()
@@ -2641,6 +2916,7 @@ public class Game_Logic : MonoBehaviour
             GC.Expedition_Upg_Lvl1_R1 = 4;
             expedition_Lvl1_R1_Up_3.SetActive(false);
             expedition_Lvl1_R1_Up_4.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Expedition(1, (purchaseValue * 4), (purchaseValue * 4), (purchaseValue * 4), 0, 0);
         }
     }
     private void Buy_Up_To_5_Expedition()
@@ -2653,7 +2929,8 @@ public class Game_Logic : MonoBehaviour
             GC.Expedition_Upg_Lvl1_R1 = 5;
             expedition_Lvl1_R1_Up_4.SetActive(false);
             expedition_Lvl1_R1_Up_5.SetActive(true); DiplayUiStats();
-            
+            SetGCResourceValues_Expedition(1, (purchaseValue * 8), (purchaseValue * 8), (purchaseValue * 8), 0, 0);
+
             expedition_Lvl1_R1_Button.interactable = false;
         }
     }
@@ -2697,51 +2974,55 @@ public class Game_Logic : MonoBehaviour
     }
     private void Buy_Up_To_2_Training()
     {
+        if (GC.Player_Metal >= purchaseValue && GC.Player_Wood >= purchaseValue && GC.Player_Tech >= purchaseValue)
+        {
+            GC.Player_Metal -= purchaseValue;
+            GC.Player_Wood -= purchaseValue;
+            GC.Player_Tech -= purchaseValue;
+            GC.Training_Upg_Lvl1_R2 = 2;
+            training_Lvl1_R2_Up_1.SetActive(false);
+            training_Lvl1_R2_Up_2.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Training(1, purchaseValue, purchaseValue, purchaseValue, 0, 0);
+        }
+    }
+    private void Buy_Up_To_3_Training()
+    {
         if (GC.Player_Metal >= (purchaseValue * 2) && GC.Player_Wood >= (purchaseValue * 2) && GC.Player_Tech >= (purchaseValue * 2))
         {
             GC.Player_Metal -= (purchaseValue * 2);
             GC.Player_Wood -= (purchaseValue * 2);
             GC.Player_Tech -= (purchaseValue * 2);
-            GC.Training_Upg_Lvl1_R2 = 2;
-            training_Lvl1_R2_Up_1.SetActive(false);
-            training_Lvl1_R2_Up_2.SetActive(true); DiplayUiStats();
+            GC.Training_Upg_Lvl1_R2 = 3;
+            training_Lvl1_R2_Up_2.SetActive(false);
+            training_Lvl1_R2_Up_3.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Training(1, (purchaseValue * 2), (purchaseValue * 2), (purchaseValue * 2), 0, 0);
         }
     }
-    private void Buy_Up_To_3_Training()
+    private void Buy_Up_To_4_Training()
     {
         if (GC.Player_Metal >= (purchaseValue * 4) && GC.Player_Wood >= (purchaseValue * 4) && GC.Player_Tech >= (purchaseValue * 4))
         {
             GC.Player_Metal -= (purchaseValue * 4);
             GC.Player_Wood -= (purchaseValue * 4);
             GC.Player_Tech -= (purchaseValue * 4);
-            GC.Training_Upg_Lvl1_R2 = 3;
-            training_Lvl1_R2_Up_2.SetActive(false);
-            training_Lvl1_R2_Up_3.SetActive(true); DiplayUiStats();
+            GC.Training_Upg_Lvl1_R2 = 4;
+            training_Lvl1_R2_Up_3.SetActive(false);
+            training_Lvl1_R2_Up_4.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Training(1, (purchaseValue * 4), (purchaseValue * 4), (purchaseValue * 4), 0, 0);
         }
     }
-    private void Buy_Up_To_4_Training()
+    private void Buy_Up_To_5_Training()
     {
         if (GC.Player_Metal >= (purchaseValue * 8) && GC.Player_Wood >= (purchaseValue * 8) && GC.Player_Tech >= (purchaseValue * 8))
         {
             GC.Player_Metal -= (purchaseValue * 8);
             GC.Player_Wood -= (purchaseValue * 8);
             GC.Player_Tech -= (purchaseValue * 8);
-            GC.Training_Upg_Lvl1_R2 = 4;
-            training_Lvl1_R2_Up_3.SetActive(false);
-            training_Lvl1_R2_Up_4.SetActive(true); DiplayUiStats();
-        }
-    }
-    private void Buy_Up_To_5_Training()
-    {
-        if (GC.Player_Metal >= (purchaseValue * 16) && GC.Player_Wood >= (purchaseValue * 16) && GC.Player_Tech >= (purchaseValue * 16))
-        {
-            GC.Player_Metal -= (purchaseValue * 16);
-            GC.Player_Wood -= (purchaseValue * 16);
-            GC.Player_Tech -= (purchaseValue * 16);
             GC.Training_Upg_Lvl1_R2 = 5;
             training_Lvl1_R2_Up_4.SetActive(false);
             training_Lvl1_R2_Up_5.SetActive(true); DiplayUiStats();
-            
+            SetGCResourceValues_Training(1, (purchaseValue * 8), (purchaseValue * 8), (purchaseValue * 8), 0, 0);
+
             training_Lvl1_R2_Button.interactable = false;
         }
     }
@@ -2786,51 +3067,59 @@ public class Game_Logic : MonoBehaviour
     }
     private void Buy_Up_To_2_UnderGarden()
     {
-        if (GC.Player_Metal >= purchaseValue && GC.Player_Wood >= purchaseValue && GC.Player_Tech >= purchaseValue)
+        if (GC.Player_Metal >= purchaseValue && GC.Player_Wood >= purchaseValue && GC.Player_Tech >= purchaseValue && GC.Player_Seeds>=10)
         {
             GC.Player_Metal -= purchaseValue;
             GC.Player_Wood -= purchaseValue;
             GC.Player_Tech -= purchaseValue;
+            GC.Player_Seeds = 10;
             GC.UnderGarden_Upg_Lvl1_L1 = 2;
             underGarden_Lvl1_L1_Up_1.SetActive(false);
             underGarden_Lvl1_L1_Up_2.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Garden(1, purchaseValue, purchaseValue, purchaseValue, 10, 0);
         }
     }
     private void Buy_Up_To_3_UnderGarden()
     {
-        if (GC.Player_Metal >= (purchaseValue * 2) && GC.Player_Wood >= (purchaseValue * 2) && GC.Player_Tech >= (purchaseValue * 2))
+        if (GC.Player_Metal >= (purchaseValue * 2) && GC.Player_Wood >= (purchaseValue * 2) && GC.Player_Tech >= (purchaseValue * 2) && GC.Player_Seeds >= 10)
         {
             GC.Player_Metal -= (purchaseValue * 2);
             GC.Player_Wood -= (purchaseValue * 2);
             GC.Player_Tech -= (purchaseValue * 2);
+            GC.Player_Seeds = 10;
             GC.UnderGarden_Upg_Lvl1_L1 = 3;
             underGarden_Lvl1_L1_Up_2.SetActive(false);
             underGarden_Lvl1_L1_Up_3.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Garden(1, (purchaseValue * 2), (purchaseValue * 2), (purchaseValue * 2), 10, 0);
         }
     }
     private void Buy_Up_To_4_UnderGarden()
     {
-        if (GC.Player_Metal >= (purchaseValue * 4) && GC.Player_Wood >= (purchaseValue * 4) && GC.Player_Tech >= (purchaseValue * 4))
+        if (GC.Player_Metal >= (purchaseValue * 4) && GC.Player_Wood >= (purchaseValue * 4) && GC.Player_Tech >= (purchaseValue * 4) && GC.Player_Seeds >= 10)
         {
             GC.Player_Metal -= (purchaseValue * 4);
             GC.Player_Wood -= (purchaseValue * 4);
             GC.Player_Tech -= (purchaseValue * 4);
+            GC.Player_Seeds = 10;
             GC.UnderGarden_Upg_Lvl1_L1 = 4;
             underGarden_Lvl1_L1_Up_3.SetActive(false);
             underGarden_Lvl1_L1_Up_4.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Garden(1, (purchaseValue * 4), (purchaseValue * 4), (purchaseValue * 4), 10, 0);
         }
     }
     private void Buy_Up_To_5_UnderGarden()
     {
-        if (GC.Player_Metal >= (purchaseValue * 8) && GC.Player_Wood >= (purchaseValue * 8) && GC.Player_Tech >= (purchaseValue * 8))
+        if (GC.Player_Metal >= (purchaseValue * 8) && GC.Player_Wood >= (purchaseValue * 8) && GC.Player_Tech >= (purchaseValue * 8) && GC.Player_Seeds >= 10)
         {
             GC.Player_Metal -= (purchaseValue * 8);
             GC.Player_Wood -= (purchaseValue * 8);
             GC.Player_Tech -= (purchaseValue * 8);
+            GC.Player_Seeds = 10;
             GC.UnderGarden_Upg_Lvl1_L1 = 5;
             underGarden_Lvl1_L1_Up_4.SetActive(false);
             underGarden_Lvl1_L1_Up_5.SetActive(true); DiplayUiStats();
-            
+            SetGCResourceValues_Garden(1, (purchaseValue * 8), (purchaseValue * 8), (purchaseValue * 8), 10, 0);
+
             underGarden_Lvl1_L1_Button.interactable = false;
         }
     }
@@ -2874,51 +3163,59 @@ public class Game_Logic : MonoBehaviour
     }
     private void Buy_Up_To_2_Radio()
     {
-        if (GC.Player_Metal >= (purchaseValue * 2) && GC.Player_Wood >= (purchaseValue * 2) && GC.Player_Tech >= (purchaseValue * 2))
+        if (GC.Player_Metal >= purchaseValue && GC.Player_Wood >= purchaseValue && GC.Player_Tech >= purchaseValue && GC.Player_Science>=10)
         {
-            GC.Player_Metal -= (purchaseValue * 2);
-            GC.Player_Wood -= (purchaseValue * 2);
-            GC.Player_Tech -= (purchaseValue * 2);
+            GC.Player_Metal -= purchaseValue;
+            GC.Player_Wood -= purchaseValue;
+            GC.Player_Tech -= purchaseValue;
+            GC.Player_Science -= 10;
             GC.Radio_Upg_Lvl1_L2 = 2;
             radio_Lvl1_L2_Up_1.SetActive(false);
             radio_Lvl1_L2_Up_2.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Radio(1, purchaseValue, purchaseValue, purchaseValue, 0, 10);
         }
     }
     private void Buy_Up_To_3_Radio()
     {
-        if (GC.Player_Metal >= (purchaseValue * 4) && GC.Player_Wood >= (purchaseValue * 4) && GC.Player_Tech >= (purchaseValue * 4))
+        if (GC.Player_Metal >= (purchaseValue * 2) && GC.Player_Wood >= (purchaseValue * 2) && GC.Player_Tech >= (purchaseValue * 2) && GC.Player_Science >= 10)
         {
-            GC.Player_Metal -= (purchaseValue * 4);
-            GC.Player_Wood -= (purchaseValue * 4);
-            GC.Player_Tech -= (purchaseValue * 4);
+            GC.Player_Metal -= (purchaseValue * 2);
+            GC.Player_Wood -= (purchaseValue * 2);
+            GC.Player_Tech -= (purchaseValue * 2);
+            GC.Player_Science -= 10;
             GC.Radio_Upg_Lvl1_L2 = 3;
             radio_Lvl1_L2_Up_2.SetActive(false);
             radio_Lvl1_L2_Up_3.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Radio(1, (purchaseValue * 2), (purchaseValue * 2), (purchaseValue * 2), 0, 10);
         }
     }
     private void Buy_Up_To_4_Radio()
     {
-        if (GC.Player_Metal >= (purchaseValue * 8) && GC.Player_Wood >= (purchaseValue * 8) && GC.Player_Tech >= (purchaseValue * 8))
+        if (GC.Player_Metal >= (purchaseValue * 4) && GC.Player_Wood >= (purchaseValue * 4) && GC.Player_Tech >= (purchaseValue * 4) && GC.Player_Science >= 10)
         {
-            GC.Player_Metal -= (purchaseValue * 8);
-            GC.Player_Wood -= (purchaseValue * 8);
-            GC.Player_Tech -= (purchaseValue * 8);
+            GC.Player_Metal -= (purchaseValue * 4);
+            GC.Player_Wood -= (purchaseValue * 4);
+            GC.Player_Tech -= (purchaseValue * 4);
+            GC.Player_Science -= 10;
             GC.Radio_Upg_Lvl1_L2 = 4;
             radio_Lvl1_L2_Up_3.SetActive(false);
             radio_Lvl1_L2_Up_4.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Radio(1, (purchaseValue * 4), (purchaseValue * 4), (purchaseValue * 4), 0, 10);
         }
     }
     private void Buy_Up_To_5_Radio()
     {
-        if (GC.Player_Metal >= (purchaseValue * 16) && GC.Player_Wood >= (purchaseValue * 16) && GC.Player_Tech >= (purchaseValue * 16))
+        if (GC.Player_Metal >= (purchaseValue * 8) && GC.Player_Wood >= (purchaseValue * 8) && GC.Player_Tech >= (purchaseValue * 8) && GC.Player_Science >= 10)
         {
-            GC.Player_Metal -= (purchaseValue * 16);
-            GC.Player_Wood -= (purchaseValue * 16);
-            GC.Player_Tech -= (purchaseValue * 16);
+            GC.Player_Metal -= (purchaseValue * 8);
+            GC.Player_Wood -= (purchaseValue * 8);
+            GC.Player_Tech -= (purchaseValue * 8);
+            GC.Player_Science -= 10;
             GC.Radio_Upg_Lvl1_L2 = 5;
             radio_Lvl1_L2_Up_4.SetActive(false);
             radio_Lvl1_L2_Up_5.SetActive(true); DiplayUiStats();
-            
+            SetGCResourceValues_Radio(1, (purchaseValue * 8), (purchaseValue * 8), (purchaseValue * 8), 0, 10);
+
             radio_Lvl1_L2_Button.interactable = false;
         }
     }
@@ -2981,6 +3278,7 @@ public class Game_Logic : MonoBehaviour
             GC.Generator_Upg_Lvl2_R1 = 1;
             generator_Lvl2_R1_Def.SetActive(false);
             generator_Lvl2_R1_Up_1.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Generator_1(1, (purchaseValue * 2), (purchaseValue * 2), (purchaseValue * 2), 0, 0);
         }
     }
     private void Buy_Up_To_2_Generator_1()
@@ -2993,6 +3291,7 @@ public class Game_Logic : MonoBehaviour
             GC.Generator_Upg_Lvl2_R1 = 2;
             generator_Lvl2_R1_Up_1.SetActive(false);
             generator_Lvl2_R1_Up_2.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Generator_1(1, purchaseValue, purchaseValue, purchaseValue, 0, 0);
         }
     }
     private void Buy_Up_To_3_Generator_1()
@@ -3005,6 +3304,7 @@ public class Game_Logic : MonoBehaviour
             GC.Generator_Upg_Lvl2_R1 = 3;
             generator_Lvl2_R1_Up_2.SetActive(false);
             generator_Lvl2_R1_Up_3.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Generator_1(1, (purchaseValue * 2), (purchaseValue * 2), (purchaseValue * 2), 0, 0);
         }
     }
     private void Buy_Up_To_4_Generator_1()
@@ -3017,6 +3317,7 @@ public class Game_Logic : MonoBehaviour
             GC.Generator_Upg_Lvl2_R1 = 4;
             generator_Lvl2_R1_Up_3.SetActive(false);
             generator_Lvl2_R1_Up_4.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Generator_1(1, (purchaseValue * 4), (purchaseValue * 4), (purchaseValue * 4), 0, 0);
         }
     }
     private void Buy_Up_To_5_Generator_1()
@@ -3029,7 +3330,8 @@ public class Game_Logic : MonoBehaviour
             GC.Generator_Upg_Lvl2_R1 = 5;
             generator_Lvl2_R1_Up_4.SetActive(false);
             generator_Lvl2_R1_Up_5.SetActive(true); DiplayUiStats();
-            
+            SetGCResourceValues_Generator_1(1, (purchaseValue * 8), (purchaseValue * 8), (purchaseValue * 8), 0, 0);
+
             generator_Lvl2_R1_Button.interactable = false;
         }
     }
@@ -3092,6 +3394,7 @@ public class Game_Logic : MonoBehaviour
             GC.Generator_Upg_Lvl2_R2 = 1;
             generator_Lvl2_R2_Def.SetActive(false);
             generator_Lvl2_R2_Up_1.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Generator_2(1, (purchaseValue * 4), (purchaseValue * 4), (purchaseValue * 4), 0, 0);
         }
     }
     private void Buy_Up_To_2_Generator_2()
@@ -3104,6 +3407,7 @@ public class Game_Logic : MonoBehaviour
             GC.Generator_Upg_Lvl2_R2 = 2;
             generator_Lvl2_R2_Up_1.SetActive(false);
             generator_Lvl2_R2_Up_2.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Generator_2(1, (purchaseValue * 2), (purchaseValue * 2), (purchaseValue * 2), 0, 0);
         }
     }
     private void Buy_Up_To_3_Generator_2()
@@ -3116,6 +3420,7 @@ public class Game_Logic : MonoBehaviour
             GC.Generator_Upg_Lvl2_R2 = 3;
             generator_Lvl2_R2_Up_2.SetActive(false);
             generator_Lvl2_R2_Up_3.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Generator_2(1, (purchaseValue * 4), (purchaseValue * 4), (purchaseValue * 4), 0, 0);
         }
     }
     private void Buy_Up_To_4_Generator_2()
@@ -3128,6 +3433,7 @@ public class Game_Logic : MonoBehaviour
             GC.Generator_Upg_Lvl2_R2 = 4;
             generator_Lvl2_R2_Up_3.SetActive(false);
             generator_Lvl2_R2_Up_4.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Generator_2(1, (purchaseValue * 8), (purchaseValue * 8), (purchaseValue * 8), 0, 0);
         }
     }
     private void Buy_Up_To_5_Generator_2()
@@ -3140,7 +3446,8 @@ public class Game_Logic : MonoBehaviour
             GC.Generator_Upg_Lvl2_R2 = 5;
             generator_Lvl2_R2_Up_4.SetActive(false);
             generator_Lvl2_R2_Up_5.SetActive(true); DiplayUiStats();
-            
+            SetGCResourceValues_Generator_2(1, (purchaseValue * 16), (purchaseValue * 16), (purchaseValue * 16), 0, 0);
+
             generator_Lvl2_R2_Button.interactable = false;
         }
     }
@@ -3204,6 +3511,7 @@ public class Game_Logic : MonoBehaviour
             GC.Workshop_Upg_Lvl2_L1 = 1;
             workshop_Lvl2_L1_Def.SetActive(false);
             workshop_Lvl2_L1_Up_1.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Workshop_1(1, (purchaseValue * 2), (purchaseValue * 2), (purchaseValue * 2), 0, 0);
         }
     }
     private void Buy_Up_To_2_Workshop_1()
@@ -3216,6 +3524,7 @@ public class Game_Logic : MonoBehaviour
             GC.Workshop_Upg_Lvl2_L1 = 2;
             workshop_Lvl2_L1_Up_1.SetActive(false);
             workshop_Lvl2_L1_Up_2.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Workshop_1(1, purchaseValue, purchaseValue, purchaseValue, 0, 0);
         }
     }
     private void Buy_Up_To_3_Workshop_1()
@@ -3228,6 +3537,7 @@ public class Game_Logic : MonoBehaviour
             GC.Workshop_Upg_Lvl2_L1 = 3;
             workshop_Lvl2_L1_Up_2.SetActive(false);
             workshop_Lvl2_L1_Up_3.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Workshop_1(1, (purchaseValue * 2), (purchaseValue * 2), (purchaseValue * 2), 0, 0);
         }
     }
     private void Buy_Up_To_4_Workshop_1()
@@ -3240,6 +3550,7 @@ public class Game_Logic : MonoBehaviour
             GC.Workshop_Upg_Lvl2_L1 = 4;
             workshop_Lvl2_L1_Up_3.SetActive(false);
             workshop_Lvl2_L1_Up_4.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Workshop_1(1, (purchaseValue * 4), (purchaseValue * 4), (purchaseValue * 4), 0, 0);
         }
     }
     private void Buy_Up_To_5_Workshop_1()
@@ -3252,7 +3563,8 @@ public class Game_Logic : MonoBehaviour
             GC.Workshop_Upg_Lvl2_L1 = 5;
             workshop_Lvl2_L1_Up_4.SetActive(false);
             workshop_Lvl2_L1_Up_5.SetActive(true); DiplayUiStats();
-            
+            SetGCResourceValues_Workshop_1(1, (purchaseValue * 8), (purchaseValue * 8), (purchaseValue * 8), 0, 0);
+
             workshop_Lvl2_L1_Button.interactable = false;
         }
     }
@@ -3315,6 +3627,7 @@ public class Game_Logic : MonoBehaviour
             GC.Workshop_Upg_Lvl2_L2 = 1;
             workshop_Lvl2_L2_Def.SetActive(false);
             workshop_Lvl2_L2_Up_1.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Workshop_2(1, (purchaseValue * 4), (purchaseValue * 4), (purchaseValue * 4), 0, 0);
         }
     }
     private void Buy_Up_To_2_Workshop_2()
@@ -3327,6 +3640,7 @@ public class Game_Logic : MonoBehaviour
             GC.Workshop_Upg_Lvl2_L2 = 2;
             workshop_Lvl2_L2_Up_1.SetActive(false);
             workshop_Lvl2_L2_Up_2.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Workshop_2(1, (purchaseValue * 2), (purchaseValue * 2), (purchaseValue * 2), 0, 0);
         }
     }
     private void Buy_Up_To_3_Workshop_2()
@@ -3339,6 +3653,7 @@ public class Game_Logic : MonoBehaviour
             GC.Workshop_Upg_Lvl2_L2 = 3;
             workshop_Lvl2_L2_Up_2.SetActive(false);
             workshop_Lvl2_L2_Up_3.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Workshop_2(1, (purchaseValue * 4), (purchaseValue * 4), (purchaseValue * 4), 0, 0);
         }
     }
     private void Buy_Up_To_4_Workshop_2()
@@ -3351,6 +3666,7 @@ public class Game_Logic : MonoBehaviour
             GC.Workshop_Upg_Lvl2_L2 = 4;
             workshop_Lvl2_L2_Up_3.SetActive(false);
             workshop_Lvl2_L2_Up_4.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Workshop_2(1, (purchaseValue * 8), (purchaseValue * 8), (purchaseValue * 8), 0, 0);
         }
     }
     private void Buy_Up_To_5_Workshop_2()
@@ -3363,6 +3679,7 @@ public class Game_Logic : MonoBehaviour
             GC.Workshop_Upg_Lvl2_L2 = 5;
             workshop_Lvl2_L2_Up_4.SetActive(false);
             workshop_Lvl2_L2_Up_5.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Workshop_2(1, (purchaseValue * 16), (purchaseValue * 16), (purchaseValue * 16), 0, 0);
 
             workshop_Lvl2_L2_Button.interactable = false;
         }
@@ -3427,6 +3744,7 @@ public class Game_Logic : MonoBehaviour
             GC.LivingSpace_Upg_Lvl3_R1 = 1;
             livingSpace_Lvl3_R1_Def.SetActive(false);
             livingSpace_Lvl3_R1_Up_1.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_LivingSpace_1(1, (purchaseValue * 2), (purchaseValue * 2), (purchaseValue * 2), 0, 0);
         }
     }
     private void Buy_Up_To_2_LivingSpace_1()
@@ -3439,6 +3757,7 @@ public class Game_Logic : MonoBehaviour
             GC.LivingSpace_Upg_Lvl3_R1 = 2;
             livingSpace_Lvl3_R1_Up_1.SetActive(false);
             livingSpace_Lvl3_R1_Up_2.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_LivingSpace_1(1, purchaseValue, purchaseValue, purchaseValue, 0, 0);
         }
     }
     private void Buy_Up_To_3_LivingSpace_1()
@@ -3451,6 +3770,7 @@ public class Game_Logic : MonoBehaviour
             GC.LivingSpace_Upg_Lvl3_R1 = 3;
             livingSpace_Lvl3_R1_Up_2.SetActive(false);
             livingSpace_Lvl3_R1_Up_3.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_LivingSpace_1(1, (purchaseValue * 2), (purchaseValue * 2), (purchaseValue * 2), 0, 0);
         }
     }
     private void Buy_Up_To_4_LivingSpace_1()
@@ -3463,6 +3783,7 @@ public class Game_Logic : MonoBehaviour
             GC.LivingSpace_Upg_Lvl3_R1 = 4;
             livingSpace_Lvl3_R1_Up_3.SetActive(false);
             livingSpace_Lvl3_R1_Up_4.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_LivingSpace_1(1, (purchaseValue * 4), (purchaseValue * 4), (purchaseValue * 4), 0, 0);
         }
     }
     private void Buy_Up_To_5_LivingSpace_1()
@@ -3475,6 +3796,7 @@ public class Game_Logic : MonoBehaviour
             GC.LivingSpace_Upg_Lvl3_R1 = 5;
             livingSpace_Lvl3_R1_Up_4.SetActive(false);
             livingSpace_Lvl3_R1_Up_5.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_LivingSpace_1(1, (purchaseValue * 8), (purchaseValue * 8), (purchaseValue * 8), 0, 0);
 
             livingSpace_Lvl3_R1_Button.interactable = false;
         }
@@ -3538,6 +3860,7 @@ public class Game_Logic : MonoBehaviour
             GC.LivingSpace_Upg_Lvl3_R2 = 1;
             livingSpace_Lvl3_R2_Def.SetActive(false);
             livingSpace_Lvl3_R2_Up_1.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_LivingSpace_2(1, (purchaseValue * 4), (purchaseValue * 4), (purchaseValue * 4), 0, 0);
         }
     }
     private void Buy_Up_To_2_LivingSpace_2()
@@ -3550,6 +3873,7 @@ public class Game_Logic : MonoBehaviour
             GC.LivingSpace_Upg_Lvl3_R2 = 2;
             livingSpace_Lvl3_R2_Up_1.SetActive(false);
             livingSpace_Lvl3_R2_Up_2.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_LivingSpace_2(1, (purchaseValue * 2), (purchaseValue * 2), (purchaseValue * 2), 0, 0);
         }
     }
     private void Buy_Up_To_3_LivingSpace_2()
@@ -3562,6 +3886,7 @@ public class Game_Logic : MonoBehaviour
             GC.LivingSpace_Upg_Lvl3_R2 = 3;
             livingSpace_Lvl3_R2_Up_2.SetActive(false);
             livingSpace_Lvl3_R2_Up_3.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_LivingSpace_2(1, (purchaseValue * 4), (purchaseValue * 4), (purchaseValue * 4), 0, 0);
         }
     }
     private void Buy_Up_To_4_LivingSpace_2()
@@ -3574,6 +3899,7 @@ public class Game_Logic : MonoBehaviour
             GC.LivingSpace_Upg_Lvl3_R2 = 4;
             livingSpace_Lvl3_R2_Up_3.SetActive(false);
             livingSpace_Lvl3_R2_Up_4.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_LivingSpace_2(1, (purchaseValue * 8), (purchaseValue * 8), (purchaseValue * 8), 0, 0);
         }
     }
     private void Buy_Up_To_5_LivingSpace_2()
@@ -3586,7 +3912,8 @@ public class Game_Logic : MonoBehaviour
             GC.LivingSpace_Upg_Lvl3_R2 = 5;
             livingSpace_Lvl3_R2_Up_4.SetActive(false);
             livingSpace_Lvl3_R2_Up_5.SetActive(true); DiplayUiStats();
-            
+            SetGCResourceValues_LivingSpace_2(1, (purchaseValue * 16), (purchaseValue * 16), (purchaseValue * 16), 0, 0);
+
             livingSpace_Lvl3_R2_Button.interactable = false;
         }
     }
@@ -3650,6 +3977,7 @@ public class Game_Logic : MonoBehaviour
             GC.Research_Upg_Lvl3_L1 = 1;
             research_Lvl3_L1_Def.SetActive(false);
             research_Lvl3_L1_Up_1.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Research_1(1, (purchaseValue * 2), (purchaseValue * 2), (purchaseValue * 2), 0, 0);
         }
     }
     private void Buy_Up_To_2_Research_1()
@@ -3662,6 +3990,7 @@ public class Game_Logic : MonoBehaviour
             GC.Research_Upg_Lvl3_L1 = 2;
             research_Lvl3_L1_Up_1.SetActive(false);
             research_Lvl3_L1_Up_2.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Research_1(1, purchaseValue, purchaseValue, purchaseValue, 0, 0);
         }
     }
     private void Buy_Up_To_3_Research_1()
@@ -3674,6 +4003,7 @@ public class Game_Logic : MonoBehaviour
             GC.Research_Upg_Lvl3_L1 = 3;
             research_Lvl3_L1_Up_2.SetActive(false);
             research_Lvl3_L1_Up_3.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Research_1(1, (purchaseValue * 2), (purchaseValue * 2), (purchaseValue * 2), 0, 0);
         }
     }
     private void Buy_Up_To_4_Research_1()
@@ -3686,6 +4016,7 @@ public class Game_Logic : MonoBehaviour
             GC.Research_Upg_Lvl3_L1 = 4;
             research_Lvl3_L1_Up_3.SetActive(false);
             research_Lvl3_L1_Up_4.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Research_1(1, (purchaseValue * 4), (purchaseValue * 4), (purchaseValue * 4), 0, 0);
         }
     }
     private void Buy_Up_To_5_Research_1()
@@ -3698,7 +4029,8 @@ public class Game_Logic : MonoBehaviour
             GC.Research_Upg_Lvl3_L1 = 5;
             research_Lvl3_L1_Up_4.SetActive(false);
             research_Lvl3_L1_Up_5.SetActive(true); DiplayUiStats();
-            
+            SetGCResourceValues_Research_1(1, (purchaseValue * 8), (purchaseValue * 8), (purchaseValue * 8), 0, 0);
+
             research_Lvl3_L1_Button.interactable = false;
         }
     }
@@ -3760,6 +4092,7 @@ public class Game_Logic : MonoBehaviour
             GC.Research_Lvl3_L2 = true;
             GC.Research_Upg_Lvl3_L2 = 1;
             research_Lvl3_L2_Up_1.SetActive(true); research_Lvl3_L2_Def.SetActive(false); DiplayUiStats();
+            SetGCResourceValues_Research_2(1, (purchaseValue * 4), (purchaseValue * 4), (purchaseValue * 4), 0, 0);
         }
     }
     private void Buy_Up_To_2_Research_2()
@@ -3772,6 +4105,7 @@ public class Game_Logic : MonoBehaviour
             GC.Research_Upg_Lvl3_L2 = 2;
             research_Lvl3_L2_Up_1.SetActive(false);
             research_Lvl3_L2_Up_2.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Research_2(1, (purchaseValue * 2), (purchaseValue * 2), (purchaseValue * 2), 0, 0);
         }
     }
     private void Buy_Up_to_3_Research_2()
@@ -3783,7 +4117,8 @@ public class Game_Logic : MonoBehaviour
             GC.Player_Tech -= (purchaseValue * 4);
             GC.Research_Upg_Lvl3_L2 = 3;
             research_Lvl3_L2_Up_2.SetActive(false);
-            research_Lvl3_L2_Up_3.SetActive(true); DiplayUiStats(); 
+            research_Lvl3_L2_Up_3.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Research_2(1, (purchaseValue * 4), (purchaseValue * 4), (purchaseValue * 4), 0, 0);
         }
     }
     private void Buy_Up_To_4_Research_2()
@@ -3795,7 +4130,8 @@ public class Game_Logic : MonoBehaviour
             GC.Player_Tech -= (purchaseValue * 8);
             GC.Research_Upg_Lvl3_L2 = 4;
             research_Lvl3_L2_Up_3.SetActive(false);
-            research_Lvl3_L2_Up_4.SetActive(true); DiplayUiStats(); 
+            research_Lvl3_L2_Up_4.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Research_2(1, (purchaseValue * 8), (purchaseValue * 8), (purchaseValue * 8), 0, 0);
         }
     }
     private void Buy_Up_To_5_Research_2()
@@ -3808,7 +4144,8 @@ public class Game_Logic : MonoBehaviour
             GC.Research_Upg_Lvl3_L2 = 5;
             research_Lvl3_L2_Up_4.SetActive(false);
             research_Lvl3_L2_Up_5.SetActive(true); DiplayUiStats();
-            
+            SetGCResourceValues_Research_2(1, (purchaseValue * 16), (purchaseValue * 16), (purchaseValue * 16), 0, 0);
+
             research_Lvl3_L2_Button.interactable = false;
         }
     }
@@ -4084,6 +4421,7 @@ public class Game_Logic : MonoBehaviour
             wall_Right_Up_1.SetActive(true);
             wall_Left_None.SetActive(false);
             wall_Left_Up_1.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Wall(50, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_2_Wall_R()
@@ -4096,6 +4434,7 @@ public class Game_Logic : MonoBehaviour
             wall_Right_Up_2.SetActive(true);
             wall_Left_Up_1.SetActive(false);
             wall_Left_Up_2.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Wall(25, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_3_Wall_R()
@@ -4108,6 +4447,7 @@ public class Game_Logic : MonoBehaviour
             wall_Right_Up_3.SetActive(true);
             wall_Left_Up_2.SetActive(false);
             wall_Left_Up_3.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Wall(50, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_4_Wall_R()
@@ -4120,6 +4460,7 @@ public class Game_Logic : MonoBehaviour
             wall_Right_Up_4.SetActive(true);
             wall_Left_Up_3.SetActive(false);
             wall_Left_Up_4.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Wall(75, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_5_Wall_R()
@@ -4132,6 +4473,7 @@ public class Game_Logic : MonoBehaviour
             wall_Right_Up_5.SetActive(true);
             wall_Left_Up_4.SetActive(false);
             wall_Left_Up_5.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Wall(100, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_6_Wall_R()
@@ -4144,6 +4486,7 @@ public class Game_Logic : MonoBehaviour
             wall_Right_Up_6.SetActive(true);
             wall_Left_Up_5.SetActive(false);
             wall_Left_Up_6.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Wall(125, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_7_Wall_R()
@@ -4156,6 +4499,7 @@ public class Game_Logic : MonoBehaviour
             wall_Right_Up_7.SetActive(true);
             wall_Left_Up_6.SetActive(false);
             wall_Left_Up_7.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Wall(150, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_8_Wall_R()
@@ -4168,6 +4512,7 @@ public class Game_Logic : MonoBehaviour
             wall_Right_Up_8.SetActive(true);
             wall_Left_Up_7.SetActive(false);
             wall_Left_Up_8.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Wall(175, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_9_Wall_R()
@@ -4180,6 +4525,7 @@ public class Game_Logic : MonoBehaviour
             wall_Right_Up_9.SetActive(true);
             wall_Left_Up_8.SetActive(false);
             wall_Left_Up_9.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Wall(200, 0, 0, 0, 0, 0);
         }
     }
     private void Buy_Up_To_10_Wall_R()
@@ -4194,6 +4540,7 @@ public class Game_Logic : MonoBehaviour
             wall_Right_Button.interactable = false;
             wall_Left_Up_9.SetActive(false);
             wall_Left_Up_10.SetActive(true); DiplayUiStats();
+            SetGCResourceValues_Wall(225, 0, 0, 0, 0, 0);
 
             wall_Left_Button.interactable = false;
         }
@@ -4211,42 +4558,42 @@ public class Game_Logic : MonoBehaviour
     /// </summary>
     public void Check_Upgrade_Bedroom_Lvl1_L()
     {
-        if (GC.Bedroom_Lvl1_L) { 
+        if (GC.Bedroom_Lvl1_L) { // 25
             switch (GC.Bedroom_Upg_Lvl1_L)
             {
                 case 1:
-                    Check_1_Bedroom_Lvl1_L();
+                    Check_1_Bedroom_Lvl1_L(); SetGCResourceValues_Bedroom_Lvl1_L(25, 0, 0, 0, 0, 0);
                     break;
                 case 2:
-                    Check_2_Bedroom_Lvl1_L();
+                    Check_2_Bedroom_Lvl1_L(); SetGCResourceValues_Bedroom_Lvl1_L(50, 0, 0, 0, 0, 0);
                     break;
                 case 3:
-                    Check_3_Bedroom_Lvl1_L();
+                    Check_3_Bedroom_Lvl1_L(); SetGCResourceValues_Bedroom_Lvl1_L(75, 0, 0, 0, 0, 0);
                     break;
                 case 4:
-                    Check_4_Bedroom_Lvl1_L();
+                    Check_4_Bedroom_Lvl1_L(); SetGCResourceValues_Bedroom_Lvl1_L(100, 0, 0, 0, 0, 0);
                     break;
                 case 5:
-                    Check_5_Bedroom_Lvl1_L();
+                    Check_5_Bedroom_Lvl1_L(); SetGCResourceValues_Bedroom_Lvl1_L(125, 0, 0, 0, 0, 0);
                     break;
                 case 6:
-                    Check_6_Bedroom_Lvl1_L();
+                    Check_6_Bedroom_Lvl1_L(); SetGCResourceValues_Bedroom_Lvl1_L(150, 0, 0, 0, 0, 0);
                     break;
                 case 7:
-                    Check_7_Bedroom_Lvl1_L();
+                    Check_7_Bedroom_Lvl1_L(); SetGCResourceValues_Bedroom_Lvl1_L(175, 0, 0, 0, 0, 0);
                     break;
                 case 8:
-                    Check_8_Bedroom_Lvl1_L();
+                    Check_8_Bedroom_Lvl1_L(); SetGCResourceValues_Bedroom_Lvl1_L(200, 0, 0, 0, 0, 0);
                     break;
                 case 9:
-                    Check_9_Bedroom_Lvl1_L();
+                    Check_9_Bedroom_Lvl1_L(); SetGCResourceValues_Bedroom_Lvl1_L(225, 0, 0, 0, 0, 0);
                     break;
                 case 10:
                     Check_10_Bedroom_Lvl1_L();
                     break;
             }
         }
-        else { Check_Locked_Bedroom_Lvl1_L(); }
+        else { Check_Locked_Bedroom_Lvl1_L(); SetGCResourceValues_Bedroom_Lvl1_L(50, 0, 0, 0, 0, 0); }
     }
     private void Check_Locked_Bedroom_Lvl1_L()
     {
@@ -4316,38 +4663,38 @@ public class Game_Logic : MonoBehaviour
             switch (GC.Bedroom_Upg_Lvl1_R)
             {
                 case 1:
-                    Check_1_Bedroom_Lvl1_R();
+                    Check_1_Bedroom_Lvl1_R(); SetGCResourceValues_Bedroom_Lvl1_R(25, 0, 0, 0, 0, 0);
                     break;
                 case 2:
-                    Check_2_Bedroom_Lvl1_R();
+                    Check_2_Bedroom_Lvl1_R(); SetGCResourceValues_Bedroom_Lvl1_R(50, 0, 0, 0, 0, 0);
                     break;
                 case 3:
-                    Check_3_Bedroom_Lvl1_R();
+                    Check_3_Bedroom_Lvl1_R(); SetGCResourceValues_Bedroom_Lvl1_R(75, 0, 0, 0, 0, 0);
                     break;
                 case 4:
-                    Check_4_Bedroom_Lvl1_R();
+                    Check_4_Bedroom_Lvl1_R(); SetGCResourceValues_Bedroom_Lvl1_R(100, 0, 0, 0, 0, 0);
                     break;
                 case 5:
-                    Check_5_Bedroom_Lvl1_R();
+                    Check_5_Bedroom_Lvl1_R(); SetGCResourceValues_Bedroom_Lvl1_R(125, 0, 0, 0, 0, 0);
                     break;
                 case 6:
-                    Check_6_Bedroom_Lvl1_R();
+                    Check_6_Bedroom_Lvl1_R(); SetGCResourceValues_Bedroom_Lvl1_R(150, 0, 0, 0, 0, 0);
                     break;
                 case 7:
-                    Check_7_Bedroom_Lvl1_R();
+                    Check_7_Bedroom_Lvl1_R(); SetGCResourceValues_Bedroom_Lvl1_R(175, 0, 0, 0, 0, 0);
                     break;
                 case 8:
-                    Check_8_Bedroom_Lvl1_R();
+                    Check_8_Bedroom_Lvl1_R(); SetGCResourceValues_Bedroom_Lvl1_R(200, 0, 0, 0, 0, 0);
                     break;
                 case 9:
-                    Check_9_Bedroom_Lvl1_R();
+                    Check_9_Bedroom_Lvl1_R(); SetGCResourceValues_Bedroom_Lvl1_R(225, 0, 0, 0, 0, 0);
                     break;
                 case 10:
                     Check_10_Bedroom_Lvl1_R();
                     break;
             }
         }
-        else { Check_Locked_Bedroom_Lvl1_R(); }
+        else { Check_Locked_Bedroom_Lvl1_R(); SetGCResourceValues_Bedroom_Lvl1_R(50, 0, 0, 0, 0, 0); }
     }
     private void Check_Locked_Bedroom_Lvl1_R()
     {
@@ -4417,38 +4764,38 @@ public class Game_Logic : MonoBehaviour
             switch (GC.Bedroom_Upg_Lvl2_L)
             {
                 case 1:
-                    Check_1_Bedroom_Lvl2_L();
+                    Check_1_Bedroom_Lvl2_L(); SetGCResourceValues_Bedroom_Lvl2_L(150, 0, 0, 0, 0, 0);
                     break;
                 case 2:
-                    Check_2_Bedroom_Lvl2_L();
+                    Check_2_Bedroom_Lvl2_L(); SetGCResourceValues_Bedroom_Lvl2_L(175, 0, 0, 0, 0, 0);
                     break;
                 case 3:
-                    Check_3_Bedroom_Lvl2_L();
+                    Check_3_Bedroom_Lvl2_L(); SetGCResourceValues_Bedroom_Lvl2_L(200, 0, 0, 0, 0, 0);
                     break;
                 case 4:
-                    Check_4_Bedroom_Lvl2_L();
+                    Check_4_Bedroom_Lvl2_L(); SetGCResourceValues_Bedroom_Lvl2_L(225, 0, 0, 0, 0, 0);
                     break;
                 case 5:
-                    Check_5_Bedroom_Lvl2_L();
+                    Check_5_Bedroom_Lvl2_L(); SetGCResourceValues_Bedroom_Lvl2_L(250, 0, 0, 0, 0, 0);
                     break;
                 case 6:
-                    Check_6_Bedroom_Lvl2_L();
+                    Check_6_Bedroom_Lvl2_L(); SetGCResourceValues_Bedroom_Lvl2_L(275, 0, 0, 0, 0, 0);
                     break;
                 case 7:
-                    Check_7_Bedroom_Lvl2_L();
+                    Check_7_Bedroom_Lvl2_L(); SetGCResourceValues_Bedroom_Lvl2_L(300, 0, 0, 0, 0, 0);
                     break;
                 case 8:
-                    Check_8_Bedroom_Lvl2_L();
+                    Check_8_Bedroom_Lvl2_L(); SetGCResourceValues_Bedroom_Lvl2_L(325, 0, 0, 0, 0, 0);
                     break;
                 case 9:
-                    Check_9_Bedroom_Lvl2_L();
+                    Check_9_Bedroom_Lvl2_L(); SetGCResourceValues_Bedroom_Lvl2_L(350, 0, 0, 0, 0, 0);
                     break;
                 case 10:
                     Check_10_Bedroom_Lvl2_L();
                     break;
             }
         }
-        else { Check_Locked_Bedroom_Lvl2_L(); }
+        else { Check_Locked_Bedroom_Lvl2_L(); SetGCResourceValues_Bedroom_Lvl2_L(125, 0, 0, 0, 0, 0); }
     }
     private void Check_Locked_Bedroom_Lvl2_L()
     {
@@ -4518,38 +4865,38 @@ public class Game_Logic : MonoBehaviour
             switch (GC.Bedroom_Upg_Lvl2_R)
             {
                 case 1:
-                    Check_1_Bedroom_Lvl2_R();
+                    Check_1_Bedroom_Lvl2_R(); SetGCResourceValues_Bedroom_Lvl2_R(150, 0, 0, 0, 0, 0);
                     break;
                 case 2:
-                    Check_2_Bedroom_Lvl2_R();
+                    Check_2_Bedroom_Lvl2_R(); SetGCResourceValues_Bedroom_Lvl2_R(175, 0, 0, 0, 0, 0);
                     break;
                 case 3:
-                    Check_3_Bedroom_Lvl2_R();
+                    Check_3_Bedroom_Lvl2_R(); SetGCResourceValues_Bedroom_Lvl2_R(200, 0, 0, 0, 0, 0);
                     break;
                 case 4:
-                    Check_4_Bedroom_Lvl2_R();
+                    Check_4_Bedroom_Lvl2_R(); SetGCResourceValues_Bedroom_Lvl2_R(225, 0, 0, 0, 0, 0);
                     break;
                 case 5:
-                    Check_5_Bedroom_Lvl2_R();
+                    Check_5_Bedroom_Lvl2_R(); SetGCResourceValues_Bedroom_Lvl2_R(250, 0, 0, 0, 0, 0);
                     break;
                 case 6:
-                    Check_6_Bedroom_Lvl2_R();
+                    Check_6_Bedroom_Lvl2_R(); SetGCResourceValues_Bedroom_Lvl2_R(275, 0, 0, 0, 0, 0);
                     break;
                 case 7:
-                    Check_7_Bedroom_Lvl2_R();
+                    Check_7_Bedroom_Lvl2_R(); SetGCResourceValues_Bedroom_Lvl2_R(300, 0, 0, 0, 0, 0);
                     break;
                 case 8:
-                    Check_8_Bedroom_Lvl2_R();
+                    Check_8_Bedroom_Lvl2_R(); SetGCResourceValues_Bedroom_Lvl2_R(325, 0, 0, 0, 0, 0);
                     break;
                 case 9:
-                    Check_9_Bedroom_Lvl2_R();
+                    Check_9_Bedroom_Lvl2_R(); SetGCResourceValues_Bedroom_Lvl2_R(350, 0, 0, 0, 0, 0);
                     break;
                 case 10:
                     Check_10_Bedroom_Lvl2_R();
                     break;
             }
         }
-        else { Check_Locked_Bedroom_Lvl2_R(); }
+        else { Check_Locked_Bedroom_Lvl2_R(); SetGCResourceValues_Bedroom_Lvl2_R(125, 0, 0, 0, 0, 0); }
     }
     private void Check_Locked_Bedroom_Lvl2_R()
     {
@@ -4619,38 +4966,38 @@ public class Game_Logic : MonoBehaviour
             switch (GC.Bedroom_Upg_Lvl3_L)
             {
                 case 1:
-                    Check_1_Bedroom_Lvl3_L();
+                    Check_1_Bedroom_Lvl3_L(); SetGCResourceValues_Bedroom_Lvl3_L(275, 0, 0, 0, 0, 0);
                     break;
                 case 2:
-                    Check_2_Bedroom_Lvl3_L();
+                    Check_2_Bedroom_Lvl3_L(); SetGCResourceValues_Bedroom_Lvl3_L(300, 0, 0, 0, 0, 0);
                     break;
                 case 3:
-                    Check_3_Bedroom_Lvl3_L();
+                    Check_3_Bedroom_Lvl3_L(); SetGCResourceValues_Bedroom_Lvl3_L(325, 0, 0, 0, 0, 0);
                     break;
                 case 4:
-                    Check_4_Bedroom_Lvl3_L();
+                    Check_4_Bedroom_Lvl3_L(); SetGCResourceValues_Bedroom_Lvl3_L(350, 0, 0, 0, 0, 0);
                     break;
                 case 5:
-                    Check_5_Bedroom_Lvl3_L();
+                    Check_5_Bedroom_Lvl3_L(); SetGCResourceValues_Bedroom_Lvl3_L(375, 0, 0, 0, 0, 0);
                     break;
                 case 6:
-                    Check_6_Bedroom_Lvl3_L();
+                    Check_6_Bedroom_Lvl3_L(); SetGCResourceValues_Bedroom_Lvl3_L(400, 0, 0, 0, 0, 0);
                     break;
                 case 7:
-                    Check_7_Bedroom_Lvl3_L();
+                    Check_7_Bedroom_Lvl3_L(); SetGCResourceValues_Bedroom_Lvl3_L(425, 0, 0, 0, 0, 0);
                     break;
                 case 8:
-                    Check_8_Bedroom_Lvl3_L();
+                    Check_8_Bedroom_Lvl3_L(); SetGCResourceValues_Bedroom_Lvl3_L(450, 0, 0, 0, 0, 0);
                     break;
                 case 9:
-                    Check_9_Bedroom_Lvl3_L();
+                    Check_9_Bedroom_Lvl3_L(); SetGCResourceValues_Bedroom_Lvl3_L(475, 0, 0, 0, 0, 0);
                     break;
                 case 10:
                     Check_10_Bedroom_Lvl3_L();
                     break;
             }
         }
-        else { Check_Locked_Bedroom_Lvl3_L(); }
+        else { Check_Locked_Bedroom_Lvl3_L(); SetGCResourceValues_Bedroom_Lvl3_L(250, 0, 0, 0, 0, 0); }
     }
     private void Check_Locked_Bedroom_Lvl3_L()
     {
@@ -4720,38 +5067,38 @@ public class Game_Logic : MonoBehaviour
             switch (GC.Bedroom_Upg_Lvl3_R)
             {
                 case 1:
-                    Check_1_Bedroom_Lvl3_R();
+                    Check_1_Bedroom_Lvl3_R(); SetGCResourceValues_Bedroom_Lvl3_R(275, 0, 0, 0, 0, 0);
                     break;
                 case 2:
-                    Check_2_Bedroom_Lvl3_R();
+                    Check_2_Bedroom_Lvl3_R(); SetGCResourceValues_Bedroom_Lvl3_R(300, 0, 0, 0, 0, 0);
                     break;
                 case 3:
-                    Check_3_Bedroom_Lvl3_R();
+                    Check_3_Bedroom_Lvl3_R(); SetGCResourceValues_Bedroom_Lvl3_R(325, 0, 0, 0, 0, 0);
                     break;
                 case 4:
-                    Check_4_Bedroom_Lvl3_R();
+                    Check_4_Bedroom_Lvl3_R(); SetGCResourceValues_Bedroom_Lvl3_R(350, 0, 0, 0, 0, 0);
                     break;
                 case 5:
-                    Check_5_Bedroom_Lvl3_R();
+                    Check_5_Bedroom_Lvl3_R(); SetGCResourceValues_Bedroom_Lvl3_R(375, 0, 0, 0, 0, 0);
                     break;
                 case 6:
-                    Check_6_Bedroom_Lvl3_R();
+                    Check_6_Bedroom_Lvl3_R(); SetGCResourceValues_Bedroom_Lvl3_R(400, 0, 0, 0, 0, 0);
                     break;
                 case 7:
-                    Check_7_Bedroom_Lvl3_R();
+                    Check_7_Bedroom_Lvl3_R(); SetGCResourceValues_Bedroom_Lvl3_R(425, 0, 0, 0, 0, 0);
                     break;
                 case 8:
-                    Check_8_Bedroom_Lvl3_R();
+                    Check_8_Bedroom_Lvl3_R(); SetGCResourceValues_Bedroom_Lvl3_R(450, 0, 0, 0, 0, 0);
                     break;
                 case 9:
-                    Check_9_Bedroom_Lvl3_R();
+                    Check_9_Bedroom_Lvl3_R(); SetGCResourceValues_Bedroom_Lvl3_R(475, 0, 0, 0, 0, 0);
                     break;
                 case 10:
                     Check_10_Bedroom_Lvl3_R();
                     break;
             }
         }
-        else { Check_Locked_Bedroom_Lvl3_R(); }
+        else { Check_Locked_Bedroom_Lvl3_R(); SetGCResourceValues_Bedroom_Lvl3_R(250, 0, 0, 0, 0, 0); }
     }
     private void Check_Locked_Bedroom_Lvl3_R()
     {
@@ -4829,6 +5176,7 @@ public class Game_Logic : MonoBehaviour
         {
             stairs_2_Locked.SetActive(true);
             stairs_2_Unlocked.SetActive(false); DiplayUiStats();
+            SetGCResourceValues_Stairs_2(25, 0, 0, 0, 0, 0);
         }
     }
     #endregion
@@ -4851,6 +5199,7 @@ public class Game_Logic : MonoBehaviour
         {
             stairs_3_Locked.SetActive(true);
             stairs_3_Unlocked.SetActive(false); DiplayUiStats();
+            SetGCResourceValues_Stairs_3(125, 0, 0, 0, 0, 0);
         }
     }
     #endregion
@@ -4865,15 +5214,19 @@ public class Game_Logic : MonoBehaviour
         {
             case 1:
                 Check_1_Expedition();
+                SetGCResourceValues_Expedition(1, purchaseValue, purchaseValue, purchaseValue, 0, 0);
                 break;
             case 2:
                 Check_2_Expedition();
+                SetGCResourceValues_Expedition(1, (purchaseValue * 2), (purchaseValue * 2), (purchaseValue * 2), 0, 0);
                 break;
             case 3:
                 Check_3_Expedition();
+                SetGCResourceValues_Expedition(1, (purchaseValue * 4), (purchaseValue * 4), (purchaseValue * 4), 0, 0);
                 break;
             case 4:
                 Check_4_Expedition();
+                SetGCResourceValues_Expedition(1, (purchaseValue * 8), (purchaseValue * 8), (purchaseValue * 8), 0, 0);
                 break;
             case 5:
                 Check_5_Expedition();
@@ -4918,15 +5271,19 @@ public class Game_Logic : MonoBehaviour
         {
             case 1:
                 Check_1_Training();
+                SetGCResourceValues_Training(1, purchaseValue, purchaseValue, purchaseValue, 0, 0);
                 break;
             case 2:
                 Check_2_Training();
+                SetGCResourceValues_Training(1, (purchaseValue * 2), (purchaseValue * 2), (purchaseValue * 2), 0, 0);
                 break;
             case 3:
                 Check_3_Training();
+                SetGCResourceValues_Training(1, (purchaseValue * 4), (purchaseValue * 4), (purchaseValue * 4), 0, 0);
                 break;
             case 4:
                 Check_4_Training();
+                SetGCResourceValues_Training(1, (purchaseValue * 8), (purchaseValue * 8), (purchaseValue * 8), 0, 0);
                 break;
             case 5:
                 Check_5_Training();
@@ -4972,15 +5329,19 @@ public class Game_Logic : MonoBehaviour
         {
             case 1:
                 Check_1_UnderGarden();
+                SetGCResourceValues_Garden(1, purchaseValue, purchaseValue, purchaseValue, 0, 0);
                 break;
             case 2:
                 Check_2_UnderGarden();
+                SetGCResourceValues_Garden(1, (purchaseValue * 2), (purchaseValue * 2), (purchaseValue * 2), 0, 0);
                 break;
             case 3:
                 Check_3_UnderGarden();
+                SetGCResourceValues_Garden(1, (purchaseValue * 4), (purchaseValue * 4), (purchaseValue * 4), 0, 0);
                 break;
             case 4:
                 Check_4_UnderGarden();
+                SetGCResourceValues_Garden(1, (purchaseValue * 8), (purchaseValue * 8), (purchaseValue * 8), 0, 0);
                 break;
             case 5:
                 Check_5_UnderGarden();
@@ -5025,15 +5386,19 @@ public class Game_Logic : MonoBehaviour
         {
             case 1:
                 Check_1_Radio();
+                SetGCResourceValues_Radio(1, purchaseValue, purchaseValue, purchaseValue, 0, 0);
                 break;
             case 2:
                 Check_2_Radio();
+                SetGCResourceValues_Radio(1, (purchaseValue * 2), (purchaseValue * 2), (purchaseValue * 2), 0, 0);
                 break;
             case 3:
                 Check_3_Radio();
+                SetGCResourceValues_Radio(1, (purchaseValue * 4), (purchaseValue * 4), (purchaseValue * 4), 0, 0);
                 break;
             case 4:
                 Check_4_Radio();
+                SetGCResourceValues_Radio(1, (purchaseValue * 8), (purchaseValue * 8), (purchaseValue * 8), 0, 0);
                 break;
             case 5:
                 Check_5_Radio();
@@ -5080,22 +5445,28 @@ public class Game_Logic : MonoBehaviour
             {
                 case 1:
                     Check_1_Generator_1();
+                    SetGCResourceValues_Generator_1(1, purchaseValue, purchaseValue, purchaseValue, 0, 0);
                     break;
                 case 2:
                     Check_2_Generator_1();
+                    SetGCResourceValues_Generator_1(1, (purchaseValue * 2), (purchaseValue * 2), (purchaseValue * 2), 0, 0);
                     break;
                 case 3:
                     Check_3_Generator_1();
+                    SetGCResourceValues_Generator_1(1, (purchaseValue * 4), (purchaseValue * 4), (purchaseValue * 4), 0, 0);
                     break;
                 case 4:
                     Check_4_Generator_1();
+                    SetGCResourceValues_Generator_1(1, (purchaseValue * 8), (purchaseValue * 8), (purchaseValue * 8), 0, 0);
                     break;
                 case 5:
                     Check_5_Generator_1();
                     break;
             }
         }
-        else { Check_Locked_Generator_1(); }
+        else { Check_Locked_Generator_1();
+            SetGCResourceValues_Generator_1(1, (purchaseValue * 2), (purchaseValue * 2), (purchaseValue * 2), 0, 0);
+        }
     }
     private void Check_Locked_Generator_1()
     {
@@ -5140,22 +5511,28 @@ public class Game_Logic : MonoBehaviour
             {
                 case 1:
                     Check_1_Generator_2();
+                    SetGCResourceValues_Generator_2(1, (purchaseValue * 2), (purchaseValue * 2), (purchaseValue * 2), 0, 0);
                     break;
                 case 2:
                     Check_2_Generator_2();
+                    SetGCResourceValues_Generator_2(1, (purchaseValue * 4), (purchaseValue * 4), (purchaseValue * 4), 0, 0);
                     break;
                 case 3:
                     Check_3_Generator_2();
+                    SetGCResourceValues_Generator_2(1, (purchaseValue * 8), (purchaseValue * 8), (purchaseValue * 8), 0, 0);
                     break;
                 case 4:
                     Check_4_Generator_2();
+                    SetGCResourceValues_Generator_2(1, (purchaseValue * 16), (purchaseValue * 16), (purchaseValue * 16), 0, 0);
                     break;
                 case 5:
                     Check_5_Generator_2();
                     break;
             }
         }
-        else { Check_Locked_Generator_2(); }
+        else { Check_Locked_Generator_2();
+            SetGCResourceValues_Generator_2(1, (purchaseValue * 4), (purchaseValue * 4), (purchaseValue * 4), 0, 0);
+        }
     }
     private void Check_Locked_Generator_2()
     {
@@ -5201,22 +5578,28 @@ public class Game_Logic : MonoBehaviour
             {
                 case 1:
                     Check_1_Workshop_1();
+                    SetGCResourceValues_Workshop_1(1, purchaseValue, purchaseValue, purchaseValue, 0, 0);
                     break;
                 case 2:
                     Check_2_Workshop_1();
+                    SetGCResourceValues_Workshop_1(1, (purchaseValue * 2), (purchaseValue * 2), (purchaseValue * 2), 0, 0);
                     break;
                 case 3:
                     Check_3_Workshop_1();
+                    SetGCResourceValues_Workshop_1(1, (purchaseValue * 4), (purchaseValue * 4), (purchaseValue * 4), 0, 0);
                     break;
                 case 4:
                     Check_4_Workshop_1();
+                    SetGCResourceValues_Workshop_1(1, (purchaseValue * 8), (purchaseValue * 8), (purchaseValue * 8), 0, 0);
                     break;
                 case 5:
                     Check_5_Workshop_1();
                     break;
             }
         }
-        else { Check_Locked_Workshop_1(); }
+        else { Check_Locked_Workshop_1();
+            SetGCResourceValues_Workshop_1(1, (purchaseValue * 2), (purchaseValue * 2), (purchaseValue * 2), 0, 0);
+        }
     }
     private void Check_Locked_Workshop_1()
     {
@@ -5261,22 +5644,28 @@ public class Game_Logic : MonoBehaviour
             {
                 case 1:
                     Check_1_Workshop_2();
+                    SetGCResourceValues_Workshop_2(1, (purchaseValue * 2), (purchaseValue * 2), (purchaseValue * 2), 0, 0);
                     break;
                 case 2:
                     Check_2_Workshop_2();
+                    SetGCResourceValues_Workshop_2(1, (purchaseValue * 4), (purchaseValue * 4), (purchaseValue * 4), 0, 0);
                     break;
                 case 3:
                     Check_3_Workshop_2();
+                    SetGCResourceValues_Workshop_2(1, (purchaseValue * 8), (purchaseValue * 8), (purchaseValue * 8), 0, 0);
                     break;
                 case 4:
                     Check_4_Workshop_2();
+                    SetGCResourceValues_Workshop_2(1, (purchaseValue * 16), (purchaseValue * 16), (purchaseValue * 16), 0, 0);
                     break;
                 case 5:
                     Check_5_Workshop_2();
                     break;
             }
         }
-        else { Check_Locked_Workshop_2(); }
+        else { Check_Locked_Workshop_2();
+            SetGCResourceValues_Workshop_2(1, (purchaseValue * 4), (purchaseValue * 4), (purchaseValue * 4), 0, 0);
+        }
     }
     private void Check_Locked_Workshop_2()
     {
@@ -5322,22 +5711,28 @@ public class Game_Logic : MonoBehaviour
             {
                 case 1:
                     Check_1_LivingSpace_1();
+                    SetGCResourceValues_LivingSpace_1(1, purchaseValue, purchaseValue, purchaseValue, 0, 0);
                     break;
                 case 2:
                     Check_2_LivingSpace_1();
+                    SetGCResourceValues_LivingSpace_1(1, (purchaseValue * 2), (purchaseValue * 2), (purchaseValue * 2), 0, 0);
                     break;
                 case 3:
                     Check_3_LivingSpace_1();
+                    SetGCResourceValues_LivingSpace_1(1, (purchaseValue * 4), (purchaseValue * 4), (purchaseValue * 4), 0, 0);
                     break;
                 case 4:
                     Check_4_LivingSpace_1();
+                    SetGCResourceValues_LivingSpace_1(1, (purchaseValue * 8), (purchaseValue * 8), (purchaseValue * 8), 0, 0);
                     break;
                 case 5:
                     Check_5_LivingSpace_1();
                     break;
             }
         }
-        else { Check_Locked_LivingSpace_1(); }
+        else { Check_Locked_LivingSpace_1();
+            SetGCResourceValues_LivingSpace_1(1, (purchaseValue * 2), (purchaseValue * 2), (purchaseValue * 2), 0, 0);
+        }
     }
     private void Check_Locked_LivingSpace_1()
     {
@@ -5382,22 +5777,28 @@ public class Game_Logic : MonoBehaviour
             {
                 case 1:
                     Check_1_LivingSpace_2();
+                    SetGCResourceValues_LivingSpace_2(1, (purchaseValue * 2), (purchaseValue * 2), (purchaseValue * 2), 0, 0);
                     break;
                 case 2:
                     Check_2_LivingSpace_2();
+                    SetGCResourceValues_LivingSpace_2(1, (purchaseValue * 4), (purchaseValue * 4), (purchaseValue * 4), 0, 0);
                     break;
                 case 3:
                     Check_3_LivingSpace_2();
+                    SetGCResourceValues_LivingSpace_2(1, (purchaseValue * 8), (purchaseValue * 8), (purchaseValue * 8), 0, 0);
                     break;
                 case 4:
                     Check_4_LivingSpace_2();
+                    SetGCResourceValues_LivingSpace_2(1, (purchaseValue * 16), (purchaseValue * 16), (purchaseValue * 16), 0, 0);
                     break;
                 case 5:
                     Check_5_LivingSpace_2();
                     break;
             }
         }
-        else { Check_Locked_LivingSpace_2(); }
+        else { Check_Locked_LivingSpace_2();
+            SetGCResourceValues_LivingSpace_2(1, (purchaseValue * 4), (purchaseValue * 4), (purchaseValue * 4), 0, 0);
+        }
     }
     private void Check_Locked_LivingSpace_2()
     {
@@ -5444,22 +5845,28 @@ public class Game_Logic : MonoBehaviour
             {
                 case 1:
                     Check_1_Research_1();
+                    SetGCResourceValues_Research_1(1, purchaseValue, purchaseValue, purchaseValue, 0, 0);
                     break;
                 case 2:
                     Check_2_Research_1();
+                    SetGCResourceValues_Research_1(1, (purchaseValue * 2), (purchaseValue * 2), (purchaseValue * 2), 0, 0);
                     break;
                 case 3:
                     Check_3_Research_1();
+                    SetGCResourceValues_Research_1(1, (purchaseValue * 4), (purchaseValue * 4), (purchaseValue * 4), 0, 0);
                     break;
                 case 4:
                     Check_4_Research_1();
+                    SetGCResourceValues_Research_1(1, (purchaseValue * 8), (purchaseValue * 8), (purchaseValue * 8), 0, 0);
                     break;
                 case 5:
                     Check_5_Research_1();
                     break;
             }
         }
-        else { Check_Locked_Research_1(); }
+        else { Check_Locked_Research_1();
+            SetGCResourceValues_Research_1(1, (purchaseValue * 2), (purchaseValue * 2), (purchaseValue * 2), 0, 0);
+        }
     }
     private void Check_Locked_Research_1()
     {
@@ -5504,22 +5911,28 @@ public class Game_Logic : MonoBehaviour
             {
                 case 1:
                     Check_1_Research_2();
+                    SetGCResourceValues_Research_2(1, (purchaseValue * 2), (purchaseValue * 2), (purchaseValue * 2), 0, 0);
                     break;
                 case 2:
                     Check_2_Research_2();
+                    SetGCResourceValues_Research_2(1, (purchaseValue * 4), (purchaseValue * 4), (purchaseValue * 4), 0, 0);
                     break;
                 case 3:
                     Check_3_Research_2();
+                    SetGCResourceValues_Research_2(1, (purchaseValue * 8), (purchaseValue * 8), (purchaseValue * 8), 0, 0);
                     break;
                 case 4:
                     Check_4_Research_2();
+                    SetGCResourceValues_Research_2(1, (purchaseValue * 16), (purchaseValue * 16), (purchaseValue * 16), 0, 0);
                     break;
                 case 5:
                     Check_5_Research_2();
                     break;
             }
         }
-        else { Check_Locked_Research_2(); }
+        else { Check_Locked_Research_2();
+            SetGCResourceValues_Research_2(1, (purchaseValue * 4), (purchaseValue * 4), (purchaseValue * 4), 0, 0);
+        }
     }
     private void Check_Locked_Research_2()
     {
@@ -5665,31 +6078,31 @@ public class Game_Logic : MonoBehaviour
             switch (GC.Wall_R_Upg)
             {
                 case 1:
-                    Check_Save_1_Wall_R();
+                    Check_Save_1_Wall_R(); SetGCResourceValues_Wall(25, 0, 0, 0, 0, 0);
                     break;
                 case 2:
-                    Check_Save_2_Wall_R();
+                    Check_Save_2_Wall_R(); SetGCResourceValues_Wall(50, 0, 0, 0, 0, 0);
                     break;
                 case 3:
-                    Check_Save_3_Wall_R();
+                    Check_Save_3_Wall_R(); SetGCResourceValues_Wall(75, 0, 0, 0, 0, 0);
                     break;
                 case 4:
-                    Check_Save_4_Wall_R();
+                    Check_Save_4_Wall_R(); SetGCResourceValues_Wall(100, 0, 0, 0, 0, 0);
                     break;
                 case 5:
-                    Check_Save_5_Wall_R();
+                    Check_Save_5_Wall_R(); SetGCResourceValues_Wall(125, 0, 0, 0, 0, 0);
                     break;
                 case 6:
-                    Check_Save_6_Wall_R();
+                    Check_Save_6_Wall_R(); SetGCResourceValues_Wall(150, 0, 0, 0, 0, 0);
                     break;
                 case 7:
-                    Check_Save_7_Wall_R();
+                    Check_Save_7_Wall_R(); SetGCResourceValues_Wall(175, 0, 0, 0, 0, 0);
                     break;
                 case 8:
-                    Check_Save_8_Wall_R();
+                    Check_Save_8_Wall_R(); SetGCResourceValues_Wall(200, 0, 0, 0, 0, 0);
                     break;
                 case 9:
-                    Check_Save_9_Wall_R();
+                    Check_Save_9_Wall_R(); SetGCResourceValues_Wall(225, 0, 0, 0, 0, 0);
                     break;
                 case 10:
                     Check_Save_10_Wall_R();

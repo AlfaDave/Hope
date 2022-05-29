@@ -97,6 +97,71 @@ public class GameController : MonoBehaviour
     #endregion
     public string levelToLoad;
     private int setToZero = 0;
+    #region Values for Tooltips
+    #region Expedition
+    public int value_Expedition_Tasks, value_Expedition_Metal, value_Expedition_Wood, value_Expedition_Tech, value_Expedition_Seeds, value_Expedition_Science;
+    #endregion
+    #region Training
+    public int value_Training_Tasks, value_Training_Metal, value_Training_Wood, value_Training_Tech, value_Training_Seeds, value_Training_Science;
+    #endregion
+    #region Garden
+    public int value_Garden_Tasks, value_Garden_Metal, value_Garden_Wood, value_Garden_Tech, value_Garden_Seeds, value_Garden_Science;
+    #endregion
+    #region Radio
+    public int value_Radio_Tasks, value_Radio_Metal, value_Radio_Wood, value_Radio_Tech, value_Radio_Seeds, value_Radio_Science;
+    #endregion
+    #region Generator 1
+    public int value_Generator_1_Tasks, value_Generator_1_Metal, value_Generator_1_Wood, value_Generator_1_Tech, value_Generator_1_Seeds, value_Generator_1_Science;
+    #endregion
+    #region Generator 2
+    public int value_Generator_2_Tasks, value_Generator_2_Metal, value_Generator_2_Wood, value_Generator_2_Tech, value_Generator_2_Seeds, value_Generator_2_Science;
+    #endregion
+    #region Workshop 1
+    public int value_Workshop_1_Tasks, value_Workshop_1_Metal, value_Workshop_1_Wood, value_Workshop_1_Tech, value_Workshop_1_Seeds, value_Workshop_1_Science;
+    #endregion
+    #region Workshop 2
+    public int value_Workshop_2_Tasks, value_Workshop_2_Metal, value_Workshop_2_Wood, value_Workshop_2_Tech, value_Workshop_2_Seeds, value_Workshop_2_Science;
+    #endregion
+    #region LivingSpace 1
+    public int value_LivingSpace_1_Tasks, value_LivingSpace_1_Metal, value_LivingSpace_1_Wood, value_LivingSpace_1_Tech, value_LivingSpace_1_Seeds, value_LivingSpace_1_Science;
+    #endregion
+    #region LivingSpace 2
+    public int value_LivingSpace_2_Tasks, value_LivingSpace_2_Metal, value_LivingSpace_2_Wood, value_LivingSpace_2_Tech, value_LivingSpace_2_Seeds, value_LivingSpace_2_Science;
+    #endregion
+    #region Research 1
+    public int value_Research_1_Tasks, value_Research_1_Metal, value_Research_1_Wood, value_Research_1_Tech, value_Research_1_Seeds, value_Research_1_Science;
+    #endregion
+    #region Research 2
+    public int value_Research_2_Tasks, value_Research_2_Metal, value_Research_2_Wood, value_Research_2_Tech, value_Research_2_Seeds, value_Research_2_Science;
+    #endregion
+    #region Wall
+    public int value_Wall_Tasks, value_Wall_Metal, value_Wall_Wood, value_Wall_Tech, value_Wall_Seeds, value_Wall_Science;
+    #endregion
+    #region Stairs_2
+    public int value_Stairs_2_Tasks, value_Stairs_2_Metal, value_Stairs_2_Wood, value_Stairs_2_Tech, value_Stairs_2_Seeds, value_Stairs_2_Science;
+    #endregion
+    #region Stairs_3
+    public int value_Stairs_3_Tasks, value_Stairs_3_Metal, value_Stairs_3_Wood, value_Stairs_3_Tech, value_Stairs_3_Seeds, value_Stairs_3_Science;
+    #endregion
+    #region Bedroom_Lvl1_L
+    public int value_Bedroom_Lvl1_L_Tasks, value_Bedroom_Lvl1_L_Metal, value_Bedroom_Lvl1_L_Wood, value_Bedroom_Lvl1_L_Tech, value_Bedroom_Lvl1_L_Seeds, value_Bedroom_Lvl1_L_Science;
+    #endregion
+    #region Bedroom_Lvl1_R
+    public int value_Bedroom_Lvl1_R_Tasks, value_Bedroom_Lvl1_R_Metal, value_Bedroom_Lvl1_R_Wood, value_Bedroom_Lvl1_R_Tech, value_Bedroom_Lvl1_R_Seeds, value_Bedroom_Lvl1_R_Science;
+    #endregion
+    #region Bedroom_Lvl2_L
+    public int value_Bedroom_Lvl2_L_Tasks, value_Bedroom_Lvl2_L_Metal, value_Bedroom_Lvl2_L_Wood, value_Bedroom_Lvl2_L_Tech, value_Bedroom_Lvl2_L_Seeds, value_Bedroom_Lvl2_L_Science;
+    #endregion
+    #region Bedroom_Lvl2_R
+    public int value_Bedroom_Lvl2_R_Tasks, value_Bedroom_Lvl2_R_Metal, value_Bedroom_Lvl2_R_Wood, value_Bedroom_Lvl2_R_Tech, value_Bedroom_Lvl2_R_Seeds, value_Bedroom_Lvl2_R_Science;
+    #endregion
+    #region Bedroom_Lvl3_L
+    public int value_Bedroom_Lvl3_L_Tasks, value_Bedroom_Lvl3_L_Metal, value_Bedroom_Lvl3_L_Wood, value_Bedroom_Lvl3_L_Tech, value_Bedroom_Lvl3_L_Seeds, value_Bedroom_Lvl3_L_Science;
+    #endregion
+    #region Bedroom_Lvl3_R
+    public int value_Bedroom_Lvl3_R_Tasks, value_Bedroom_Lvl3_R_Metal, value_Bedroom_Lvl3_R_Wood, value_Bedroom_Lvl3_R_Tech, value_Bedroom_Lvl3_R_Seeds, value_Bedroom_Lvl3_R_Science;
+    #endregion
+    #endregion
     public static GameController gameC;
 
     private void Awake()

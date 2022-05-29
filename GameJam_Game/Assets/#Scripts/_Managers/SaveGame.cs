@@ -376,7 +376,7 @@ public class SaveGame : MonoBehaviour
 
     public void OnApplicationQuit()
     {
-        SavingGame();
+        //SavingGame();
         Application.Quit();
     }
     public void LoadLevel(string level)
