@@ -11,12 +11,12 @@ public class _Manager_Main : MonoBehaviour
     private bool creditsToggle;
     void Start()
     {
-        GameObject soundButton = GameObject.Find("Button_Sound");
+        //GameObject soundButton = GameObject.Find("Button_Sound");
         //GameObject credits = GameObject.Find("CreditsMaster");
         credits.transform.GetChild(0).gameObject.SetActive(false);
-        soundButtonText = soundButton.transform.GetChild(0).gameObject;
-        if (GameController.gameC.Player_Sound) { soundButtonText.GetComponent<Text>().text = soundOn; }
-        else { soundButtonText.GetComponent<Text>().text = soundOff; }
+        //soundButtonText = soundButton.transform.GetChild(0).gameObject;
+        //if (GameController.gameC.Player_Sound) { soundButtonText.GetComponent<Text>().text = soundOn; }
+        //else { soundButtonText.GetComponent<Text>().text = soundOff; }
     }
     public void ToggleSound()
     {

@@ -198,6 +198,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 342679157}
+  - {fileID: 800123877}
   m_Father: {fileID: 1016444201}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -326,7 +327,7 @@ GameObject:
   - component: {fileID: 188686740}
   - component: {fileID: 188686739}
   m_Layer: 5
-  m_Name: Button_Sound
+  m_Name: Button_Quit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -349,8 +350,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 640, y: -420}
-  m_SizeDelta: {x: 320, y: 100}
+  m_AnchoredPosition: {x: 725.28577, y: -432.4052}
+  m_SizeDelta: {x: 149.4285, y: 75.1896}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &188686739
 MonoBehaviour:
@@ -396,9 +397,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2057320603}
-        m_TargetAssemblyTypeName: _Manager_Main, Assembly-CSharp
-        m_MethodName: ToggleSound
+      - m_Target: {fileID: 1182281033}
+        m_TargetAssemblyTypeName: SaveGame, Assembly-CSharp
+        m_MethodName: OnApplicationQuit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -713,8 +714,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -640, y: -264.4613}
-  m_SizeDelta: {x: 320, y: 171.0774}
+  m_AnchoredPosition: {x: -483.13513, y: -174.54297}
+  m_SizeDelta: {x: 633.7297, y: 332.5366}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &525654319
 MonoBehaviour:
@@ -966,6 +967,85 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 609429579}
   m_CullTransparentMesh: 1
+--- !u!1 &800123876
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 800123877}
+  - component: {fileID: 800123879}
+  - component: {fileID: 800123878}
+  m_Layer: 5
+  m_Name: A Game By
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &800123877
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800123876}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 133374841}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 575.50964, y: -136.52985}
+  m_SizeDelta: {x: 248.1493, y: 44.2397}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &800123878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800123876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 0f798044fbf078843b9ee26dcc9f1599, type: 3}
+    m_FontSize: 30
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 50
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: A Game By David Gould
+--- !u!222 &800123879
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800123876}
+  m_CullTransparentMesh: 1
 --- !u!1 &1016444197
 GameObject:
   m_ObjectHideFlags: 0
@@ -1127,6 +1207,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c18c8c2f0c5351c428f08c5d7fc8805e, type: 3}
+--- !u!114 &1182281033 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7275033464934433091, guid: c18c8c2f0c5351c428f08c5d7fc8805e, type: 3}
+  m_PrefabInstance: {fileID: 1182281032}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07ab136169203a3498e92060a5551995, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1411159696
 GameObject:
   m_ObjectHideFlags: 0
@@ -1445,7 +1536,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Sound
+  m_Text: QUIT
 --- !u!222 &1998980185
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1487,10 +1578,10 @@ RectTransform:
   m_Father: {fileID: 525654318}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.00014114}
-  m_SizeDelta: {x: 300, y: 150}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -30, y: -30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2027602406
 MonoBehaviour:
@@ -1666,9 +1757,21 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Solo Developer
+  m_Text: 'Every element of this game is made from scratch in 10 days of the gamedev.tv
+    Gamejam.
 
-    David Gould'
+
+    Exceptions
+
+    Background music
+
+    soundraw
+
+
+    Sfx
+
+    CCo
+    Sources'
 --- !u!222 &2049853229
 CanvasRenderer:
   m_ObjectHideFlags: 0
