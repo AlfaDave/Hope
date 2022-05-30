@@ -13,6 +13,7 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     [SerializeField] internal Type type;
     private Text txt_Task,txt_Metal,txt_Wood,txt_Tech,txt_Seeds,text_Science;
     private Text txt_Bonus;
+    private float counter = 30;
 
     private void Start()
     {
@@ -22,7 +23,11 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         SetElements();
         WriteElements();
     }
-
+    private void Update()
+    {
+        counter -= Time.deltaTime;
+        if (counter <= 0) { counter = 30; WriteElements();  }
+    }
     private void SetElements()
     {
         txt_Bonus = tooltipGameObject.transform.GetChild(3).GetChild(0).GetChild(0).GetComponent<Text>();
