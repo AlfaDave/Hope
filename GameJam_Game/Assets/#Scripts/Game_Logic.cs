@@ -96,6 +96,7 @@ public class Game_Logic : MonoBehaviour
     [SerializeField] internal Text dailyMessage_Text, dailyMessageShadow_Text;
     private string dailyMessage;
     private string dailyMes_1, dailyMes_2, dailyMes_3, dailyMes_4, dailyMes_5, dailyMes_6, dailyMes_7, dailyMes_8, dailyMes_9, dailyMes_10, dailyMes_11, dailyMes_12, dailyMes_13, dailyMes_14, dailyMes_15, dailyMes_16, dailyMes_17, dailyMes_18, dailyMes_19, dailyMes_20;
+    private bool dead = false, win = false;
     private void Start()
     {
         
@@ -122,7 +123,7 @@ public class Game_Logic : MonoBehaviour
     }
     private void SetDailyMessages()
     {
-        dailyMes_1 = "Son N:- Daddy, i wish i still had an ybox to play on, Dad:- Son N, so do we it would be much quieter....";
+        dailyMes_1 = "Son N:- Daddy, i wish i still had an ybox to play on.\nDad:- Son N, so do we it would be much quieter....";
         dailyMes_2 = "Dad:- I think we should gather the resources to upgrade our Expedition room.";
         dailyMes_3 = "Mom:- Atleast we dont have to worry about our credit card debt anymore.";
         dailyMes_4 = "Son H:- Dad, should we start thinking about looking at building some beds as sleeping on the floor is getting cold.";
@@ -131,16 +132,16 @@ public class Game_Logic : MonoBehaviour
         dailyMes_7 = "Son H:- Dad, do you still have skills to build a wall ????";
         dailyMes_8 = "Dad:- Son H, i can try. In worse case if it falls down it will still slow any enemy.";
         dailyMes_9 = "Wife:- Dad, im sure i spotted something in the distance when gathering food and water.";
-        dailyMes_10 = "Dad:- Wife, im sure its nothing. but if it is something i best get this wall built.";
+        dailyMes_10 = "Dad:- Wife, im sure its nothing.\nBut if it is something i best get this wall built.";
         dailyMes_11 = "Son N:- Mommy, I'm scared when i wake at night i hear sounds above us.";
         dailyMes_12 = "Mom:- Son N, Sweetie pie i'm sure it was nothing probably just some wild animals";
         dailyMes_13 = "Dad:- Family, i don't wish to alarm you but i have seen some very strange looking creatures out past the town.";
         dailyMes_14 = "Mom:- Dad, so i wasnt seeing things 5 days ago";
-        dailyMes_15 = "Dad:- Wife, no im fairly sure its something. I suspect its nothing good.";
+        dailyMes_15 = "Dad:- Wife, no im fairly sure its something.\nI suspect its nothing good.";
         dailyMes_16 = "Son H:- Dad, do you think our walls and hatch will keep anything bad out??";
         dailyMes_17 = "Dad:- Son H, i think we could make our walls stronger, but i do think it will be hard to break through";
         dailyMes_18 = "Son N:- Daddy, Are we safe??";
-        dailyMes_19 = "Dad:- Son N, yes bud we are safe here.";
+        dailyMes_19 = "Dad:- Son N, yes we are safe here Son.";
         dailyMes_20 = "Dad:- Family, I'm sure i have spotted campfire smoke last night, maybe there will be other survivours.";
     }
     private void SetMessageOfTheDay()
@@ -311,53 +312,58 @@ public class Game_Logic : MonoBehaviour
     }
     public void Turn()
     {
-        gSave.SavingGame();
-        GC.PlayerSave = true;
         SFX_EndTurn();
         endTurn.SetActive(false);
-        if (GC.Player_Turns <= 1) { GC.Player_People = 4;GC.Player_Capacity = 4; }
-        GC.Player_Turns += 1;
-        GC.Player_Tasks = 0;
-        GC.Player_Tasks += GC.Player_People * 3;
+        //if (GC.Player_Turns <= 1) { GC.Player_People = 4;GC.Player_Capacity = 4; }
+       
         int i = GC.Player_People * 10;
         endTurnFoodConsumption.text = i.ToString();
-        endTurnUi.SetActive(true); endTurnUi_Display.SetActive(false); endTurnUi_GameOver.SetActive(false); endTurnUi_Win.SetActive(false);
+        
         StarvingPeople();
         Attacked();
         CivilianRequest();
         Expedition();
-        DiplayUiStats();
-        /*if (GC.Player_Turns > 1)
+        GC.Player_Turns += 1;
+        GC.Player_Tasks = 0;
+        GC.Player_Tasks = 0;
+        GC.Player_Tasks += GC.Player_People * 3;
+        if (dead || win)
         {
-            endTurnUi.SetActive(true); endTurnUi_Display.SetActive(false); endTurnUi_GameOver.SetActive(false); endTurnUi_Win.SetActive(false);
-            StarvingPeople();
-            Attacked();
-            CivilianRequest();
-            Expedition();
-            DiplayUiStats();
-        }*/
+            if (dead) { endTurnUi.SetActive(true); endTurnUi_Display.SetActive(false); endTurnUi_GameOver.SetActive(true); endTurnUi_Win.SetActive(false); }
+            if (win) { endTurnUi.SetActive(true); endTurnUi_Display.SetActive(false); endTurnUi_GameOver.SetActive(false); endTurnUi_Win.SetActive(true); }
+        }
+        else { endTurnUi.SetActive(true); endTurnUi_Display.SetActive(true); endTurnUi_GameOver.SetActive(false); endTurnUi_Win.SetActive(false); }
         DiplayUiStats();
-
         gSave.SavingGame();
-        //public int AttackRisk { get; set; } <<< end of turn risk factor
-        //public int SurvivourChance { get; set; } < end of turn chance new civilian
-        //public int SurvivourNeeds { get; set; } <end of turn how picky a requesting civilian will be
-        //public int BaseJoy { get; set; } <end of turn base joy which is what the above needs
-        //public int ChanceOfSeeds { get; set; } <end of turn chance of new seeds
-        //public int ChanceOfResearch { get; set; } < end of turn chance of new science
-        //public int ChanceOfSettlement { get; set; } < end of turn win game chance
+        GC.PlayerSave = true;
     }
-    public void TurnOffEndOfTurnUi()
+    #region per turn functions
+    private void StarvingPeople()
     {
-        endTurnCivKilled.text = "";
-        endTurnCivStarved.text = "";
-        endTurnFoodConsumption.text = "";
-        endTurnFoundGuides.text = "";
-        endTurnFoundSeeds.text = "";
-        endTurnFoundSpareParts.text = "0";
-        endTurnSuvivourFound.text = "";
-        endTurnSuvivourThinks.text = "";
-        endTurnUi.SetActive(false); endTurnUi_Display.SetActive(false); endTurnUi_GameOver.SetActive(false); endTurnUi_Win.SetActive(false);
+        GC.Starvation = false;
+        if (GC.Player_Food < (GC.Player_People * 10))
+        {
+            GC.Player_Food -= GC.Player_People * 10;
+            if (GC.Player_Food <= 0) { GC.Player_Food = 0; }
+            GC.Starvation = true;
+            GC.Player_People -= 1;
+            string value = "1 Shelter member starved, please focus more on food";
+            endTurnCivStarved.text = value;
+            if (GC.Player_People <= 0)
+            {
+                dead = true;
+            }
+            else
+            {
+                dead = false;
+            }
+        }
+        else
+        {
+            GC.Player_Food -= GC.Player_People * 10;
+            string value = "0 civilians starved, Welldone";
+            endTurnCivStarved.text = value;
+        }
     }
     private void Attacked()
     {
@@ -403,7 +409,7 @@ public class Game_Logic : MonoBehaviour
         {
             GC.AttackRisk = 27; // 1 in 4 chance of having a civilian killed
         }
-        int i = UnityEngine.Random.Range(1,101);
+        int i = UnityEngine.Random.Range(1, 101);
         if (i >= GC.AttackRisk)
         {
             string value = "0 civilians Killed, Welldone";
@@ -419,7 +425,11 @@ public class Game_Logic : MonoBehaviour
                 endTurnCivKilled.text = value;
                 if (GC.Player_People <= 0)
                 {
-                    endTurnUi.SetActive(true); endTurnUi_Display.SetActive(false); endTurnUi_GameOver.SetActive(true); endTurnUi_Win.SetActive(false);
+                    dead = true;
+                }
+                else
+                {
+                    dead = false;
                 }
             }
             else
@@ -487,9 +497,9 @@ public class Game_Logic : MonoBehaviour
             else
             {
                 if (GC.Player_Turns >= 20)
-                { 
-                endTurnSuvivourFound.text = "0 survivours have found us, maybe we should look at upgrading our Radio equiptment";
-                endTurnSuvivourThinks.text = "That we dont exist";
+                {
+                    endTurnSuvivourFound.text = "0 survivours have found us, maybe we should look at upgrading our Radio equiptment";
+                    endTurnSuvivourThinks.text = "That we dont exist";
                 }
                 else
                 {
@@ -579,33 +589,27 @@ public class Game_Logic : MonoBehaviour
         }
         if (settlement <= GC.ChanceOfSettlement)
         {
-            endTurnUi.SetActive(true); endTurnUi_Display.SetActive(false); endTurnUi_GameOver.SetActive(false); endTurnUi_Win.SetActive(true);
+           win = true;
             // display this to end of turn ui
         }
         else
         {
-            endTurnUi.SetActive(true); endTurnUi_Display.SetActive(true);
+            win = false;
             // display no settlement found
-        }        
+        }
     }
-    private void StarvingPeople()
+    #endregion
+    public void TurnOffEndOfTurnUi()
     {
-        GC.Starvation = false;
-        if (GC.Player_Food < (GC.Player_People*10))
-        {
-            GC.Player_Food -= GC.Player_People * 10;
-            if (GC.Player_Food <= 0) { GC.Player_Food = 0; }
-            GC.Starvation = true;
-            GC.Player_People -= 1;
-            string value = "1 Shelter member starved, please focus more on food";
-            endTurnCivStarved.text = value;
-        }
-        else
-        {
-            GC.Player_Food -= GC.Player_People * 10;
-            string value = "0 civilians starved, Welldone";
-            endTurnCivStarved.text = value;
-        }
+        endTurnCivKilled.text = "";
+        endTurnCivStarved.text = "";
+        endTurnFoodConsumption.text = "";
+        endTurnFoundGuides.text = "";
+        endTurnFoundSeeds.text = "";
+        endTurnFoundSpareParts.text = "0";
+        endTurnSuvivourFound.text = "";
+        endTurnSuvivourThinks.text = "";
+        endTurnUi.SetActive(false); endTurnUi_Display.SetActive(false); endTurnUi_GameOver.SetActive(false); endTurnUi_Win.SetActive(false);
     }
     public void GameOverResetSaveFile()
     {
@@ -717,9 +721,7 @@ public class Game_Logic : MonoBehaviour
         GC.ChanceOfSettlement = 0;
         GC.Starvation = false;
         #endregion
-        if (GC.Player_Capacity < 4) { GC.Player_Capacity = 4; }
-        if (GC.Player_People >= GC.Player_Capacity) { GC.Player_People = GC.Player_Capacity; }
-        GC.Player_Tasks = GC.Player_People * 4;
+        GC.Player_Tasks = GC.Player_People * 3;
     }
     private void LinkAllItemsInGame()/// must be step 1 in game sequence
     {
