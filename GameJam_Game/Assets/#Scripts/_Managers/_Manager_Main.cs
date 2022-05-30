@@ -6,18 +6,21 @@ using UnityEngine.UI;
 public class _Manager_Main : MonoBehaviour
 {
     private SoundManager SM;
-    [SerializeField] internal GameObject soundButtonText;
+    private SaveGame GS;
+    private GameObject soundButtonText;
     public GameObject credits;
     private string soundOn = "Sound ON", soundOff = "Sound OFF";
     private bool creditsToggle;
     void Start()
     {
+        GS = GameObject.Find("GameSave").GetComponent<SaveGame>();
         SM = GameObject.Find("SoundManager").GetComponent<SoundManager>();
         //GameObject credits = GameObject.Find("CreditsMaster");
         credits.transform.GetChild(0).gameObject.SetActive(false);
         //soundButtonText = soundButton.transform.GetChild(0).gameObject;
         //if (GameController.gameC.Player_Sound) { soundButtonText.GetComponent<Text>().text = soundOn; }
         //else { soundButtonText.GetComponent<Text>().text = soundOff; }
+        //GS.LoadingGame();
     }
     public void ToggleSound()
     {
