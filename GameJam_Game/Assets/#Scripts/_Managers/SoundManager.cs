@@ -6,7 +6,7 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager soundManager;
     private float volumeSFX=0.5f, backgroundMusic=0.5f;
-    public AudioClip backingMusic, sfxMenuButton, sfxElectClick, sfxMetalClick, sfxBuildingMatClick, sfxFoodClick, sfxRemoveRockClick; 
+    public AudioClip backingMusic, sfxMenuButton,sfxCollect, sfxEndTurn,sfxDeny,sfxBuilding; 
 
     void Awake()
     {
@@ -36,30 +36,25 @@ public class SoundManager : MonoBehaviour
         GameObject soundGameObject_MenuBut = new GameObject("OneShotSound_MenuButton");
         SFXPlayOnce(soundGameObject_MenuBut, sfxMenuButton);
     }
-    public void OneSound_ClickOnElect()
+    public void OneSound_Collect()
     {
-        GameObject soundGameObject_ClickElect = new GameObject("OneShotSound_ClickElect");
-        SFXPlayOnce(soundGameObject_ClickElect, sfxElectClick);
+        GameObject soundGameObject_ClickCollect = new GameObject("OneShotSound_ClickCollect");
+        SFXPlayOnce(soundGameObject_ClickCollect, sfxCollect);
     }
-    public void OneSound_ClickOnMetal()
+    public void OneSound_Deny()
     {
-        GameObject soundGameObject_ClickMetal = new GameObject("OneShotSound_ClickMetal");
-        SFXPlayOnce(soundGameObject_ClickMetal, sfxMetalClick);
+        GameObject soundGameObject_ClickDeny = new GameObject("OneShotSound_ClickDeny");
+        SFXPlayOnce(soundGameObject_ClickDeny, sfxDeny);
     }
-    public void OneSound_ClickOnBuildingMats()
+    public void OneSound_Building()
     {
-        GameObject soundGameObject_ClickBuildingMats = new GameObject("OneShotSound_ClickBuildingMats");
-        SFXPlayOnce(soundGameObject_ClickBuildingMats, sfxBuildingMatClick);
+        GameObject soundGameObject_ClickBuilding = new GameObject("OneShotSound_ClickBuilding");
+        SFXPlayOnce(soundGameObject_ClickBuilding, sfxBuilding); 
     }
-    public void OneSound_ClickOnFood()
+    public void OneSound_EndTurn()
     {
-        GameObject soundGameObject_ClickFood = new GameObject("OneShotSound_ClickFood");
-        SFXPlayOnce(soundGameObject_ClickFood, sfxFoodClick);
-    }
-    public void OneSound_ClickOnRemovingRock()
-    {
-        GameObject soundGameObject_ClickRemoveRock = new GameObject("OneShotSound_ClickRemoveRock");
-        SFXPlayOnce(soundGameObject_ClickRemoveRock, sfxRemoveRockClick);
+        GameObject soundGameObject_ClickEndTurn = new GameObject("OneShotSound_ClickEndTurn");
+        SFXPlayOnce(soundGameObject_ClickEndTurn, sfxEndTurn); 
     }
     private void SFXPlayOnce(GameObject instance, AudioClip audioToPlay)
     {

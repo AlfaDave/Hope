@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour
 {
     public bool PlayerSave { get; set; }
+    public bool PlayerSkipTutorial { get; set; }
     public bool Player_Sound { get; set; }
     #region Default Buildings
     public int Room_Radio { get; set; }
@@ -91,9 +92,17 @@ public class GameController : MonoBehaviour
     public int Player_Wood { get; set; }
     public int Player_Tech { get; set; }
     public int Player_Seeds { get; set; }
+    public int Player_SpareParts { get; set; }
     #endregion
     #region Game Mechanics
-
+    public int AttackRisk { get; set; }
+    public int SurvivourChance { get; set; }
+    public int SurvivourNeeds { get; set; }
+    public int BaseJoy { get; set; }
+    public int ChanceOfSeeds { get; set; }
+    public int ChanceOfResearch { get; set; }
+    public int ChanceOfSettlement { get; set; }
+    public bool Starvation { get; set; }
     #endregion
     public string levelToLoad;
     private int setToZero = 0;
@@ -162,6 +171,7 @@ public class GameController : MonoBehaviour
     public int value_Bedroom_Lvl3_R_Tasks, value_Bedroom_Lvl3_R_Metal, value_Bedroom_Lvl3_R_Wood, value_Bedroom_Lvl3_R_Tech, value_Bedroom_Lvl3_R_Seeds, value_Bedroom_Lvl3_R_Science;
     #endregion
     #endregion
+    
     public static GameController gameC;
 
     private void Awake()

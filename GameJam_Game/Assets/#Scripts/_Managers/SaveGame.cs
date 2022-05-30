@@ -94,9 +94,15 @@ public class SaveGame : MonoBehaviour
     #endregion
     #endregion
     #region load and save tasks ADD VARIABLES TO SAVE AND LOAD IN HERE!!!! IN the load and save player data
+    public void DeleteGame()
+    {
+        File.Delete(Application.persistentDataPath + "/" + saveFolder + "/" + username + "/" + tempPath);
+        SceneManager.LoadScene("Intro");
+    }
     private void DeleteSave()
     {
         /*File.Delete(Application.persistentDataPath + "/" + SaveFolder + "/" + Username + "/" + UsernameForSave + "/" + CurrentSaveLocation);// edit each version update
+         * 
         PlayerPrefs.DeleteAll();
         PlayerPrefs.SetFloat("MasterVolume", 1f);
         PlayerPrefs.SetFloat("MusicVolume", 1f);
@@ -146,6 +152,7 @@ public class SaveGame : MonoBehaviour
         //data.example = exampleVariable;
         // ADD NEW VARIABLES UNDER HERE IN THE STYLE ON THE LINE ABOVE
         data.playerSave = gCont.PlayerSave;
+        data.playerSkipTutorial = gCont.PlayerSkipTutorial;
         data.player_Sound = gCont.Player_Sound;
         #region Vault Heath Items
         data.vault_Health = gCont.Vault_Health;
@@ -262,6 +269,7 @@ public class SaveGame : MonoBehaviour
              //exampleVariable = data.example;
              // ADD NEW VARIABLES UNDER HERE IN THE STYLE ON THE LINE ABOVE
             gCont.PlayerSave = data.playerSave;
+            gCont.PlayerSkipTutorial = data.playerSkipTutorial;
             gCont.Player_Sound = data.player_Sound;
             #region Vault Heath Items
             gCont.Vault_Health = data.vault_Health;
@@ -405,6 +413,7 @@ public class GameData
 {
     #region Game Player items
     public bool playerSave;
+    public bool playerSkipTutorial;
     public bool player_Sound;
     public int vault_Health;
     #endregion
