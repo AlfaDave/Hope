@@ -305,9 +305,29 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2715892288946792315, guid: 77327dce60de65147b3860fe3f870710, type: 3}
+      propertyPath: sfxDeny
+      value: 
+      objectReference: {fileID: 8300000, guid: db35a42bc78df9246901baee064ec07c, type: 3}
+    - target: {fileID: 2715892288946792315, guid: 77327dce60de65147b3860fe3f870710, type: 3}
+      propertyPath: sfxCollect
+      value: 
+      objectReference: {fileID: 8300000, guid: a6746c240d9b01d4797a2a6d0cc12e78, type: 3}
+    - target: {fileID: 2715892288946792315, guid: 77327dce60de65147b3860fe3f870710, type: 3}
+      propertyPath: sfxEndTurn
+      value: 
+      objectReference: {fileID: 8300000, guid: a495897923f13324f947b37731063f19, type: 3}
+    - target: {fileID: 2715892288946792315, guid: 77327dce60de65147b3860fe3f870710, type: 3}
+      propertyPath: sfxBuilding
+      value: 
+      objectReference: {fileID: 8300000, guid: 2d773ba90402d934dadf4d5d8cda6d80, type: 3}
+    - target: {fileID: 2715892288946792315, guid: 77327dce60de65147b3860fe3f870710, type: 3}
       propertyPath: backingMusic
       value: 
       objectReference: {fileID: 8300000, guid: a99443af162e4454a982ac0ea5c1d8b7, type: 3}
+    - target: {fileID: 2715892288946792315, guid: 77327dce60de65147b3860fe3f870710, type: 3}
+      propertyPath: sfxMenuButton
+      value: 
+      objectReference: {fileID: 8300000, guid: c3a95f2eb81bc2a46bf4efab1aeded58, type: 3}
     - target: {fileID: 2715892288947071300, guid: 77327dce60de65147b3860fe3f870710, type: 3}
       propertyPath: m_audioClip
       value: 
@@ -632,7 +652,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_BackGroundColor: {r: 0.39215687, g: 0.39215687, b: 0.39215687, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

@@ -9,7 +9,7 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     private GameController GC;
     public GameObject tooltipGameObject;
-    [SerializeField] internal enum Type { Expedition, Training, Garden, Radio, Generator_1, Generator_2, Workshop_1, Workshop_2, Research_1,Research_2, Living_1,Living_2, Bedroom_Lv1_Left, Bedroom_Lv1_Right, Bedroom_Lv2_Left, Bedroom_Lv2_Right, Bedroom_Lv3_Left, Bedroom_Lv3_Right, Stairs_2,Stairs_3, Wall };
+    [SerializeField] internal enum Type { Expedition, Training, Garden, Radio, Generator_1, Generator_2, Workshop_1, Workshop_2, Research_1,Research_2, Living_1,Living_2, Bedroom_Lv1_Left, Bedroom_Lv1_Right, Bedroom_Lv2_Left, Bedroom_Lv2_Right, Bedroom_Lv3_Left, Bedroom_Lv3_Right, Stairs_2,Stairs_3, Wall, TutorialMessage };
     [SerializeField] internal Type type;
     private Text txt_Task,txt_Metal,txt_Wood,txt_Tech,txt_Seeds,text_Science;
     private Text txt_Bonus;
