@@ -30,4 +30,8 @@ public class _Manager_Main : MonoBehaviour
         else if (!creditsToggle) { creditsToggle = true; credits.transform.GetChild(0).gameObject.SetActive(true); } }
 
     public void LoadGameplay() { SM.OneSound_MenuButton(); SaveGame.gameSave.LoadLevel("Async_Load_MainGame"); }
+    public void Quit()
+    {
+        Application.Quit();
+    }
 }

@@ -417,9 +417,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1182281033}
-        m_TargetAssemblyTypeName: SaveGame, Assembly-CSharp
-        m_MethodName: OnApplicationQuit
+      - m_Target: {fileID: 2057320603}
+        m_TargetAssemblyTypeName: _Manager_Main, Assembly-CSharp
+        m_MethodName: Quit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -958,7 +958,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.4641013, b: 0.2113207, a: 1}
+  m_Color: {r: 0, g: 0.54509807, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1227,17 +1227,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c18c8c2f0c5351c428f08c5d7fc8805e, type: 3}
---- !u!114 &1182281033 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7275033464934433091, guid: c18c8c2f0c5351c428f08c5d7fc8805e, type: 3}
-  m_PrefabInstance: {fileID: 1182281032}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07ab136169203a3498e92060a5551995, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1411159696
 GameObject:
   m_ObjectHideFlags: 0
