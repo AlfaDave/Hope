@@ -87,9 +87,15 @@ public class Game_Logic : MonoBehaviour
     public GameObject exitGame, exitGameButton, exitCancelButton, exitProceedButton;
     public GameObject endTurnUi, endTurnUi_Display, endTurnUi_GameOver, endTurnUi_Win;
     public Text endTurnFoodConsumption, endTurnCivStarved, endTurnCivKilled, endTurnFoundSeeds, endTurnFoundGuides, endTurnFoundSpareParts, endTurnSuvivourFound, endTurnSuvivourThinks;
+    public GameObject shortResSeedsMaster, shortResScienceMaster;
+    private bool shortResSeeds = false, shortResScience = false;
+    private float shortResSeedsTimer = 1, shortResScienceTimer = 1;
 
     private string intro = "From the dusts of the unforgiven may bring life and hope to the remaining few", intro_2 = "Once they were billions now there are few";
     private string intro_3 = "Dad why did the big people in charge attack everyone", intro_4 = "Son i can't answer that question, sometimes people chase after greed and power over living in harmony and for peace", intro_5 = "My son we will survive and we will rebuild a better life";
+    [SerializeField] internal Text dailyMessage_Text, dailyMessageShadow_Text;
+    private string dailyMessage;
+    private string dailyMes_1, dailyMes_2, dailyMes_3, dailyMes_4, dailyMes_5, dailyMes_6, dailyMes_7, dailyMes_8, dailyMes_9, dailyMes_10, dailyMes_11, dailyMes_12, dailyMes_13, dailyMes_14, dailyMes_15, dailyMes_16, dailyMes_17, dailyMes_18, dailyMes_19, dailyMes_20;
     private void Start()
     {
         
@@ -107,10 +113,146 @@ public class Game_Logic : MonoBehaviour
         //CheatMode();
         //DiplayUiStats();
         //Turn();
+        SetDailyMessages();
     }
     private void Update()
     {
         WaitTimers();
+    }
+    private void SetDailyMessages()
+    {
+        dailyMes_1 = "Son N:- Daddy, i wish i still had an ybox to play on, Dad:- Son N, so do we it would be much quieter....";
+        dailyMes_2 = "Dad:- I think we should gather the resources to upgrade our Expedition room.";
+        dailyMes_3 = "Mom:- Atleast we dont have to worry about our credit card debt anymore.";
+        dailyMes_4 = "Son H:- Dad, should we start thinking about looking at building some beds as sleeping on the floor is getting cold.";
+        dailyMes_5 = "Dad:- Mom, some extra beds could allow us to take in people if we find any.";
+        dailyMes_6 = "Dad:- Family, i really think we should start building some walls or anything to block anything bad from getting in.";
+        dailyMes_7 = "Son H:- Dad, do you still have skills to build a wall ????";
+        dailyMes_8 = "Dad:- Son H, i can try. In worse case if it falls down it will still slow any enemy.";
+        dailyMes_9 = "Wife:- Dad, im sure i spotted something in the distance when gathering food and water.";
+        dailyMes_10 = "Dad:- Wife, im sure its nothing. but if it is something i best get this wall built.";
+        dailyMes_11 = "Son N:- Mommy, I'm scared when i wake at night i hear sounds above us.";
+        dailyMes_12 = "Mom:- Son N, Sweetie pie i'm sure it was nothing probably just some wild animals";
+        dailyMes_13 = "Dad:- Family, i don't wish to alarm you but i have seen some very strange looking creatures out past the town.";
+        dailyMes_14 = "Mom:- Dad, so i wasnt seeing things 5 days ago";
+        dailyMes_15 = "Dad:- Wife, no im fairly sure its something. I suspect its nothing good.";
+        dailyMes_16 = "Son H:- Dad, do you think our walls and hatch will keep anything bad out??";
+        dailyMes_17 = "Dad:- Son H, i think we could make our walls stronger, but i do think it will be hard to break through";
+        dailyMes_18 = "Son N:- Daddy, Are we safe??";
+        dailyMes_19 = "Dad:- Son N, yes bud we are safe here.";
+        dailyMes_20 = "Dad:- Family, I'm sure i have spotted campfire smoke last night, maybe there will be other survivours.";
+    }
+    private void SetMessageOfTheDay()
+    {
+        switch (GC.Player_Turns)
+        {
+            case 0:
+                dailyMessage = dailyMes_1;
+                dailyMessage_Text.text = dailyMessage;
+                dailyMessageShadow_Text.text = dailyMessage;
+                break;
+            case 1:
+                dailyMessage = dailyMes_2;
+                dailyMessage_Text.text = dailyMessage;
+                dailyMessageShadow_Text.text = dailyMessage;
+                break;
+            case 2:
+                dailyMessage = dailyMes_3;
+                dailyMessage_Text.text = dailyMessage;
+                dailyMessageShadow_Text.text = dailyMessage;
+                break;
+            case 3:
+                dailyMessage = dailyMes_4;
+                dailyMessage_Text.text = dailyMessage;
+                dailyMessageShadow_Text.text = dailyMessage;
+                break;
+            case 4:
+                dailyMessage = dailyMes_5;
+                dailyMessage_Text.text = dailyMessage;
+                dailyMessageShadow_Text.text = dailyMessage;
+                break;
+            case 5:
+                dailyMessage = dailyMes_6;
+                dailyMessage_Text.text = dailyMessage;
+                dailyMessageShadow_Text.text = dailyMessage;
+                break;
+            case 6:
+                dailyMessage = dailyMes_7;
+                dailyMessage_Text.text = dailyMessage;
+                dailyMessageShadow_Text.text = dailyMessage;
+                break;
+            case 7:
+                dailyMessage = dailyMes_8;
+                dailyMessage_Text.text = dailyMessage;
+                dailyMessageShadow_Text.text = dailyMessage;
+                break;
+            case 8:
+                dailyMessage = dailyMes_9;
+                dailyMessage_Text.text = dailyMessage;
+                dailyMessageShadow_Text.text = dailyMessage;
+                break;
+            case 9:
+                dailyMessage = dailyMes_10;
+                dailyMessage_Text.text = dailyMessage;
+                dailyMessageShadow_Text.text = dailyMessage;
+                break;
+            case 10:
+                dailyMessage = dailyMes_11;
+                dailyMessage_Text.text = dailyMessage;
+                dailyMessageShadow_Text.text = dailyMessage;
+                break;
+            case 11:
+                dailyMessage = dailyMes_12;
+                dailyMessage_Text.text = dailyMessage;
+                dailyMessageShadow_Text.text = dailyMessage;
+                break;
+            case 12:
+                dailyMessage = dailyMes_13;
+                dailyMessage_Text.text = dailyMessage;
+                dailyMessageShadow_Text.text = dailyMessage;
+                break;
+            case 13:
+                dailyMessage = dailyMes_14;
+                dailyMessage_Text.text = dailyMessage;
+                dailyMessageShadow_Text.text = dailyMessage;
+                break;
+            case 14:
+                dailyMessage = dailyMes_15;
+                dailyMessage_Text.text = dailyMessage;
+                dailyMessageShadow_Text.text = dailyMessage;
+                break;
+            case 15:
+                dailyMessage = dailyMes_16;
+                dailyMessage_Text.text = dailyMessage;
+                dailyMessageShadow_Text.text = dailyMessage;
+                break;
+            case 16:
+                dailyMessage = dailyMes_17;
+                dailyMessage_Text.text = dailyMessage;
+                dailyMessageShadow_Text.text = dailyMessage;
+                break;
+            case 17:
+                dailyMessage = dailyMes_18;
+                dailyMessage_Text.text = dailyMessage;
+                dailyMessageShadow_Text.text = dailyMessage;
+                break;
+            case 18:
+                dailyMessage = dailyMes_19;
+                dailyMessage_Text.text = dailyMessage;
+                dailyMessageShadow_Text.text = dailyMessage;
+                break;
+            case 19:
+                dailyMessage = dailyMes_20;
+                dailyMessage_Text.text = dailyMessage;
+                dailyMessageShadow_Text.text = dailyMessage;
+                break;
+            case 20:
+                dailyMessage = "";
+                dailyMessage_Text.text = dailyMessage;
+                dailyMessageShadow_Text.text = dailyMessage;
+                break;
+
+        }
     }
     private void WaitTimers()
     {
@@ -133,6 +275,16 @@ public class Game_Logic : MonoBehaviour
         {
             wait_Button_Tech -= Time.deltaTime;
             if (wait_Button_Tech <= 0) { wait_Button_Tech = 0; Unlock_Tech_Button(); }
+        }
+        if (shortResSeeds)
+        {
+            shortResSeedsTimer -= Time.deltaTime;
+            if (shortResSeedsTimer <= 0) { shortResSeedsTimer = 1; shortResSeedsMaster.SetActive(false); }
+        }
+        if (shortResScience)
+        {
+            shortResScienceTimer -= Time.deltaTime;
+            if (shortResScienceTimer <= 0) { shortResScienceTimer = 1; shortResScienceMaster.SetActive(false); }
         }
     }
     public void ExitGame()
@@ -194,10 +346,20 @@ public class Game_Logic : MonoBehaviour
     }
     public void TurnOffEndOfTurnUi()
     {
+        endTurnCivKilled.text = "";
+        endTurnCivStarved.text = "";
+        endTurnFoodConsumption.text = "";
+        endTurnFoundGuides.text = "";
+        endTurnFoundSeeds.text = "";
+        endTurnFoundSpareParts.text = "0";
+        endTurnSuvivourFound.text = "";
+        endTurnSuvivourThinks.text = "";
         endTurnUi.SetActive(false); endTurnUi_Display.SetActive(false); endTurnUi_GameOver.SetActive(false); endTurnUi_Win.SetActive(false);
     }
     private void Attacked()
     {
+        string value2 = "No Enemy Known";
+        endTurnCivKilled.text = value2.ToString();
         if (GC.Wall_R)
         {
             switch (GC.Wall_R_Upg)
@@ -241,18 +403,26 @@ public class Game_Logic : MonoBehaviour
         int i = UnityEngine.Random.Range(1,101);
         if (i >= GC.AttackRisk)
         {
-            string value = "0 civilians Killed, Welldone Boss";
+            string value = "0 civilians Killed, Welldone";
             endTurnCivKilled.text = value.ToString();
         }
         else
         {
             // civilian killed
-            GC.Player_People -= 1;
-            string value = "1 civilian Killed, focus more on wall improvements";
-            endTurnCivKilled.text = value;
-            if (GC.Player_People<=0)
+            if (GC.Player_Turns >= 20)
             {
-                endTurnUi.SetActive(true); endTurnUi_Display.SetActive(false); endTurnUi_GameOver.SetActive(true); endTurnUi_Win.SetActive(false);
+                GC.Player_People -= 1;
+                string value = "1 civilian Killed, focus more on wall improvements";
+                endTurnCivKilled.text = value;
+                if (GC.Player_People <= 0)
+                {
+                    endTurnUi.SetActive(true); endTurnUi_Display.SetActive(false); endTurnUi_GameOver.SetActive(true); endTurnUi_Win.SetActive(false);
+                }
+            }
+            else
+            {
+                string value = "0 civilians Killed, Welldone";
+                endTurnCivKilled.text = value.ToString();
             }
         }
     }
@@ -285,21 +455,44 @@ public class Game_Logic : MonoBehaviour
             {
                 if (GC.BaseJoy > GC.SurvivourNeeds)
                 {
-                    GC.Player_People += 1;
-                    endTurnSuvivourFound.text = "1 survivour has joined us Boss";
-                    endTurnSuvivourThinks.text = "This Shelter is up to my standards";
+                    if (GC.Player_Turns >= 20)
+                    {
+                        GC.Player_People += 1;
+                        endTurnSuvivourFound.text = "1 survivour has joined us";
+                        endTurnSuvivourThinks.text = "This Shelter is up to my standards";
+                    }
+                    else
+                    {
+                        endTurnSuvivourFound.text = "Unsure if any others have survived";
+                        endTurnSuvivourThinks.text = "";
+                    }
                 }
                 else
                 {
-
-                    endTurnSuvivourFound.text = "1 survivour checked out our shelter Boss";
-                    endTurnSuvivourThinks.text = "This Shelter is a dump can't believe i wasted my time walking here..";
+                    if (GC.Player_Turns >= 20)
+                    {
+                        endTurnSuvivourFound.text = "1 survivour checked out our shelter";
+                        endTurnSuvivourThinks.text = "This Shelter is a dump can't believe i wasted my time walking here..";
+                    }
+                    else
+                    {
+                        endTurnSuvivourFound.text = "Unsure if any others have survived";
+                        endTurnSuvivourThinks.text = "";
+                    }
                 }
             }
             else
             {
-                endTurnSuvivourFound.text = "0 survivours have found us Boss, maybe we should look at upgrading our Radio equiptment";
+                if (GC.Player_Turns >= 20)
+                { 
+                endTurnSuvivourFound.text = "0 survivours have found us, maybe we should look at upgrading our Radio equiptment";
                 endTurnSuvivourThinks.text = "That we dont exist";
+                }
+                else
+                {
+                    endTurnSuvivourFound.text = "Unsure if any others have survived";
+                    endTurnSuvivourThinks.text = "";
+                }
             }
         }
     }
@@ -346,19 +539,19 @@ public class Game_Logic : MonoBehaviour
             switch (rand1)
             {
                 case 1:
-                    endTurnFoundSeeds.text = "Boss the scouts have found Fruit seeds.";
+                    endTurnFoundSeeds.text = "We have found Fruit seeds.";
                     break;
                 case 2:
-                    endTurnFoundSeeds.text = "Boss the scouts have found Veg seeds.";
+                    endTurnFoundSeeds.text = "We have found Veg seeds.";
                     break;
                 case 3:
-                    endTurnFoundSeeds.text = "Boss the scouts have found Mutated seeds.";
+                    endTurnFoundSeeds.text = "We have found Mutated seeds.";
                     break;
             }
         }
         else
         {
-            endTurnFoundSeeds.text = "Boss our scouts didn't find any seeds..";
+            endTurnFoundSeeds.text = "We didn't find any seeds..";
         }
         if (research <= GC.ChanceOfResearch)
         {
@@ -367,19 +560,19 @@ public class Game_Logic : MonoBehaviour
             switch (rand2)
             {
                 case 1:
-                    endTurnFoundGuides.text = "Boss the scouts have found Radio Codes.";
+                    endTurnFoundGuides.text = "We have found Radio Codes.";
                     break;
                 case 2:
-                    endTurnFoundGuides.text = "Boss the scouts have found Building techniques.";
+                    endTurnFoundGuides.text = "We have found Building techniques.";
                     break;
                 case 3:
-                    endTurnFoundGuides.text = "Boss the scouts have found How to survive for dummies.";
+                    endTurnFoundGuides.text = "We have found How to survive for dummies.";
                     break;
             }
         }
         else
         {
-            endTurnFoundGuides.text = "Boss our scouts didn't find any Guides";
+            endTurnFoundGuides.text = "We didn't find any Guides";
         }
         if (settlement <= GC.ChanceOfSettlement)
         {
@@ -401,13 +594,13 @@ public class Game_Logic : MonoBehaviour
             if (GC.Player_Food <= 0) { GC.Player_Food = 0; }
             GC.Starvation = true;
             GC.Player_People -= 1;
-            string value = "1 civilian starved, focus more on food";
+            string value = "1 Shelter member starved, please focus more on food";
             endTurnCivStarved.text = value;
         }
         else
         {
             GC.Player_Food -= GC.Player_People * 10;
-            string value = "0 civilians starved, Welldone Boss";
+            string value = "0 civilians starved, Welldone";
             endTurnCivStarved.text = value;
         }
     }
@@ -1422,6 +1615,7 @@ public class Game_Logic : MonoBehaviour
     }
     private void NextTurnItems()
     {
+        SetMessageOfTheDay();
         endTurn.SetActive(true);
     }
     // Calculations for the wait time after pressing a gathering resource
@@ -3684,6 +3878,7 @@ public class Game_Logic : MonoBehaviour
         }
         else
         {
+            if (GC.Player_Seeds < 10) { shortResSeeds = true; shortResSeedsMaster.SetActive(true); }
             SFX_Deny();
         }
     }
@@ -3703,6 +3898,7 @@ public class Game_Logic : MonoBehaviour
         }
         else
         {
+            if (GC.Player_Seeds < 10) { shortResSeeds = true; shortResSeedsMaster.SetActive(true); }
             SFX_Deny();
         }
     }
@@ -3722,6 +3918,7 @@ public class Game_Logic : MonoBehaviour
         }
         else
         {
+            if (GC.Player_Seeds < 10) { shortResSeeds = true; shortResSeedsMaster.SetActive(true); }
             SFX_Deny();
         }
     }
@@ -3743,6 +3940,7 @@ public class Game_Logic : MonoBehaviour
         }
         else
         {
+            if (GC.Player_Seeds < 10) { shortResSeeds = true; shortResSeedsMaster.SetActive(true); }
             SFX_Deny();
         }
     }
@@ -3796,6 +3994,7 @@ public class Game_Logic : MonoBehaviour
         }
         else
         {
+            if (GC.Player_Science < 10) { shortResScience = true; shortResScienceMaster.SetActive(true); }
             SFX_Deny();
         }
     }
@@ -3815,6 +4014,7 @@ public class Game_Logic : MonoBehaviour
         }
         else
         {
+            if (GC.Player_Science < 10) { shortResScience = true; shortResScienceMaster.SetActive(true); }
             SFX_Deny();
         }
     }
@@ -3834,6 +4034,7 @@ public class Game_Logic : MonoBehaviour
         }
         else
         {
+            if (GC.Player_Science < 10) { shortResScience = true; shortResScienceMaster.SetActive(true); }
             SFX_Deny();
         }
     }
@@ -3855,6 +4056,7 @@ public class Game_Logic : MonoBehaviour
         }
         else
         {
+            if (GC.Player_Science < 10) { shortResScience = true; shortResScienceMaster.SetActive(true); }
             SFX_Deny();
         }
     }

@@ -240,7 +240,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Project Hope
+  m_Text: Hope
 --- !u!222 &133374843
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -594,7 +594,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Project Hope
+  m_Text: Hope
 --- !u!222 &342679159
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1021,7 +1021,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 575.50964, y: -136.52985}
+  m_AnchoredPosition: {x: 128.74, y: -136.52985}
   m_SizeDelta: {x: 248.1493, y: 44.2397}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &800123878
