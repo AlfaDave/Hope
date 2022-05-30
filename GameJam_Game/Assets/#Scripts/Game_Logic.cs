@@ -100,12 +100,13 @@ public class Game_Logic : MonoBehaviour
     {
         
         FindAllStatics();
-        gSave.LoadingGame();
+        if (GC.PlayerSave) { gSave.LoadingGame(); }
+        else { SetDefaults(); }
+        
         LinkAllItemsInGame(); // these extra functions are just used to logically track the game logic steps
         //
         TurnOffUnwantedItems(); // these extra functions are just used to logically track the game logic steps
         //
-        if (!GC.PlayerSave) { SetDefaults(); }
         TurnOnAllVitalInitialItems();
         //
         CheckRoomUnlockProgress();
@@ -310,6 +311,8 @@ public class Game_Logic : MonoBehaviour
     }
     public void Turn()
     {
+        gSave.SavingGame();
+        GC.PlayerSave = true;
         SFX_EndTurn();
         endTurn.SetActive(false);
         if (GC.Player_Turns <= 1) { GC.Player_People = 4;GC.Player_Capacity = 4; }
