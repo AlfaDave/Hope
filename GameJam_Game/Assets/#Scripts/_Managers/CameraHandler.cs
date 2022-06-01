@@ -30,8 +30,8 @@ public class CameraHandler : MonoBehaviour
 
         camFollowPosition.y = homeLocation.y;
         camFollowPosition.x = homeLocation.x;
-        zoomLevel = 2;
-        currentOrthoZoom = zoomLevelOrthoSetting_2;
+        zoomLevel = 3;
+        currentOrthoZoom = zoomLevelOrthoSetting_3;
         //camFollow.Setup(() => point1.transform.position, () => zoom);
         camFollow.Setup(() => camFollowPosition, () => currentOrthoZoom);
         camFollow.SetCamFollowPos(homeLocation);
@@ -134,9 +134,9 @@ public class CameraHandler : MonoBehaviour
     }
     private void CheckZoomIcon()
     {
-        if (zoomLevel == 1) { zoom_1X.SetActive(false); zoom_2X.SetActive(true); zoom_3X.SetActive(false); }
-        else if (zoomLevel == 2) { zoom_1X.SetActive(false); zoom_2X.SetActive(false); zoom_3X.SetActive(true); }
-        else if (zoomLevel == 3) { zoom_1X.SetActive(true); zoom_2X.SetActive(false); zoom_3X.SetActive(false); }
+        if (zoomLevel == 1) { zoom_1X.SetActive(true); zoom_2X.SetActive(false); zoom_3X.SetActive(false); }
+        else if (zoomLevel == 2) { zoom_1X.SetActive(false); zoom_2X.SetActive(true); zoom_3X.SetActive(false); }
+        else if (zoomLevel == 3) { zoom_1X.SetActive(false); zoom_2X.SetActive(false); zoom_3X.SetActive(true); }
     }
     private void CameraZoomStep(bool positive)
     {
